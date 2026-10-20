@@ -594,21 +594,18 @@ html[lang="ar"] .mbar b{font:500 18px/1 var(--ar)}
                { id:'hands', en:'Hands', ar:'العقارب', opts:[ o('blue','Heat-blued','أزرق','#2443a8'), o('silver','Polished silver','فضي','linear-gradient(135deg,#f0f0f0,#a8abae)') ] } ],
       card:()=> 'monte-front-bracelet-blue-hands', sketch:'monte-sketch-front',
       gallery:s => {
-        const leather = s.strap !== 'bracelet', notes = [];
-        if (leather && s.strap !== 'black') notes.push('n_black');
-        if (leather && s.hands !== 'blue') notes.push('n_bluehands');
-        const g = [ ['front', leather ? 'monte-front-black-leather' : `monte-front-bracelet-${s.hands}-hands`, notes], ['sketch', 'monte-sketch-front', []] ];
-        g.push(['side', 'monte-side-black-leather', leather ? (s.strap !== 'black' ? ['n_black'] : []) : ['n_leather']]);
-        g.push(['caseback', 'monte-caseback-black-leather', leather ? (s.strap !== 'black' ? ['n_black'] : []) : ['n_leather']]);
-        if (leather) { g.push(['strap', 'monte-strap-black-leather', s.strap !== 'black' ? ['n_black'] : []]); g.push(['clasp', 'monte-clasp-black-leather', s.strap !== 'black' ? ['n_black'] : []]); }
-        if (s.hands === 'blue') g.push(['dial', 'monte-dial-macro', []]);
-        g.push(['editorial', 'ed-monte-oxblood', []]);
-        return g; } },
+        // Only photos that match the build: bracelet builds never show leather shots, and every
+        // catalogue view shares one framing. Leather colours other than black are photographed in black.
+        const leather = s.strap !== 'bracelet', black = leather && s.strap !== 'black' ? ['n_black'] : [];
+        if (!leather) return [ ['front', `monte-front-bracelet-${s.hands}-hands`, []], ...(s.hands === 'blue' ? [['dial', 'monte-dial-macro', []]] : []), ['sketch', 'monte-sketch-front', []], ['editorial', 'ed-monte-oxblood', []] ];
+        const front = [...black]; if (s.hands !== 'blue') front.push('n_bluehands');
+        return [ ['front', 'monte-front-black-leather', front], ['side', 'monte-side-black-leather', black], ['caseback', 'monte-caseback-black-leather', black],
+                 ['clasp', 'monte-strap-black-leather', black], ...(s.hands === 'blue' ? [['dial', 'monte-dial-macro', []]] : []), ['editorial', 'ed-monte-oxblood', []] ]; } },
     lumi: { name:'LUMI', size:'33.5', price:799, for:'women', spec:{ size:'33.5 mm', crystal:['Sapphire','سافاير'], move:['NH05 automatic','NH05 أوتوماتيك'], case:['Steel, integrated bracelet','ستيل، سوار مدمج'] },
       sub:'The smaller square, light-pink TIME IS MONEY, steel bracelet.', subAr:'المربع الأصغر، TIME IS MONEY بالوردي، وسوار ستيل.',
       groups:[ { id:'hands', en:'Hands', ar:'العقارب', opts:[ o('blue','Blue','أزرق','#2443a8'), o('silver','Silver','فضي','linear-gradient(135deg,#f0f0f0,#a8abae)') ] } ],
       card:()=> 'lumi-front-blue-hands', sketch:'lumi-sketch-front',
-      gallery:s => [ ['front', `lumi-front-${s.hands}-hands`, []], ['sketch', 'lumi-sketch-front', []], ['crown', 'lumi-crown-profile', []], ['clasp', 'lumi-clasp', []], ['dial', 'lumi-dial-macro', ['n_artwork']] ] },
+      gallery:s => [ ['front', `lumi-front-${s.hands}-hands`, []], ['sketch', 'lumi-sketch-front', []], ['crown', 'lumi-crown-profile', []], ['clasp', 'lumi-clasp', []] ] },
     rayo: { name:'RAYO', size:'40', price:899, for:'men', spec:{ size:'40 mm', case:['Chronograph, tachymeter bezel','كرونوغراف، إطار تاكيميتر'] },
       sub:'Three sub-dials and a tachymeter bezel.', subAr:'ثلاث موانئ فرعية وإطار تاكيميتر.',
       groups:[ { id:'colour', en:'Colour', ar:'اللون', opts:[ o('gold-ice-black','Ice blue, gold, black rubber','أزرق ثلجي، ذهبي، مطاط أسود','linear-gradient(135deg,#a9d3ea 50%,#d4b264 50%)'), o('gold-navy-navy','Navy, gold, navy rubber','كحلي، ذهبي، مطاط كحلي','linear-gradient(135deg,#1b2a55 50%,#d4b264 50%)'), o('silver-black-steel','Black, steel','أسود، ستيل','linear-gradient(135deg,#151515 50%,#c9cbcd 50%)'), o('silver-white-steel','White, steel','أبيض، ستيل','linear-gradient(135deg,#f6f6f4 50%,#151515 50%)'), o('silver-ice-steel','Ice blue, steel','أزرق ثلجي، ستيل','linear-gradient(135deg,#a9d3ea 50%,#c9cbcd 50%)'), o('silver-white-bluehands-steel','White, blue hands, steel','أبيض، عقارب زرقاء، ستيل','linear-gradient(135deg,#f6f6f4 50%,#2443a8 50%)') ] } ],

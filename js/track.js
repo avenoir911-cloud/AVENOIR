@@ -1,0 +1,73 @@
+/* AVENOIR tracking: one place that turns shop actions into analytics events.
+   Meta Pixel loads only when META_PIXEL_ID is filled in. Until then events are only kept in
+   window.dataLayer (so GA4 / TikTok can be plugged in later without touching the shop code).
+   No personal data is ever sent from here: only model, options, price and order reference. */
+(() => {
+  const META_PIXEL_ID = '';            // ← paste the Pixel ID from Meta Events Manager (numbers only)
+  const CURRENCY = 'AED';
+
+  window.dataLayer = window.dataLayer || [];
+  let fbqReady = false;
+  if (/^\d{10,20}$/.test(META_PIXEL_ID)) {
+    /* standard Meta Pixel base code */
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', META_PIXEL_ID);
+    fbq('track', 'PageView');
+    fbqReady = true;
+  }
+
+  const STANDARD = new Set(['ViewContent', 'AddToCart', 'InitiateCheckout', 'Purchase']);
+  function track(name, params = {}, eventID) {
+    window.dataLayer.push({ event: name, ...params, event_id: eventID });
+    if (!fbqReady) return;
+    const opts = eventID ? { eventID } : undefined;
+    if (STANDARD.has(name)) fbq('track', name, params, opts); else fbq('trackCustom', name, params, opts);
+  }
+  window.avnTrack = track;
+
+  const $ = id => document.getElementById(id);
+  const amount = () => { const n = ($('pv-total')?.textContent || '').replace(/[^\d.]/g, ''); return n ? +n : undefined; };
+  const model = () => { try { return new URL($('pv-buy').href).searchParams.get('m') || ''; } catch (e) { return ''; } };
+  const productParams = () => ({ content_ids: [model()], content_name: $('pv-name')?.textContent || '', content_type: 'product', value: amount(), currency: CURRENCY });
+
+  /* product opened → SelectProduct + ViewContent */
+  const pv = $('pv');
+  if (pv) {
+    let wasHidden = pv.hidden;
+    new MutationObserver(() => {
+      if (wasHidden && !pv.hidden) setTimeout(() => { const p = productParams(); track('SelectProduct', { content_ids: p.content_ids, content_name: p.content_name }); track('ViewContent', p); }, 0);
+      wasHidden = pv.hidden;
+    }).observe(pv, { attributes: true, attributeFilter: ['hidden'] });
+  }
+
+  /* choices inside the product view */
+  document.addEventListener('click', e => {
+    const sw = e.target.closest('#pv .sw, #pv .chip');
+    if (sw) {
+      const group = sw.closest('.sws')?.getAttribute('aria-label') || (sw.classList.contains('chip') ? 'Second strap' : '');
+      const option = sw.getAttribute('aria-label') || sw.textContent.trim();
+      const isStrap = sw.classList.contains('chip') || /strap|السير|سير/i.test(group);
+      setTimeout(() => track(isStrap ? 'SelectStrap' : 'SelectOption', { content_ids: [model()], option_group: group, option, second_strap: sw.classList.contains('chip') || undefined, value: amount(), currency: CURRENCY }), 0);
+      return;
+    }
+    const buy = e.target.closest('#pv-buy, #mbar-buy');
+    if (buy) {
+      const p = productParams();
+      try { localStorage.setItem('avn_last_checkout', JSON.stringify({ ...p, at: Date.now() })); } catch (err) {}
+      track('AddToCart', p);
+      track('InitiateCheckout', { ...p, num_items: 1 });
+    }
+  }, true);
+
+  /* back from Ziina with #paid-AV-XXXXXX → Purchase, once per order (eventID = order ref, for later server-side dedup) */
+  const m = location.hash.match(/^#paid-(AV-[A-Z0-9]{6})$/);
+  if (m) {
+    const ref = m[1]; let done = false, last = null;
+    try { done = localStorage.getItem('avn_purchase_' + ref) === '1'; last = JSON.parse(localStorage.getItem('avn_last_checkout') || 'null'); } catch (err) {}
+    if (!done) {
+      const fresh = last && Date.now() - last.at < 6 * 3600e3 ? last : null;
+      track('Purchase', fresh ? { content_ids: fresh.content_ids, content_name: fresh.content_name, content_type: 'product', value: fresh.value, currency: CURRENCY, order_ref: ref } : { currency: CURRENCY, order_ref: ref }, ref);
+      try { localStorage.setItem('avn_purchase_' + ref, '1'); } catch (err) {}
+    }
+  }
+})();

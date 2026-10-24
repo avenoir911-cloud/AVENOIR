@@ -3,7 +3,7 @@
    window.dataLayer (so GA4 / TikTok can be plugged in later without touching the shop code).
    No personal data is ever sent from here: only model, options, price and order reference. */
 (() => {
-  const META_PIXEL_ID = '';            // ← paste the Pixel ID from Meta Events Manager (numbers only)
+  const META_PIXEL_ID = '1248708300606989'; // Meta dataset (Pixel) for avenoir.watches, business 733073342985949
   const CURRENCY = 'AED';
 
   window.dataLayer = window.dataLayer || [];

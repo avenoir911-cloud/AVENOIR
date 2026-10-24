@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>الإدارة · AVENOIR</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+:root{--ivory:#f4f1ea;--paper:#fbfaf6;--ink:#111;--muted:#5d5a54;--hair:#ddd6c8;--ok:#2f6b3a;--warn:#9a6a12;--bad:#9b1c1c;--serif:Georgia,"Times New Roman",serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ivory);color:var(--ink);font:15px/1.6 system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px 80px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
+.logo{letter-spacing:.32em;font-size:14px}
+h1{font:400 30px/1.2 var(--serif);margin:0 0 4px}
+.muted{color:var(--muted);font-size:13px}
+.card{background:var(--paper);border:1px solid var(--hair);padding:18px;margin-bottom:14px}
+input,select,button{font:inherit}
+input,select{padding:9px 11px;border:1px solid #d3cbbb;background:#fff;color:#111;border-radius:0}
+button{padding:9px 16px;border:1px solid #111;background:#111;color:#fff;cursor:pointer}
+button.ghost{background:transparent;color:#111}
+button:disabled{opacity:.5;cursor:default}
+.tabs{display:flex;gap:6px;margin:14px 0}
+.tabs button{background:transparent;color:#111;border-color:var(--hair)}
+.tabs button[aria-selected=true]{background:#111;color:#fff;border-color:#111}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.order{display:grid;gap:8px}
+.order .top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
+.order b.ref{letter-spacing:.08em}
+.tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;border:1px solid var(--hair);color:var(--muted)}
+.tag.paid{color:var(--ok);border-color:var(--ok)}.tag.wait{color:var(--warn);border-color:var(--warn)}.tag.bad{color:var(--bad);border-color:var(--bad)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:6px 18px}
+.grid div span{color:var(--muted);font-size:12px;display:block}
+a{color:#111}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid var(--hair);text-align:start;vertical-align:middle}
+th{font-weight:500;color:var(--muted);font-size:13px}
+td input[type=number]{width:110px}
+.msg{min-height:1.4em;font-size:13px}
+.msg.err{color:var(--bad)}.msg.ok{color:var(--ok)}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+@media(max-width:640px){table,thead,tbody,tr,td,th{display:block}thead{display:none}tr{border:1px solid var(--hair);margin-bottom:10px;padding:8px}td{border:0;padding:6px 4px}td[data-l]::before{content:attr(data-l);display:block;font-size:12px;color:var(--muted)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><a class="logo" href="./" style="color:inherit;text-decoration:none">AVENOIR</a><span class="muted">لوحة الإدارة</span></header>
+
+  <section class="card" id="login">
+    <h1>الدخول</h1>
+    <p class="muted">اكتب كلمة مرور الإدارة. تبقى محفوظة في هذا المتصفح حتى تغلقه.</p>
+    <form class="row" id="loginForm"><input type="password" id="pw" autocomplete="current-password" placeholder="كلمة المرور" required style="min-width:240px"><button>دخول</button></form>
+    <p class="msg" id="loginMsg"></p>
+  </section>
+
+  <main id="app" hidden>
+    <div class="row" style="justify-content:space-between">
+      <h1>الطلبات والمنتجات</h1>
+      <button class="ghost" id="logout">خروج</button>
+    </div>
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="orders">الطلبات</button>
+      <button role="tab" aria-selected="false" data-tab="products">المنتجات والأسعار</button>
+    </div>
+
+    <section id="tab-orders">
+      <div class="filters">
+        <select id="fStatus"><option value="todo">بحاجة لتجهيز أو شحن</option><option value="paid">كل المدفوعة</option><option value="all">كل الطلبات</option></select>
+        <label class="row muted" style="gap:6px"><input type="checkbox" id="fTest"> إظهار طلبات التجربة</label>
+        <button class="ghost" id="reload">تحديث</button>
+      </div>
+      <p class="msg" id="ordersMsg"></p>
+      <div id="orders"></div>
+    </section>
+
+    <section id="tab-products" hidden>
+      <div class="card">
+        <p class="muted">السعر يطبّق فوراً على الموقع وعلى الدفع. المخزون الفارغ = يُصنع حسب الطلب بلا حد. عند الدفع تنقص قطعة تلقائياً إذا كان للمخزون رقم.</p>
+        <table><thead><tr><th>الساعة</th><th>السعر (درهم)</th><th>السير الإضافي</th><th>المخزون</th><th>معروضة للبيع</th><th></th></tr></thead><tbody id="products"></tbody></table>
+        <p class="msg" id="productsMsg"></p>
+      </div>
+    </section>
+  </main>
+</div>
+<script>
+(() => {
+  const API = 'https://uktmzygjaqnkizamrvij.supabase.co/functions/v1/admin';
+  const $ = id => document.getElementById(id);
+  const STATUS = { new: 'جديد', preparing: 'قيد التجهيز', shipped: 'تم الشحن', delivered: 'تم التسليم', cancelled: 'ملغي' };
+  const PAY = { completed: ['مدفوع', 'paid'], requires_payment_instrument: ['ينتظر الدفع', 'wait'], requires_user_action: ['ينتظر العميل', 'wait'], pending: ['قيد المعالجة', 'wait'], failed: ['فشل', 'bad'], canceled: ['ملغي', 'bad'] };
+  const EM = { 'Abu Dhabi': 'أبوظبي', 'Al Ain': 'العين', 'Dubai': 'دبي', 'Sharjah': 'الشارقة', 'Ajman': 'عجمان', 'Umm Al Quwain': 'أم القيوين', 'Ras Al Khaimah': 'رأس الخيمة', 'Fujairah': 'الفجيرة' };
+  let key = ''; try { key = sessionStorage.getItem('avn_admin') || ''; } catch (e) {}
+  let orders = [];
+
+  async function call(body) {
+    const r = await fetch(API, { method: 'POST', headers: { 'content-type': 'application/json', 'x-admin-key': key }, body: JSON.stringify(body) });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) { const e = new Error(j.error || ('خطأ ' + r.status)); e.status = r.status; throw e; }
+    return j;
+  }
+  const el = (tag, props = {}, kids = []) => { const n = Object.assign(document.createElement(tag), props); kids.forEach(k => n.append(k)); return n; };
+  const fmtDate = s => new Date(s).toLocaleString('ar-AE', { timeZone: 'Asia/Dubai', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+
+  async function start() {
+    try { await loadOrders(); $('login').hidden = true; $('app').hidden = false; loadProducts(); }
+    catch (e) { $('login').hidden = false; $('app').hidden = true; $('loginMsg').className = 'msg err'; $('loginMsg').textContent = e.status === 401 ? 'كلمة المرور غير صحيحة.' : e.message; }
+  }
+  $('loginForm').addEventListener('submit', e => { e.preventDefault(); key = $('pw').value; try { sessionStorage.setItem('avn_admin', key); } catch (er) {} $('loginMsg').textContent = '…'; start(); });
+  $('logout').addEventListener('click', () => { key = ''; try { sessionStorage.removeItem('avn_admin'); } catch (e) {} location.reload(); });
+  document.querySelectorAll('[data-tab]').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('[data-tab]').forEach(x => x.setAttribute('aria-selected', String(x === b)));
+    $('tab-orders').hidden = b.dataset.tab !== 'orders'; $('tab-products').hidden = b.dataset.tab !== 'products';
+  }));
+  $('reload').addEventListener('click', () => loadOrders().catch(e => $('ordersMsg').textContent = e.message));
+  $('fStatus').addEventListener('change', drawOrders); $('fTest').addEventListener('change', drawOrders);
+
+  async function loadOrders() { const j = await call({ action: 'orders' }); orders = j.orders || []; drawOrders(); }
+  function drawOrders() {
+    const f = $('fStatus').value, showTest = $('fTest').checked;
+    const list = orders.filter(o => (showTest || (!o.test && o.model !== 'trial')) &&
+      (f === 'all' || (o.ziina_status === 'completed' && (f === 'paid' || ['new', 'preparing', 'shipped'].includes(o.fulfillment_status)))));
+    $('ordersMsg').className = 'msg'; $('ordersMsg').textContent = list.length ? `${list.length} طلب` : 'لا توجد طلبات هنا.';
+    $('orders').replaceChildren(...list.map(o => {
+      const [payTxt, payCls] = PAY[o.ziina_status] || ['لم يبدأ', ''];
+      const sel = el('select', {}, Object.entries(STATUS).map(([v, t]) => el('option', { value: v, textContent: t, selected: v === o.fulfillment_status })));
+      const note = el('span', { className: 'msg' });
+      sel.addEventListener('change', async () => {
+        sel.disabled = true; note.className = 'msg'; note.textContent = '…';
+        try { await call({ action: 'set_fulfillment', ref: o.ref, status: sel.value }); o.fulfillment_status = sel.value; note.className = 'msg ok'; note.textContent = 'تم الحفظ'; }
+        catch (e) { sel.value = o.fulfillment_status; note.className = 'msg err'; note.textContent = e.message; }
+        sel.disabled = false;
+      });
+      const digits = (o.customer_phone || '').replace(/\D/g, '');
+      const phone = o.customer_phone ? el('a', { href: 'https://wa.me/' + digits, target: '_blank', rel: 'noopener', textContent: o.customer_phone, dir: 'ltr' }) : document.createTextNode('—');
+      const opts = Object.values(o.options || {}).join(' · ') + ((o.extras || []).length ? ` · +${o.extras.join(', +')}` : '');
+      const info = (label, val) => el('div', {}, [el('span', { textContent: label }), typeof val === 'string' ? document.createTextNode(val || '—') : val]);
+      return el('article', { className: 'card order' }, [
+        el('div', { className: 'top' }, [
+          el('div', {}, [el('b', { className: 'ref', textContent: o.ref }), document.createTextNode(' · ' + fmtDate(o.created_at) + ' '), o.test || o.model === 'trial' ? el('span', { className: 'tag', textContent: 'تجربة' }) : '']),
+          el('div', { className: 'row' }, [el('span', { className: 'tag ' + payCls, textContent: payTxt }), sel, note]),
+        ]),
+        el('div', { className: 'grid' }, [
+          info('الساعة', `${(o.model || '').toUpperCase()} · ${opts}`), info('المبلغ', `${o.amount_aed} درهم`),
+          info('العميل', o.customer_name || ''), info('الجوال', phone), info('الإمارة', EM[o.emirate] || o.emirate || ''),
+          info('العنوان', o.address || ''), info('البريد', o.customer_email || ''), info('ملاحظة', o.customer_note || ''),
+        ]),
+      ]);
+    }));
+  }
+
+  async function loadProducts() {
+    try {
+      const j = await call({ action: 'products' });
+      $('products').replaceChildren(...(j.products || []).map(p => {
+        const price = el('input', { type: 'number', min: 2, step: 1, value: p.price_aed ?? '', placeholder: '—' });
+        const strap = el('input', { type: 'number', min: 0, step: 1, value: p.extra_strap_aed });
+        const stock = el('input', { type: 'number', min: 0, step: 1, value: p.stock ?? '', placeholder: 'حسب الطلب' });
+        const active = el('input', { type: 'checkbox', checked: p.active });
+        const save = el('button', { textContent: 'حفظ' }); const msg = el('span', { className: 'msg' });
+        save.addEventListener('click', async () => {
+          const body = { action: 'update_product', key: p.key, price_aed: price.value === '' ? null : Math.round(+price.value), extra_strap_aed: Math.round(+strap.value || 0), stock: stock.value === '' ? null : Math.round(+stock.value), active: active.checked };
+          if (body.active && body.price_aed == null) { msg.className = 'msg err'; msg.textContent = 'لا يمكن عرضها بدون سعر'; return; }
+          save.disabled = true; msg.className = 'msg'; msg.textContent = '…';
+          try { await call(body); msg.className = 'msg ok'; msg.textContent = 'تم الحفظ'; } catch (e) { msg.className = 'msg err'; msg.textContent = e.message; }
+          save.disabled = false;
+        });
+        const td = (l, kids) => { const c = el('td', {}, kids); if (l) c.dataset.l = l; return c; };
+        return el('tr', {}, [td('', [el('b', { textContent: p.name })]), td('السعر (درهم)', [price]), td('السير الإضافي', [strap]), td('المخزون (فارغ = حسب الطلب)', [stock]), td('معروضة للبيع', [active]), td('', [save, msg])]);
+      }));
+    } catch (e) { $('productsMsg').className = 'msg err'; $('productsMsg').textContent = e.message; }
+  }
+
+  if (key) start();
+})();
+</script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 /* AVENOIR tracking: one place that turns shop actions into analytics events.
    Meta Pixel loads only when META_PIXEL_ID is filled in. Until then events are only kept in
    window.dataLayer (so GA4 / TikTok can be plugged in later without touching the shop code).
+   Every event is also stored in AVENOIR's own database (/api/collect) for the dashboard.
    No personal data is ever sent from here: only model, options, price and order reference. */
 (() => {
   const META_PIXEL_ID = '1465681438668900'; // Meta dataset (Pixel) ID for avenoir.watches, business 733073342985949 (the dataset is *named* 1248708300606989)
@@ -16,14 +17,27 @@
     fbqReady = true;
   }
 
+  /* first-party analytics: random per-visit id, where the visit came from */
+  const API = 'https://uktmzygjaqnkizamrvij.supabase.co/functions/v1/api';
+  const ss = (k, make) => { try { let v = sessionStorage.getItem(k); if (!v) { v = make(); sessionStorage.setItem(k, v); } return v; } catch (e) { return make(); } };
+  const session = ss('avn_sid', () => Array.from(crypto.getRandomValues(new Uint8Array(10)), b => (b % 36).toString(36)).join(''));
+  const src = JSON.parse(ss('avn_src', () => { const q = new URLSearchParams(location.search); let ref = ''; try { ref = document.referrer ? new URL(document.referrer).hostname : ''; } catch (e) {} if (ref === location.hostname) ref = ''; return JSON.stringify({ referrer: ref, utm_source: q.get('utm_source') || (q.get('fbclid') ? 'facebook' : ''), utm_campaign: q.get('utm_campaign') || '' }); }));
+  function collect(name, params) {
+    const body = { session, event: name, model: params.content_ids?.[0] || null, option_group: params.option_group || null, option: params.option || null,
+      value: Number.isFinite(params.value) ? params.value : null, ref: params.order_ref || null, path: location.pathname, ...src };
+    try { fetch(API + '/collect', { method: 'POST', keepalive: true, headers: { 'content-type': 'text/plain' }, body: JSON.stringify(body) }).catch(() => {}); } catch (e) {}
+  }
+
   const STANDARD = new Set(['ViewContent', 'AddToCart', 'InitiateCheckout', 'Purchase']);
   function track(name, params = {}, eventID) {
     window.dataLayer.push({ event: name, ...params, event_id: eventID });
+    collect(name, params);
     if (!fbqReady) return;
     const opts = eventID ? { eventID } : undefined;
     if (STANDARD.has(name)) fbq('track', name, params, opts); else fbq('trackCustom', name, params, opts);
   }
   window.avnTrack = track;
+  window.dataLayer.push({ event: 'PageView' }); collect('PageView', {});
 
   const $ = id => document.getElementById(id);
   const amount = () => { const n = ($('pv-total')?.textContent || '').replace(/[^\d.]/g, ''); return n ? +n : undefined; };
@@ -63,20 +77,25 @@
       } catch (err) {}
       const p = productParams();
       try { localStorage.setItem('avn_last_checkout', JSON.stringify({ ...p, at: Date.now() })); } catch (err) {}
-      track('AddToCart', p);
-      track('InitiateCheckout', { ...p, num_items: 1 });
+      track('AddToCart', p);   // "Buy now" opens the delivery-details step
     }
   }, true);
+  // delivery details sent → on the way to Ziina
+  addEventListener('avn:checkout', () => {
+    let p = null; try { p = JSON.parse(localStorage.getItem('avn_last_checkout') || 'null'); } catch (err) {}
+    const { at, ...params } = p || productParams();
+    track('InitiateCheckout', { ...params, num_items: 1 });
+  });
 
-  /* back from Ziina with #paid-AV-XXXXXX → Purchase, once per order (eventID = order ref, for later server-side dedup) */
-  const m = location.hash.match(/^#paid-(AV-[A-Z0-9]{6})$/);
-  if (m) {
-    const ref = m[1]; let done = false, last = null;
+  /* Purchase: only after the server has confirmed the payment with Ziina (the page fires 'avn:paid'),
+     once per order; eventID = order ref so Meta merges it with the server-side Conversions API event */
+  addEventListener('avn:paid', e => {
+    const ref = e.detail?.ref; if (!/^AV-[A-Z0-9]{6}$/.test(ref || '')) return;
+    let done = false, last = null;
     try { done = localStorage.getItem('avn_purchase_' + ref) === '1'; last = JSON.parse(localStorage.getItem('avn_last_checkout') || 'null'); } catch (err) {}
-    if (!done) {
-      const fresh = last && Date.now() - last.at < 6 * 3600e3 ? last : null;
-      track('Purchase', fresh ? { content_ids: fresh.content_ids, content_name: fresh.content_name, content_type: 'product', value: fresh.value, currency: CURRENCY, order_ref: ref } : { currency: CURRENCY, order_ref: ref }, ref);
-      try { localStorage.setItem('avn_purchase_' + ref, '1'); } catch (err) {}
-    }
-  }
+    if (done) return;
+    const fresh = last && Date.now() - last.at < 6 * 3600e3 ? last : null;
+    track('Purchase', fresh ? { content_ids: fresh.content_ids, content_name: fresh.content_name, content_type: 'product', value: fresh.value, currency: CURRENCY, order_ref: ref } : { currency: CURRENCY, order_ref: ref }, ref);
+    try { localStorage.setItem('avn_purchase_' + ref, '1'); } catch (err) {}
+  });
 })();

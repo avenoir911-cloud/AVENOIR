@@ -52,6 +52,15 @@
     }
     const buy = e.target.closest('#pv-buy, #mbar-buy');
     if (buy) {
+      // pass Meta's browser ids to checkout so the server-side Purchase matches this visitor
+      try {
+        const ck = n => (document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]+)')) || [])[1];
+        let fbc = ck('_fbc'); const clid = new URLSearchParams(location.search).get('fbclid');
+        if (!fbc && clid) fbc = `fb.1.${Date.now()}.${clid}`;
+        const u = new URL(buy.href); const fbp = ck('_fbp');
+        if (fbp) u.searchParams.set('fbp', decodeURIComponent(fbp)); if (fbc) u.searchParams.set('fbc', decodeURIComponent(fbc));
+        buy.href = u.toString();
+      } catch (err) {}
       const p = productParams();
       try { localStorage.setItem('avn_last_checkout', JSON.stringify({ ...p, at: Date.now() })); } catch (err) {}
       track('AddToCart', p);

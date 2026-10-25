@@ -62,6 +62,7 @@ td input[type=number]{width:110px}
     <div class="tabs" role="tablist">
       <button role="tab" aria-selected="true" data-tab="orders">الطلبات</button>
       <button role="tab" aria-selected="false" data-tab="products">المنتجات والأسعار</button>
+      <button role="tab" aria-selected="false" data-tab="channels">القنوات</button>
     </div>
 
     <section id="tab-orders">
@@ -79,6 +80,22 @@ td input[type=number]{width:110px}
         <p class="muted">السعر يطبّق فوراً على الموقع وعلى الدفع. المخزون الفارغ = يُصنع حسب الطلب بلا حد. عند الدفع تنقص قطعة تلقائياً إذا كان للمخزون رقم.</p>
         <table><thead><tr><th>الساعة</th><th>السعر (درهم)</th><th>السير الإضافي</th><th>المخزون</th><th>معروضة للبيع</th><th></th></tr></thead><tbody id="products"></tbody></table>
         <p class="msg" id="productsMsg"></p>
+      </div>
+    </section>
+    <section id="tab-channels" hidden>
+      <div class="card">
+        <div class="row" style="justify-content:space-between">
+          <b>من وين جوا الزوار؟</b>
+          <select id="fDays"><option value="1">آخر 24 ساعة</option><option value="7">آخر 7 أيام</option><option value="30" selected>آخر 30 يوم</option><option value="90">آخر 90 يوم</option></select>
+        </div>
+        <p class="muted">كل زيارة تنحسب على القناة اللي جات منها أول مرة. «مباشر» = فتح الرابط بدون علامة (مثلاً نسخه ولصقه).</p>
+        <table><thead><tr><th>القناة</th><th>زيارات</th><th>شافوا ساعة</th><th>بدأوا الدفع</th><th>دفعوا</th><th>المبلغ</th></tr></thead><tbody id="channels"></tbody></table>
+        <p class="msg" id="channelsMsg"></p>
+      </div>
+      <div class="card">
+        <b>روابطك الجاهزة</b>
+        <p class="muted">استخدم كل رابط في مكانه بدال الرابط العادي، وبعدها الجدول فوق يبين أي قناة تجيب زوار وطلبات.</p>
+        <div id="links" class="order"></div>
       </div>
     </section>
   </main>
@@ -110,8 +127,38 @@ td input[type=number]{width:110px}
   $('logout').addEventListener('click', () => { key = ''; try { sessionStorage.removeItem('avn_admin'); } catch (e) {} location.reload(); });
   document.querySelectorAll('[data-tab]').forEach(b => b.addEventListener('click', () => {
     document.querySelectorAll('[data-tab]').forEach(x => x.setAttribute('aria-selected', String(x === b)));
-    $('tab-orders').hidden = b.dataset.tab !== 'orders'; $('tab-products').hidden = b.dataset.tab !== 'products';
+    $('tab-orders').hidden = b.dataset.tab !== 'orders'; $('tab-products').hidden = b.dataset.tab !== 'products'; $('tab-channels').hidden = b.dataset.tab !== 'channels';
+    if (b.dataset.tab === 'channels') loadChannels();
   }));
+  $('fDays').addEventListener('change', () => loadChannels());
+
+  /* channels: tagged links (utm) + visits per channel */
+  const SHOP = 'https://avenoir911-cloud.github.io/AVENOIR/';
+  const LINKS = [
+    ['بايو إنستغرام', 'instagram', 'bio'], ['ستوري إنستغرام (ستيكر الرابط)', 'instagram', 'story'],
+    ['حالة واتساب', 'whatsapp', 'status'], ['رسائل واتساب للأهل والأصدقاء', 'whatsapp', 'friends'],
+    ['كتالوج واتساب بزنس', 'whatsapp', 'catalog'], ['سناب شات', 'snapchat', 'profile'], ['تيك توك', 'tiktok', 'bio'],
+  ];
+  const CH_AR = { direct: 'مباشر', instagram: 'إنستغرام', whatsapp: 'واتساب', facebook: 'فيسبوك', google: 'جوجل', snapchat: 'سناب شات', tiktok: 'تيك توك' };
+  const CAMP_AR = { bio: 'البايو', story: 'الستوري', status: 'الحالة', friends: 'الأهل والأصدقاء', catalog: 'الكتالوج', profile: 'البروفايل' };
+  const chName = c => { const [s, k] = c.split(' / '); return (CH_AR[s] || s) + (k ? ' · ' + (CAMP_AR[k] || k) : ''); };
+  $('links').replaceChildren(...LINKS.map(([label, src, camp]) => {
+    const url = `${SHOP}?utm_source=${src}&utm_campaign=${camp}`;
+    const inp = el('input', { value: url, readOnly: true, dir: 'ltr', style: 'flex:1;min-width:0' });
+    const btn = el('button', { className: 'ghost', textContent: 'نسخ' });
+    btn.addEventListener('click', async () => { try { await navigator.clipboard.writeText(url); } catch (e) { inp.select(); document.execCommand('copy'); } btn.textContent = 'تم النسخ'; setTimeout(() => btn.textContent = 'نسخ', 1500); });
+    return el('div', {}, [el('span', { className: 'muted', textContent: label }), el('div', { className: 'row', style: 'flex-wrap:nowrap' }, [inp, btn])]);
+  }));
+  async function loadChannels() {
+    $('channelsMsg').className = 'msg'; $('channelsMsg').textContent = '…';
+    try {
+      const j = await call({ action: 'channels', days: +$('fDays').value });
+      const list = j.channels || [];
+      const td = (l, t) => { const c = el('td', { textContent: t }); c.dataset.l = l; return c; };
+      $('channels').replaceChildren(...list.map(c => el('tr', {}, [el('td', {}, [el('b', { textContent: chName(c.channel) })]), td('زيارات', c.visits), td('شافوا ساعة', c.views), td('بدأوا الدفع', c.checkouts), td('دفعوا', c.paid), td('المبلغ', c.revenue ? c.revenue + ' درهم' : '—')])));
+      $('channelsMsg').textContent = list.length ? '' : 'ما في زيارات في هالفترة.';
+    } catch (e) { $('channelsMsg').className = 'msg err'; $('channelsMsg').textContent = e.message; }
+  }
   $('reload').addEventListener('click', () => loadOrders().catch(e => $('ordersMsg').textContent = e.message));
   $('fStatus').addEventListener('change', drawOrders); $('fTest').addEventListener('change', drawOrders);
 

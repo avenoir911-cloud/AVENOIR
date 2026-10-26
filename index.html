@@ -105,6 +105,21 @@ html[lang="ar"] .menu a{font:400 28px/1.4 var(--arh)}
 .hero-grid{display:grid;gap:8px;align-items:center}
 @media(min-width:900px){.hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px}}
 .hero-copy{display:grid;gap:24px;justify-items:start;position:relative;z-index:2}
+/* quick pick: all four watches in the first screen */
+.quick{order:-1;display:grid;gap:10px;margin:0 0 14px;position:relative;z-index:2}
+.quick .ql{font:400 10.5px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--body)}
+html[lang="ar"] .quick .ql{font:500 13px/1 var(--ar);letter-spacing:0}
+.quick .qrow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.qcard{display:grid;gap:6px;justify-items:center;text-align:center;padding:8px 4px 10px;border:1px solid var(--hair);background:transparent;cursor:pointer;color:inherit;min-height:44px;transition:border-color .4s var(--ease)}
+.qcard:hover,.qcard:focus-visible{border-color:var(--ink)}
+.qcard picture{display:block;width:100%;aspect-ratio:1/1}
+.qcard img{width:100%;height:100%;object-fit:contain}
+.qcard b{font:400 11.5px/1.2 var(--serif);letter-spacing:.1em}
+.qcard .qp{font:300 11px/1.2 var(--sans);letter-spacing:.04em;color:var(--body)}
+html[lang="ar"] .qcard .qp{font-family:var(--ar);letter-spacing:0}
+.qcard .qc{font:400 9.5px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--navy)}
+html[lang="ar"] .qcard .qc{font:500 12px/1.2 var(--ar);letter-spacing:0}
+@media(min-width:900px){.quick{order:0;grid-column:1/-1;margin:0;grid-template-columns:auto 1fr;align-items:center;gap:24px}.quick .qrow{gap:12px}.qcard{grid-template-columns:56px 1fr;grid-template-rows:auto auto auto;justify-items:start;text-align:start;column-gap:12px;row-gap:3px;padding:8px 12px}.qcard picture{grid-row:1/4;width:56px}.qcard b{font-size:13px}.qcard .qp{font-size:12.5px}}
 .hero-copy .lede{max-width:34ch;font-size:17px}
 .hero-copy .price{font:400 13px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}
 html[lang="ar"] .hero-copy .price{font:500 16px/1 var(--ar);letter-spacing:0}
@@ -381,6 +396,7 @@ html[lang="ar"] .mbar b{font:500 18px/1 var(--ar)}
           <a class="tl" href="#watches" data-t="all_watches">All watches</a>
         </div>
       </div>
+      <nav class="quick" id="quick" aria-labelledby="quick-l"><span class="ql" id="quick-l" data-t="q_label">Pick your watch</span><div class="qrow" id="qrow"></div></nav>
     </div>
     <div class="scrollcue" aria-hidden="true"></div>
   </section>
@@ -546,7 +562,7 @@ html[lang="ar"] .mbar b{font:500 18px/1 var(--ar)}
     back:'كل الساعات', addon:'أضف سير ثاني', total:'الإجمالي', buy:'اشترِ الآن', byziina:'دفع آمن عبر Ziina',
     p1:'تُجمَّع حسب الطلب وتوصل خلال 2–3 أسابيع.', p2:'كل ساعة تُفحص قبل ما تطلع من عندنا.',
     ask:'عندك سؤال قبل الشراء؟', ask_link:'راسلنا',
-    aed:'درهم', onrequest:'السعر عند الطلب', enquire:'اطلب عبر إنستغرام', soon:'قريباً', cta:'اكتشف',
+    aed:'درهم', onrequest:'السعر عند الطلب', enquire:'اطلب عبر إنستغرام', soon:'قريباً', cta:'اكتشف', q_cta:'شوف الساعة', q_label:'اختر ساعتك',
     v_front:'من الأمام', v_side:'الجنب والتاج', v_crown:'الجنب والتاج', v_caseback:'من الخلف', v_strap:'تفاصيل السير', v_clasp:'القفل', v_dial:'الميناء عن قرب', v_editorial:'',
     n_black:'معروضة على الجلد الأسود', n_leather:'معروضة على السير الجلد', n_bluehands:'معروضة بالعقارب الزرقاء', n_artwork:'الميناء قبل التركيب',
     s_crystal:'الزجاج', s_move:'الحركة', s_size:'المقاس', s_case:'العلبة',
@@ -578,7 +594,7 @@ html[lang="ar"] .mbar b{font:500 18px/1 var(--ar)}
     p1:'تُجمَّع بعد ما تطلبها، وتوصل خلال 2–3 أسابيع.', p2:'تنفحص باليد قبل ما تطلع من عندنا.', p3:'السعر يشمل الساعة وسيرها. ما ينضاف شي وقت الدفع.',
     v_sketch:'الرسمة الأصلية'
   });
-  const EN = { v_sketch:'The original drawing', buy:'Buy now', aed:'AED', onrequest:'Price on request', enquire:'Enquire on Instagram', soon:'Coming soon', cta:'Discover', close:'Close',
+  const EN = { v_sketch:'The original drawing', buy:'Buy now', aed:'AED', onrequest:'Price on request', enquire:'Enquire on Instagram', soon:'Coming soon', cta:'Discover', q_cta:'See the watch', close:'Close',
     v_front:'Front', v_side:'Side and crown', v_crown:'Side and crown', v_caseback:'Case back', v_strap:'Strap detail', v_clasp:'Clasp', v_dial:'Dial', v_editorial:'',
     n_black:'shown on black leather', n_leather:'shown on the leather strap', n_bluehands:'shown with blue hands', n_artwork:'dial before assembly',
     s_crystal:'Crystal', s_move:'Movement', s_size:'Size', s_case:'Case',
@@ -659,6 +675,17 @@ html[lang="ar"] .mbar b{font:500 18px/1 var(--ar)}
     document.querySelectorAll('.filter').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.f === filter)));
     window.__observeCards && window.__observeCards();
     document.querySelectorAll('[data-price]').forEach(n => n.textContent = fmt(W[n.dataset.price].price));
+    renderQuick();
+  }
+  /* hero quick pick: the four watches, current photos and live prices, one tap to the watch */
+  function renderQuick() {
+    const row = document.getElementById('qrow'); if (!row) return; row.replaceChildren();
+    ORDER.filter(k => !W[k].soon).forEach(k => {
+      const w = W[k];
+      row.append(el('button', { type: 'button', class: 'qcard', onclick: () => openPV(k), 'aria-label': `${title(k)} · ${fmt(w.price)} · ${t('q_cta')}` }, [
+        pic(w.card(), '(min-width:900px) 160px, 22vw', '', true),
+        el('b', { text: w.name }), el('span', { class: 'qp', text: fmt(w.price) }), el('span', { class: 'qc', text: t('q_cta') }) ]));
+    });
   }
   function setFilter(f) { filter = f; renderGrid(); }
   /* live prices / availability from the server; the built-in values stay if it can't be reached */

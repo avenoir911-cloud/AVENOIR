@@ -617,12 +617,12 @@ html[lang="ar"] .mbar b{font:500 18px/1 var(--ar)}
         // Only photos that match the build: bracelet builds never show leather shots, and every
         // catalogue view shares one framing. Leather colours other than black are photographed in black.
         const leather = s.strap !== 'bracelet';
-        if (!leather) return [ ['front', `monte-front-bracelet-${s.hands}-hands`, []], ...(s.hands === 'blue' ? [['dial', 'monte-dial-macro', []]] : []), ['sketch', 'monte-sketch-front', []], ['editorial', 'ed-monte-oxblood', []] ];
+        if (!leather) return [ ['front', `monte-front-bracelet-${s.hands}-hands`, []], ['sketch', 'monte-sketch-front', []], ['editorial', 'ed-monte-oxblood', []] ];
         // Every leather colour has its own front, caseback and clasp image (black is photographed; the others are
         // the same photographs with only the leather recoloured). The side profile exists in black only.
         const c = s.strap, front = s.hands !== 'blue' ? ['n_bluehands'] : [];
         return [ ['front', `monte-front-${c}-leather`, front], ...(c === 'black' ? [['side', 'monte-side-black-leather', []]] : []), ['caseback', `monte-caseback-${c}-leather`, []],
-                 ['clasp', `monte-strap-${c}-leather`, []], ...(s.hands === 'blue' ? [['dial', 'monte-dial-macro', []]] : []), ['editorial', 'ed-monte-oxblood', []] ]; } },
+                 ['clasp', `monte-strap-${c}-leather`, []], ['editorial', 'ed-monte-oxblood', []] ]; } },
     lumi: { name:'LUMI', size:'33.5', price:799, for:'women', spec:{ size:'33.5 mm', crystal:['Sapphire','سافاير'], move:['NH05 automatic','NH05 أوتوماتيك'], case:['Steel, integrated bracelet','ستيل، سوار مدمج'] },
       sub:'The smaller square, light-pink TIME IS MONEY, steel bracelet.', subAr:'المربع الأصغر، TIME IS MONEY بالوردي، وسوار ستيل.',
       groups:[ { id:'hands', en:'Hands', ar:'العقارب', opts:[ o('blue','Blue','أزرق','#2443a8'), o('silver','Silver','فضي','linear-gradient(135deg,#f0f0f0,#a8abae)') ] } ],

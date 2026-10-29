@@ -104,6 +104,7 @@ html[lang="ar"] .menu a{font:400 26px/1.5 var(--arh)}
 .hero-grid{display:grid;gap:18px;align-items:center}
 @media(min-width:900px){.hero{padding:40px 0 72px}.hero-grid{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px}}
 .hero-media{position:relative;aspect-ratio:1/1;width:100%;max-width:min(100%,600px,58svh);justify-self:center;background:var(--ivory)}
+@media(max-width:899px){.hero{padding:8px 0 40px}.hero-grid{gap:6px}.hero-media{max-width:min(100%,600px,40svh)}.hero-copy{gap:10px}.hero-copy .lede{display:none}.facts{font-size:14px}}
 @media(min-width:900px){.hero-media{max-width:min(100%,640px,calc(100svh - 160px))}}
 .hero-media{overflow:hidden}
 .hero-media img{width:100%;height:100%;object-fit:contain}
@@ -180,7 +181,7 @@ html[lang="ar"] .dfig b{font:400 22px/1.5 var(--arh)}
 .straprow{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px}
 .stile{display:grid;gap:8px;text-decoration:none;color:inherit;text-align:center}
 .stile .sp{aspect-ratio:3/4;background:var(--paper);border:1px solid var(--hair);overflow:hidden}
-.stile img{width:100%;height:100%;object-fit:cover;object-position:50% 50%;transform:scale(1.9)}
+.stile img{width:100%;height:100%;object-fit:cover;object-position:50% 60%;transform:scale(1.45);transform-origin:50% 60%}
 .stile.br img{transform:scale(2.6);transform-origin:50% 100%}
 .stile span{font-size:14px;color:var(--ink);line-height:1.3}
 @media(hover:hover){.stile:hover .sp{border-color:var(--ink)}}
@@ -246,13 +247,24 @@ html[lang="ar"] .pv-price{font:600 22px/1.3 var(--ar)}
 .grp-h b{font:500 15px/1.3 var(--sans);color:var(--ink)}
 html[lang="ar"] .grp-h b{font:600 16px/1.4 var(--ar)}
 .grp .hint{font-size:14px;color:var(--quiet)}
+.tiers{display:grid;gap:8px}
+.tier{display:grid;gap:4px;text-align:start;padding:12px 14px;border:1px solid var(--hair);background:var(--paper);color:var(--ink);position:relative}
+.tier[aria-checked="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.tier .th{display:flex;justify-content:space-between;gap:12px;font:500 16px/1.3 var(--sans);padding-inline-end:26px}
+.tier .tl1{font-size:14.5px;color:var(--body)}
+.tier ul{margin:4px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:2px 12px;font-size:13.5px;color:var(--quiet)}
+.tier li::before{content:"· "}
+.tier[aria-checked="true"]::after{content:"";position:absolute;top:12px;inset-inline-end:12px;width:18px;height:18px;border-radius:50%;background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F4F1EA' stroke-width='3'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center/12px no-repeat}
+.stile small{font-size:12.5px;color:var(--quiet)}
+.logo{direction:ltr}
+#addon-note:empty{display:none}
 /* option tiles: picture + name, selection shown by a ring and a tick, not colour alone */
 .opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:8px}
 @media(max-width:420px){.opts:not(.txt){grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.opt span{font-size:12px}}
 .opt{position:relative;display:grid;gap:4px;justify-items:center;text-align:center;padding:4px 4px 6px;border:1px solid var(--hair);background:var(--paper);min-height:44px;color:var(--ink)}
 .opt .ti{width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--ivory)}
 @media(min-width:421px){.opts:not(.txt){grid-template-columns:repeat(4,minmax(0,1fr))}}
-.opt .ti img{width:100%;height:100%;object-fit:cover;transform:scale(1.9)}
+.opt .ti img{width:100%;height:100%;object-fit:cover;object-position:50% 72%;transform:scale(1.55);transform-origin:50% 72%}
 .opt.br .ti img{transform:scale(2.6);transform-origin:50% 100%}
 .opt .dot{width:100%;aspect-ratio:1/1;display:grid;place-items:center;background:var(--ivory)}
 .opt .dot i{width:46%;aspect-ratio:1/1;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(17,17,17,.2)}
@@ -337,7 +349,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
         <picture><source type="image/avif" srcset="../img/catalogue/monte-front-black-leather-480.avif 480w, ../img/catalogue/monte-front-black-leather-768.avif 768w, ../img/catalogue/monte-front-black-leather-1200.avif 1200w" sizes="(min-width:900px) 600px, 92vw"><source type="image/webp" srcset="../img/catalogue/monte-front-black-leather-480.webp 480w, ../img/catalogue/monte-front-black-leather-768.webp 768w, ../img/catalogue/monte-front-black-leather-1200.webp 1200w" sizes="(min-width:900px) 600px, 92vw"><img src="../img/catalogue/monte-front-black-leather-768.jpg" width="1200" height="1200" alt="MONTI 38: square steel case, ivory dial with Roman numerals and TIME IS MONEY in red, blue cabochon crown, black leather strap" fetchpriority="high"></picture>
       </a>
       <div class="hero-copy">
-        <span class="label" data-t="hero_label">MONTI 38 · Steel · Automatic</span>
+        <span class="label" data-t="hero_label">MONTI 38 · Standard</span>
         <h1 id="hero-h" data-t="hero_h">Time, signed <em>in red.</em></h1>
         <p class="lede" data-t="hero_p">A square steel case, Roman numerals, and TIME IS MONEY written across the dial in red.</p>
         <div class="pricebox"><span class="p num" data-price="monti">AED 999</span><small data-t="incl">Includes your strap and delivery in the UAE.</small></div>
@@ -357,7 +369,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   <!-- 2 collection -->
   <section id="watches" class="band" aria-labelledby="coll-h">
     <div class="wrap">
-      <div class="head"><span class="label" data-t="coll_label">The collection</span><h2 id="coll-h" data-t="coll_h">Four watches, one steel family.</h2></div>
+      <div class="head"><span class="label" data-t="coll_label">AVENOIR</span><h2 id="coll-h" data-t="coll_h">The collection</h2></div>
       <div class="filters" role="group" aria-label="Filter">
         <button class="filter" type="button" data-f="all" aria-pressed="true" data-t="f_all">All</button>
         <button class="filter" type="button" data-f="men" aria-pressed="false" data-t="men">Men</button>
@@ -385,7 +397,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   <!-- 4 personalisation -->
   <section id="straps" class="band" aria-labelledby="str-h">
     <div class="wrap">
-      <div class="head"><span class="label" data-t="str_label">Make it yours</span><h2 id="str-h" data-t="str_h">Seven ways to wear MONTI.</h2><p data-t="str_p">Steel bracelet or one of six leathers, with blue or silver hands. Your first strap is in the price; a second strap is added for <span class="num" data-extra>AED 149</span>.</p></div>
+      <div class="head"><span class="label" data-t="str_label">Make it yours</span><h2 id="str-h" data-t="str_h">Bracelet and straps.</h2><p data-t="str_p">Standard comes on the steel bracelet or black leather. You can add one second strap for <span class="num" data-extra>AED 149</span>.</p></div>
       <div class="straprow" id="straprow"></div>
     </div>
   </section>
@@ -437,6 +449,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
       <div class="addon" id="pv-addon" hidden>
         <button class="addon-toggle" type="button" id="addon-toggle" aria-expanded="false" aria-controls="addon-opts"><span data-t="addon">Add a second strap</span><span class="num" id="addon-price">+ AED 149</span></button>
         <div class="opts" id="addon-opts" role="group" hidden></div>
+        <p class="hint" id="addon-note" aria-live="polite"></p>
       </div>
       <div class="buy">
         <div class="buy-total"><span class="label" data-t="total">Total</span><b class="num" id="pv-total" aria-live="polite"></b></div>
@@ -469,7 +482,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
 
 <script>
 (() => {
-  const DATA = {"catalog":{"_note":"Build-time fallback only. The live price always comes from the products table (admin), which checkout also uses. Keep these in step with admin.","extra_strap_aed":149,"models":{"monti":{"name":"MONTI","size":"38","price":999,"active":true},"lumi":{"name":"LUMI","size":"33.5","price":799,"active":true},"rayo":{"name":"RAYO","size":"40","price":899,"active":true},"bloom":{"name":"BLOOM","size":"31","price":799,"active":true},"timeless":{"name":"TIMELESS","size":"","price":null,"active":false}},"tiers":{"monti":{"standard":{"enabled":true,"default":true},"exclusive":{"enabled":false,"price":null,"_note":"Hidden until the supplier confirms what Exclusive adds and its cost."}}}},"img":{"rayo-front-silver-white-steel":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1530},"rayo-front-silver-white-bluehands-steel":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1530},"monte-front-brown-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"monte-front-navy-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"rayo-front-silver-ice-steel":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1530},"monte-dial-macro":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1260},"monte-front-white-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"rayo-front-silver-black-steel":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1530},"lumi-front-silver-hands":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":720},"bloom-front-pink":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"monte-caseback-black-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"lumi-crown-profile":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"monte-front-bracelet-silver-hands":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"monte-caseback-brown-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"monte-strap-cream-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":600},"monte-front-black-leather":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1080},"rayo-front-gold-ice-black":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1530},"monte-front-bracelet-blue-hands":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"monte-sketch-front":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1080},"rayo-front-gold-navy-navy":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1530},"monte-clasp-black-leather":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"lumi-sketch-front":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1080},"monte-strap-black-leather":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":630},"monte-front-cream-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"monte-caseback-cream-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"bloom-front-white":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"monte-caseback-white-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"monte-strap-brown-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":720},"monte-side-black-leather":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"lumi-dial-macro":{"d":"catalogue","w":[480,768],"r":1.0,"j":768,"e":768},"monte-caseback-green-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"bloom-front-blue":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"lumi-clasp":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"monte-caseback-navy-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"monte-front-green-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"lumi-front-blue-hands":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":720},"monte-strap-white-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":600},"monte-strap-green-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":600},"monte-strap-navy-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":600},"ed-bloom-women":{"d":"editorial","w":[480,768,1122],"r":1.2496,"j":768,"e":1122},"ed-rayo-men":{"d":"editorial","w":[480,768,1122],"r":1.2496,"j":768,"e":953},"ed-sketch-exploded":{"d":"editorial","w":[480,768,1200,1600],"r":1.0,"j":768,"e":1360},"ed-monte-oxblood":{"d":"editorial","w":[480,768,1122],"r":1.2496,"j":768,"e":1122}}};              // build-time catalogue + image map (prices are replaced by the live table below)
+  const DATA = {"catalog":{"_note":"Build-time fallback only. Live prices and packages come from the products table (price_aed, tiers), which checkout also charges from.","extra_strap_aed":149,"models":{"monti":{"name":"MONTI","size":"38","price":999,"active":true},"lumi":{"name":"LUMI","size":"33.5","price":799,"active":true},"rayo":{"name":"RAYO","size":"40","price":899,"active":true},"bloom":{"name":"BLOOM","size":"31","price":799,"active":true},"timeless":{"name":"TIMELESS","size":"","price":null,"active":false}},"tiers":{"monti":{"standard":{"price":799,"enabled":true,"allow":{"strap":["bracelet","black"],"hands":["blue"]},"max_extras":1},"exclusive":{"price":999,"enabled":false}}}},"img":{"rayo-front-silver-white-steel":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1530},"rayo-front-silver-white-bluehands-steel":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1530},"monte-front-brown-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"monte-front-navy-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"rayo-front-silver-ice-steel":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1530},"monte-dial-macro":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1260},"monte-front-white-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"rayo-front-silver-black-steel":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1530},"lumi-front-silver-hands":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":720},"bloom-front-pink":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"monte-caseback-black-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"lumi-crown-profile":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"monte-front-bracelet-silver-hands":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"monte-caseback-brown-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"monte-strap-cream-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":600},"monte-front-black-leather":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1080},"rayo-front-gold-ice-black":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1530},"monte-front-bracelet-blue-hands":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"monte-sketch-front":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1080},"rayo-front-gold-navy-navy":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1530},"monte-clasp-black-leather":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"lumi-sketch-front":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":1080},"monte-strap-black-leather":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":630},"monte-front-cream-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"monte-caseback-cream-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"bloom-front-white":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"monte-caseback-white-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"monte-strap-brown-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":720},"monte-side-black-leather":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"lumi-dial-macro":{"d":"catalogue","w":[480,768],"r":1.0,"j":768,"e":768},"monte-caseback-green-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"bloom-front-blue":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"lumi-clasp":{"d":"catalogue","w":[480,768,1200,1800],"r":1.0,"j":768,"e":900},"monte-caseback-navy-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"monte-front-green-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":1020},"lumi-front-blue-hands":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":720},"monte-strap-white-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":600},"monte-strap-green-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":600},"monte-strap-navy-leather":{"d":"catalogue","w":[480,768,1200],"r":1.0,"j":768,"e":600},"ed-bloom-women":{"d":"editorial","w":[480,768,1122],"r":1.2496,"j":768,"e":1122},"ed-rayo-men":{"d":"editorial","w":[480,768,1122],"r":1.2496,"j":768,"e":953},"ed-sketch-exploded":{"d":"editorial","w":[480,768,1200,1600],"r":1.0,"j":768,"e":1360},"ed-monte-oxblood":{"d":"editorial","w":[480,768,1122],"r":1.2496,"j":768,"e":1122}}};              // build-time catalogue + image map (prices are replaced by the live table below)
   // this page changes its address (watch/<model>/) without reloading, so every relative link is fixed to an absolute one now
   const A = new URL('../', location.href).href, HOME = new URL('./', location.href), INITIAL = '';
   document.querySelectorAll('a[href]').forEach(a => { if (!/^(https?:|mailto:|tel:)/.test(a.getAttribute('href'))) a.href = a.href; });
@@ -544,6 +557,13 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     failed_h:'لم تكتمل عملية الدفع', failed_p:'لم يُخصم أي مبلغ. يمكنك المحاولة مرة أخرى، أو مراسلتنا لنساعدك.',
     paid_p:'هذا رقم طلبك. وصلتنا بيانات التوصيل، وسنتواصل معك على جوالك لتأكيد موعد التسليم.', checking_p:'لحظات، نتحقق من Ziina أن الدفع تم.'
   });
+  Object.assign(EN, { choose_ver:'Choose your version', st_inc:'Included', st_extra:'Second strap', x_removed:'Your second strap became your main strap, so it was removed from the extras.',
+    hero_label:'MONTI 38 · Standard', coll_label:'AVENOIR', coll_h:'The collection' });
+  Object.assign(AR, { choose_ver:'اختر نسختك', st_inc:'ضمن السعر', st_extra:'سير ثانٍ', x_removed:'أصبح السير الثاني هو السير الأساسي، فأزلناه من الإضافات.',
+    hero_label:'\u2066MONTI 38 · Standard\u2069', coll_label:'AVENOIR', coll_h:'المجموعة',
+    str_h:'السوار والسيور.', str_p:'نسخة Standard تأتي بسوار ستيل أو جلد أسود. ويمكن إضافة سير ثانٍ واحد بـ <span class="num" data-extra>149 درهم</span>.' });
+  Object.assign(EN, { str_h:'Bracelet and straps.', str_p:'Standard comes on the steel bracelet or black leather. You can add one second strap for <span class="num" data-extra>AED 149</span>.' });
+  for (const k in AR) if (typeof AR[k] === 'string') AR[k] = AR[k].replace(/TIME IS MONEY/g, '\u2066TIME IS MONEY\u2069');
   Object.assign(EN, { tr_pay:'<b>Payment:</b> card or Apple Pay through Ziina. The final price includes delivery in the UAE.', tr_help:'<b>Contact:</b> direct contact on Instagram, before and after you buy.' });
   let lang = 'en'; try { lang = localStorage.getItem('avn-lang') || 'en'; } catch (e) {}
   const t = k => lang === 'ar' ? (AR[k] ?? EN[k] ?? '') : (EN[k] ?? '');
@@ -601,10 +621,20 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   const ORDER = ['monti','lumi','rayo','bloom','timeless'];
   for (const k of ORDER) Object.assign(W[k], { name: C[k].name, size: C[k].size, price: C[k].price, soon: !C[k].active });
   // Packages: Standard is the watch as sold today. Exclusive stays switched off until its extras are confirmed.
+  // Packages (MONTI Standard / Exclusive) come from products.tiers, the same data checkout prices from.
+  // A package that is not enabled is never shown or sold.
   const TIERS = DATA.catalog.tiers || {};
   const tierOn = k => Object.entries(TIERS[k] || {}).filter(([, v]) => v.enabled);
+  const tierOf = k => { const on = tierOn(k); if (!on.length) return null; const f = on.find(([id]) => id === state[k].tier) || on[0]; state[k].tier = f[0]; return f[1]; };
+  const priceOf = k => { const t = tierOf(k); return t ? t.price : W[k].price; };
+  const allowed = (k, g) => { const a = tierOf(k)?.allow?.[g.id]; return a ? g.opts.filter(x => a.includes(x.id)) : g.opts; };
+  const maxExtras = k => { const t = tierOf(k); return t ? (t.max_extras ?? 1) : 9; };
+  const TIER_TXT = {
+    standard: { en: ['The original MONTI design, in ready combinations.', ['Original dial and blue hands', 'Steel bracelet or black leather', 'UAE delivery included', '1-year warranty on the movement']],
+                ar: ['تصميم مونتي الأصلي، باختيارات جاهزة.', ['المينا الأصلية والعقارب الزرقاء', 'سوار ستيل أو جلد أسود', 'التوصيل داخل الإمارات ضمن السعر', 'ضمان لمدة سنة على الحركة']] },
+    exclusive: { en: ['MONTI with your signature: selected colours and personal details.', []], ar: ['مونتي بتوقيعك، بألوان مختارة وتفاصيل شخصية.', []] } };
 
-  const state = {}; ORDER.forEach(k => { state[k] = { _x: [], _open: false, _i: 0, tier: 'standard' }; W[k].groups.forEach(g => state[k][g.id] = g.opts[0].id); });
+  const state = {}; ORDER.forEach(k => { state[k] = { _x: [], _open: false, _i: 0, tier: 'standard', _note: '' }; W[k].groups.forEach(g => state[k][g.id] = g.opts[0].id); });
   state.monti.strap = 'bracelet';
   let cur = null, filter = 'all';
 
@@ -612,8 +642,9 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   const L = x => lang === 'ar' ? x.ar : x.en;
   const title = k => W[k].name + (W[k].size ? ' ' + W[k].size : '');
   const extrasFor = k => { const w = W[k]; if (w.extras) return w.extras; const g = w.groups.find(g => g.extra); return g ? g.opts.filter(x => x.id !== state[k][g.id] && x.id !== 'bracelet') : []; };
-  const total = k => W[k].price == null ? null : W[k].price + state[k]._x.length * EXTRA;     // the extra strap is counted once, here only
-  const optQuery = k => { const p = new URLSearchParams(); W[k].groups.forEach(g => p.set(g.id, state[k][g.id])); if (state[k]._x.length) p.set('x', state[k]._x.join(',')); return p; };
+  const total = k => priceOf(k) == null ? null : priceOf(k) + state[k]._x.length * EXTRA;     // the extra strap is counted once, here only
+  const mm = k => lang === 'ar' ? `\u2066${W[k].size}\u2069 مم` : `${W[k].size} mm`;
+  const optQuery = k => { const p = new URLSearchParams(); if (tierOf(k)) p.set('tier', state[k].tier); W[k].groups.forEach(g => p.set(g.id, state[k][g.id])); if (state[k]._x.length) p.set('x', state[k]._x.join(',')); return p; };
   const buyHref = k => { const p = optQuery(k); p.set('m', k); return `${CHECKOUT}?${p}`; };
   const watchURL = k => new URL(`watch/${k}/?${optQuery(k)}`, HOME).href;
   const el = (tag, at = {}, kids = []) => { const e = document.createElement(tag); for (const [a, v] of Object.entries(at)) { if (a === 'text') e.textContent = v; else if (a === 'html') e.innerHTML = v; else if (a.startsWith('on')) e.addEventListener(a.slice(2), v); else if (v != null) e.setAttribute(a, v); } kids.forEach(c => c && e.append(c)); return e; };
@@ -633,13 +664,13 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
       const w = W[k];
       grid.append(el('a', { class: 'card', href: new URL(`watch/${k}/`, HOME).href, 'data-open': k }, [
         el('div', { class: 'ph', style: `--s:${w.scale}` }, [ pic(w.card, '(min-width:900px) 280px, 46vw', `${title(k)}`) ]),
-        el('div', { class: 'tx' }, [ el('h3', { text: w.name }), el('span', { class: 'sz', text: `${w.size} mm` }), el('span', { class: 'pr num', text: fmt(w.price) }), el('span', { class: 'cta', text: t('cta') }) ])
+        el('div', { class: 'tx' }, [ el('h3', { text: w.name }), el('span', { class: 'sz', text: mm(k) }), el('span', { class: 'pr num', text: (tierOf(k) ? (lang === 'ar' ? 'Standard · ' : 'Standard · ') : '') + fmt(priceOf(k)) }), el('span', { class: 'cta', text: t('cta') }) ])
       ]));
     });
     document.querySelectorAll('.filter').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.f === filter)));
-    document.querySelectorAll('[data-price]').forEach(n => n.textContent = fmt(W[n.dataset.price].price));
+    document.querySelectorAll('[data-price]').forEach(n => n.textContent = fmt(priceOf(n.dataset.price)));
     document.querySelectorAll('[data-extra]').forEach(n => n.textContent = fmt(EXTRA));
-    const fw = document.getElementById('footw'); fw.replaceChildren(...ORDER.filter(k => !W[k].soon).map(k => el('li', {}, [ el('a', { href: new URL(`watch/${k}/`, HOME).href, 'data-open': k, text: `${title(k)} · ${fmt(W[k].price)}` }) ])));
+    const fw = document.getElementById('footw'); fw.replaceChildren(...ORDER.filter(k => !W[k].soon).map(k => el('li', {}, [ el('a', { href: new URL(`watch/${k}/`, HOME).href, 'data-open': k, text: `${title(k)} · ${fmt(priceOf(k))}` }) ])));
     observe();
   }
   function renderHomeDetails() {
@@ -650,7 +681,9 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     ];
     document.getElementById('dgrid').replaceChildren(...D.map(([id, h, p, n]) => el('figure', { class: 'dfig' }, [ el('div', { class: 'frame' }, [ pic(id, '(min-width:800px) 380px, 92vw', L({ en: h[0], ar: h[1] })) ]), el('figcaption', { style: 'display:grid;gap:6px' }, [ el('b', { text: L({ en: h[0], ar: h[1] }) }), el('p', { text: L({ en: p[0], ar: p[1] }) }), el('small', { text: L({ en: n[0], ar: n[1] }) }) ]) ])));
     const sg = W.monti.groups[0];
-    document.getElementById('straprow').replaceChildren(...sg.opts.map(x => el('a', { class: 'stile' + (x.id === 'bracelet' ? ' br' : ''), href: new URL(`watch/monti/?strap=${x.id}`, HOME).href, 'data-open': 'monti', 'data-preset': `strap=${x.id}` }, [ el('div', { class: 'sp' }, [ pic(x.img, '160px', '') ]), el('span', { text: L(x) }) ])));
+    const inc = allowed('monti', sg).map(x => x.id);
+    document.getElementById('straprow').replaceChildren(...sg.opts.map(x => { const q = inc.includes(x.id) ? `strap=${x.id}` : `strap=black&x=${x.id}`;
+      return el('a', { class: 'stile' + (x.id === 'bracelet' ? ' br' : ''), href: new URL(`watch/monti/?${q}`, HOME).href, 'data-open': 'monti', 'data-preset': q }, [ el('div', { class: 'sp' }, [ pic(x.img, '160px', '') ]), el('span', { text: L(x) }), el('small', { text: inc.includes(x.id) ? t('st_inc') : `${t('st_extra')} · +${fmt(EXTRA)}` }) ]); }));
     document.getElementById('wstrip').replaceChildren(...Array.from({ length: 12 }, (_, i) => { const n = String(i + 1).padStart(2, '0'); return el('figure', {}, [ el('picture', {}, [ el('source', { type: 'image/webp', srcset: `${A}img/customers/c${n}.webp` }), el('img', { src: `${A}img/customers/c${n}.jpg`, width: 320, height: 400, alt: t('worn_alt'), loading: 'lazy', decoding: 'async' }) ]) ]); }));
     document.getElementById('faqlist').replaceChildren(...FAQ.map(f => el('details', {}, [ el('summary', { text: L({ en: f.q[0], ar: f.q[1] }) }), el('p', { text: L({ en: f.a[0], ar: f.a[1] }) }) ])));
   }
@@ -663,8 +696,10 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     (products || []).forEach(p => { const w = W[p.key]; if (!w) return;
       if (p.active && p.price_aed != null && w.price !== p.price_aed) { w.price = p.price_aed; changed = true; }
       if (!p.active && !w.soon) { w.soon = true; changed = true; }
-      if (p.extra_strap_aed && p.extra_strap_aed !== EXTRA) { EXTRA = p.extra_strap_aed; changed = true; } });
-    if (changed) { renderGrid(); if (cur) renderPV(); }
+      if (p.extra_strap_aed && p.extra_strap_aed !== EXTRA) { EXTRA = p.extra_strap_aed; changed = true; }
+      if (p.tiers && JSON.stringify(p.tiers) !== JSON.stringify(TIERS[p.key])) { TIERS[p.key] = p.tiers; changed = true; } });
+    if (changed) for (const k of ORDER) sanitize(k);
+    if (changed) { renderGrid(); renderHomeDetails(); if (cur) { renderPV(); syncURL(); } }
   }).catch(() => {});
 
   /* ---------- menu ---------- */
@@ -684,18 +719,23 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     // keep the same view (e.g. stay on "Front") when an option changes, so the watch does not jump
     const prevView = galKey.startsWith(k + '|') ? (views[s._i] ? views[s._i][0] : null) : null;
     galKey = key;
-    track.replaceChildren(...views.map(([view, id, notes], i) => {
+    const figs = views.map(([view, id, notes], i) => {
       const cap = t('v_' + view), note = notes.map(t).join(' · ');
       return el('figure', { class: 'slide', role: 'group', 'aria-roledescription': 'slide', 'aria-label': `${i + 1} / ${views.length}: ${cap}` }, [
         el('div', { class: 'frame', style: `--s:${view === 'front' ? W[k].scale : 1}` }, [ pic(id, '(min-width:960px) 52vw, 100vw', `${title(k)}, ${cap}${note ? ' (' + note + ')' : ''}`, i === 0) ]),
         el('figcaption', {}, [ el('b', { text: cap }), note ? document.createTextNode(' · ' + note) : null ]) ]);
-    }));
-    thumbs.replaceChildren(...views.map(([view, id], i) => el('button', { type: 'button', class: 'thumb', 'aria-label': `${i + 1}: ${t('v_' + view)}`, onclick: () => goSlide(i) }, [ pic(id, '56px', '') ])));
-    track.querySelectorAll('.frame img').forEach(im => { const on = () => im.classList.add('ok'); im.complete && im.naturalWidth ? on() : (im.addEventListener('load', on, { once: true }), im.addEventListener('error', on, { once: true })); });
-    thumbs.hidden = views.length < 2;
+    });
     const ni = prevView ? Math.max(0, views.findIndex(v => v[0] === prevView)) : 0;
-    s._i = ni; requestAnimationFrame(() => { track.scrollLeft = (lang === 'ar' ? -1 : 1) * ni * track.clientWidth; markThumb(ni); });
+    const first = figs[ni].querySelector('img'); first.loading = 'eager'; first.setAttribute('fetchpriority', 'high');
+    const swap = () => { if (galKey !== key) return; track.replaceChildren(...figs); figs.forEach(f => f.querySelector('img').classList.add('ok'));
+      s._i = ni; track.scrollLeft = (lang === 'ar' ? -1 : 1) * ni * track.clientWidth; markThumb(ni); buyLock(false); };
+    if (track.children.length) { buyLock(true); const pre = new Image(); pre.sizes = matchMedia('(min-width:960px)').matches ? '52vw' : '100vw'; const src = first.parentElement.querySelector('source[type="image/webp"]'); if (src) pre.srcset = src.srcset; pre.src = first.src;
+      (pre.decode ? pre.decode() : Promise.resolve()).catch(() => {}).then(swap); setTimeout(swap, 2500); }
+    else { track.replaceChildren(...figs); figs.forEach(f => { const im = f.querySelector('img'); const on = () => im.classList.add('ok'); im.complete && im.naturalWidth ? on() : (im.addEventListener('load', on, { once: true }), im.addEventListener('error', on, { once: true })); }); s._i = ni; requestAnimationFrame(() => { track.scrollLeft = (lang === 'ar' ? -1 : 1) * ni * track.clientWidth; markThumb(ni); }); }
+    thumbs.replaceChildren(...views.map(([view, id], i) => el('button', { type: 'button', class: 'thumb', 'aria-label': `${i + 1}: ${t('v_' + view)}`, onclick: () => goSlide(i) }, [ pic(id, '56px', '') ])));
+    thumbs.hidden = views.length < 2;
   }
+  function buyLock(on) { for (const id of ['pv-buy', 'mbar-buy']) { const b = document.getElementById(id); if (on) b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled'); } }
   function goSlide(i) { const track = document.getElementById('track'); if (!track.children[i]) return; track.scrollTo({ left: (lang === 'ar' ? -1 : 1) * i * track.clientWidth, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); state[cur]._i = i; markThumb(i); }
   function markThumb(i) { [...document.getElementById('thumbs').children].forEach((b, j) => b.setAttribute('aria-current', String(i === j))); }
   document.getElementById('track').addEventListener('scroll', e => { const tr = e.currentTarget; const i = Math.round(Math.abs(tr.scrollLeft) / tr.clientWidth); if (cur && i !== state[cur]._i) { state[cur]._i = i; markThumb(i); } }, { passive: true });
@@ -703,8 +743,9 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
 
   function optionGroup(k, g, s) {
     const chosen = g.opts.find(x => x.id === s[g.id]);
+    if (g.opts.length === 1) return el('div', { class: 'grp' }, [ el('div', { class: 'grp-h' }, [ el('span', { class: 'label', text: L(g) }), el('b', { text: L(chosen) }) ]) ]);
     const visual = g.opts.some(x => x.img);
-    const pick = x => { s[g.id] = x.id; s._x = s._x.filter(id => extrasFor(k).some(e => e.id === id)); renderPV(); syncURL(); };
+    const pick = x => { s[g.id] = x.id; const before = s._x.length; s._x = s._x.filter(id => extrasFor(k).some(e => e.id === id)); s._note = before > s._x.length ? 'x_removed' : ''; if (g.id === 'tier') sanitize(k); renderPV(); syncURL(); };
     const keys = e => { const btns = [...e.currentTarget.querySelectorAll('[role=radio]')], i = btns.indexOf(document.activeElement); const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key]; if (d == null || i < 0) return; e.preventDefault(); const n = btns[(i + d * (lang === 'ar' && e.key.startsWith('Arrow') && e.key !== 'ArrowUp' && e.key !== 'ArrowDown' ? -1 : 1) + btns.length) % btns.length]; n.focus(); n.click(); };
     return el('div', { class: 'grp' }, [
       el('div', { class: 'grp-h' }, [ el('span', { class: 'label', id: `g-${g.id}`, text: L(g) }), el('b', { text: L(chosen) }) ]),
@@ -712,31 +753,44 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
         visual ? el('span', { class: 'ti' }, [ pic(x.img, '120px', '') ]) : el('i', { style: `background:${x.sw}` }), el('span', { text: L(x) }) ]))),
     ]);
   }
+  function tierCards(k, tiers, s) {
+    return el('div', { class: 'grp' }, [ el('span', { class: 'label', id: 'g-tier', text: t('choose_ver') }),
+      el('div', { class: 'tiers', role: 'radiogroup', 'aria-labelledby': 'g-tier' }, tiers.map(([id, v]) => { const tx = TIER_TXT[id]?.[lang] || ['', []];
+        return el('button', { type: 'button', role: 'radio', class: 'tier', 'aria-checked': String(s.tier === id), onclick: () => { s.tier = id; sanitize(k); renderPV(); syncURL(); } }, [
+          el('span', { class: 'th' }, [ el('b', { text: id === 'standard' ? 'Standard' : 'Exclusive' }), el('span', { class: 'num', text: fmt(v.price) }) ]), el('span', { class: 'tl1', text: tx[0] }),
+          el('ul', {}, tx[1].map(f => el('li', { text: f }))) ]); })) ]);
+  }
+  // keep a build valid for its package (e.g. Standard: bracelet or black, blue hands, one extra strap)
+  function sanitize(k) {
+    const s = state[k]; W[k].groups.forEach(g => { const a = allowed(k, g); if (!a.some(x => x.id === s[g.id])) s[g.id] = a[0].id; });
+    s._x = s._x.filter((x, i) => s._x.indexOf(x) === i && extrasFor(k).some(e => e.id === x)).slice(0, maxExtras(k));
+  }
   function renderPV() {
     const k = cur, w = W[k], s = state[k];
-    document.getElementById('pv-spec').textContent = `${w.size} mm`;
+    document.getElementById('pv-spec').textContent = mm(k);
     document.getElementById('pv-name').textContent = title(k);
-    document.getElementById('pv-price').textContent = fmt(w.price);
-    document.getElementById('pv-sub').textContent = lang === 'ar' ? w.subAr : w.sub;
+    document.getElementById('pv-price').textContent = (tierOf(k) ? 'Standard · ' : '') + fmt(priceOf(k));
+    document.getElementById('pv-sub').textContent = lang === 'ar' ? w.subAr.replace(/TIME IS MONEY/g, '\u2066TIME IS MONEY\u2069') : w.sub;
     renderGallery();
     const box = document.getElementById('pv-groups'); box.replaceChildren();
     const tiers = tierOn(k);
-    if (tiers.length > 1) box.append(optionGroup(k, { id: 'tier', en: 'Package', ar: 'الباقة', opts: tiers.map(([id]) => o(id, EN[id], AR[id], '#111')) }, s));
-    w.groups.forEach(g => box.append(optionGroup(k, g, s)));
+    if (tiers.length) box.append(tierCards(k, tiers, s));
+    w.groups.forEach(g => box.append(optionGroup(k, { ...g, opts: allowed(k, g) }, s)));
     const ex = extrasFor(k), addon = document.getElementById('pv-addon'), opts = document.getElementById('addon-opts'), tog = document.getElementById('addon-toggle');
-    addon.hidden = !(ex.length && w.price != null);
+    addon.hidden = !(ex.length && priceOf(k) != null);
+    document.getElementById('addon-note').textContent = s._note ? t(s._note) : '';
     document.getElementById('addon-price').textContent = '+ ' + fmt(EXTRA);
     tog.setAttribute('aria-expanded', String(s._open || s._x.length > 0)); opts.hidden = !(s._open || s._x.length > 0);
     opts.className = 'opts' + (ex.some(x => x.img) ? '' : ' txt');
-    opts.replaceChildren(...ex.map(x => el('button', { type: 'button', class: 'opt', role: 'checkbox', 'aria-checked': String(s._x.includes(x.id)), onclick: () => { s._x = s._x.includes(x.id) ? s._x.filter(i => i !== x.id) : [...s._x, x.id]; renderPV(); syncURL(); } }, [
+    opts.replaceChildren(...ex.map(x => el('button', { type: 'button', class: 'opt', role: maxExtras(k) === 1 ? 'radio' : 'checkbox', 'aria-checked': String(s._x.includes(x.id)), onclick: () => { s._note = ''; s._x = s._x.includes(x.id) ? s._x.filter(i => i !== x.id) : (maxExtras(k) === 1 ? [x.id] : [...s._x, x.id]); renderPV(); syncURL(); } }, [
       x.img ? el('span', { class: 'ti' }, [ pic(x.img, '120px', '') ]) : el('i', { style: `background:${x.sw}` }), el('span', { text: L(x) }) ])));
     // specs: size, crystal, movement, case, and the chosen options in words
     const sp = document.getElementById('pv-specs'); sp.replaceChildren();
-    const rows = [['s_size', `${w.size} mm`], ['s_crystal', w.spec.crystal && L({ en: w.spec.crystal[0], ar: w.spec.crystal[1] })], ['s_move', w.spec.move && L({ en: w.spec.move[0], ar: w.spec.move[1] })], ['s_case', w.spec.case && L({ en: w.spec.case[0], ar: w.spec.case[1] })], ['s_war', L({ en: '1 year on the movement', ar: 'سنة على الحركة' })]];
+    const rows = [['s_size', mm(k)], ['s_crystal', w.spec.crystal && L({ en: w.spec.crystal[0], ar: w.spec.crystal[1] })], ['s_move', w.spec.move && L({ en: w.spec.move[0], ar: w.spec.move[1] })], ['s_case', w.spec.case && L({ en: w.spec.case[0], ar: w.spec.case[1] })], ['s_war', L({ en: '1 year on the movement', ar: 'سنة على الحركة' })]];
     rows.filter(r => r[1]).forEach(([a, b]) => sp.append(el('dt', { text: t(a) }), el('dd', { text: b })));
     const chosenWords = w.groups.map(g => L(g.opts.find(x => x.id === s[g.id]))).join(' · ');
     const extraWords = s._x.map(id => L(ex.find(x => x.id === id) || { en: id, ar: id })).join(', ');
-    const summary = `${title(k)} · ${chosenWords}${extraWords ? ` · ${t('sum_extra')} ${extraWords}` : ''}`;
+    const summary = `${title(k)}${tierOf(k) ? ' Standard' : ''} · ${chosenWords}${extraWords ? ` · ${t('sum_extra')} ${extraWords}` : ''}`;
     document.getElementById('pv-summary').textContent = summary;
     const tot = fmt(total(k));
     document.getElementById('pv-total').textContent = tot;
@@ -749,7 +803,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     const ds = document.getElementById('pv-design');
     ds.hidden = !w.sketch;
     if (w.sketch) ds.replaceChildren(el('span', { class: 'label', text: t('design_h') }), el('div', { class: 'frame' }, [ pic(w.sketch, '340px', t('design_cap')) ]), el('small', { text: t('design_cap').replace('MONTI', w.name) }));
-    document.title = `${title(k)} · ${fmt(w.price)} · AVENOIR`;
+    document.title = `${title(k)} · ${fmt(priceOf(k))} · AVENOIR`;
   }
   document.getElementById('addon-toggle').addEventListener('click', () => { state[cur]._open = !(state[cur]._open || state[cur]._x.length); if (!state[cur]._open) { state[cur]._x = []; syncURL(); } renderPV(); });
 
@@ -759,7 +813,8 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   function applyQuery(k, q) {
     const s = state[k], p = new URLSearchParams(q);
     W[k].groups.forEach(g => { const v = p.get(g.id); if (v && g.opts.some(x => x.id === v)) s[g.id] = v; });
-    const xs = (p.get('x') || '').split(',').filter(Boolean); s._x = xs.filter((x, i) => xs.indexOf(x) === i && extrasFor(k).some(e => e.id === x));
+    const tr = p.get('tier'); if (tr && tierOn(k).some(([id]) => id === tr)) s.tier = tr;
+    s._x = (p.get('x') || '').split(',').filter(Boolean); sanitize(k);
   }
   function openPV(k, how = 'push', q = '') {
     if (!W[k] || W[k].soon) return;

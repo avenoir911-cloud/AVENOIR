@@ -1,17 +1,58 @@
 {
-  "_note": "Build-time fallback only. The live price always comes from the products table (admin), which checkout also uses. Keep these in step with admin.",
+  "_note": "Build-time fallback only. Live prices and packages come from the products table (price_aed, tiers), which checkout also charges from.",
   "extra_strap_aed": 149,
   "models": {
-    "monti": { "name": "MONTI", "size": "38", "price": 999, "active": true },
-    "lumi":  { "name": "LUMI", "size": "33.5", "price": 799, "active": true },
-    "rayo":  { "name": "RAYO", "size": "40", "price": 899, "active": true },
-    "bloom": { "name": "BLOOM", "size": "31", "price": 799, "active": true },
-    "timeless": { "name": "TIMELESS", "size": "", "price": null, "active": false }
+    "monti": {
+      "name": "MONTI",
+      "size": "38",
+      "price": 999,
+      "active": true
+    },
+    "lumi": {
+      "name": "LUMI",
+      "size": "33.5",
+      "price": 799,
+      "active": true
+    },
+    "rayo": {
+      "name": "RAYO",
+      "size": "40",
+      "price": 899,
+      "active": true
+    },
+    "bloom": {
+      "name": "BLOOM",
+      "size": "31",
+      "price": 799,
+      "active": true
+    },
+    "timeless": {
+      "name": "TIMELESS",
+      "size": "",
+      "price": null,
+      "active": false
+    }
   },
   "tiers": {
     "monti": {
-      "standard": { "enabled": true, "default": true },
-      "exclusive": { "enabled": false, "price": null, "_note": "Hidden until the supplier confirms what Exclusive adds and its cost." }
+      "standard": {
+        "price": 799,
+        "enabled": true,
+        "allow": {
+          "strap": [
+            "bracelet",
+            "black"
+          ],
+          "hands": [
+            "blue"
+          ]
+        },
+        "max_extras": 1
+      },
+      "exclusive": {
+        "price": 999,
+        "enabled": false
+      }
     }
   }
 }

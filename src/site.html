@@ -87,7 +87,7 @@ html[lang="ar"] .menu a{font:400 26px/1.5 var(--arh)}
 .hero-media{position:relative;aspect-ratio:1/1;width:100%;max-width:min(100%,600px,58svh);justify-self:center;background:var(--ivory)}
 @media(min-width:900px){.hero-media{max-width:min(100%,640px,calc(100svh - 160px))}}
 .hero-media{overflow:hidden}
-.hero-media img{width:100%;height:100%;object-fit:contain;transform:scale(1.32)}
+.hero-media img{width:100%;height:100%;object-fit:contain}
 .hero-copy{display:grid;gap:14px;justify-items:start;align-content:center}
 .hero-copy .lede{max-width:40ch;font-size:16.5px;color:var(--body)}
 .pricebox{display:grid;gap:4px;margin-top:4px}
@@ -200,7 +200,8 @@ html[dir="rtl"] .pv-close svg{transform:scaleX(-1)}
 .slide{flex:0 0 100%;scroll-snap-align:center;margin:0;display:grid;gap:8px}
 .slide .frame{aspect-ratio:1/1;background:var(--ivory);overflow:hidden;position:relative;width:100%}
 @media(min-width:960px){.slide .frame{max-height:calc(100vh - 200px);margin:0 auto;width:min(100%,calc(100vh - 200px));cursor:zoom-in}}
-.slide .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:scale(var(--s,1));transition:transform .35s var(--ease)}
+.slide .frame img{opacity:0;transition:opacity .25s,transform .35s var(--ease);position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:scale(var(--s,1))}
+.slide .frame img.ok{opacity:1}
 .slide .frame.ink img{mix-blend-mode:multiply}
 .slide .frame.zoom{cursor:zoom-out}
 .slide .frame.zoom img{transform:scale(var(--z,1.6))}
@@ -211,9 +212,10 @@ html[lang="ar"] .slide figcaption{font:400 15px/1.6 var(--ar)}
 .thumb{width:56px;height:56px;padding:0;border:1px solid var(--hair);background:var(--ivory);overflow:hidden}
 .thumb img{width:100%;height:100%;object-fit:contain}
 .thumb[aria-current="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
-.pv-info{display:grid;gap:26px;align-content:start;padding:22px var(--gut) 130px}
-@media(min-width:960px){.pv-info{padding:40px clamp(28px,4vw,56px) 64px;background:var(--paper);min-height:calc(100vh - 56px);border-inline-start:1px solid var(--hair)}}
-.pv-head{display:grid;gap:8px}
+.pv-info{display:grid;gap:20px;align-content:start;padding:22px var(--gut) 130px}
+@media(min-width:960px){.pv-info{padding:24px clamp(28px,4vw,56px) 64px;background:var(--paper);min-height:calc(100vh - 56px);border-inline-start:1px solid var(--hair)}}
+.pv-head{display:grid;gap:6px}
+@media(min-width:960px){.pv-sub{display:none}}
 .pv-head h1{font-size:clamp(30px,3.2vw,44px);letter-spacing:.06em}
 html[lang="ar"] .pv-head h1{font-family:var(--serif);letter-spacing:.06em}
 .pv-price{font:500 22px/1.2 var(--sans);color:var(--ink)}
@@ -228,8 +230,9 @@ html[lang="ar"] .grp-h b{font:600 16px/1.4 var(--ar)}
 /* option tiles: picture + name, selection shown by a ring and a tick, not colour alone */
 .opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:8px}
 @media(max-width:420px){.opts:not(.txt){grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.opt span{font-size:12px}}
-.opt{position:relative;display:grid;gap:6px;justify-items:center;text-align:center;padding:6px 6px 8px;border:1px solid var(--hair);background:var(--paper);min-height:44px;color:var(--ink)}
-.opt .ti{width:100%;aspect-ratio:1/1;overflow:hidden;background:var(--ivory)}
+.opt{position:relative;display:grid;gap:4px;justify-items:center;text-align:center;padding:4px 4px 6px;border:1px solid var(--hair);background:var(--paper);min-height:44px;color:var(--ink)}
+.opt .ti{width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--ivory)}
+@media(min-width:421px){.opts:not(.txt){grid-template-columns:repeat(4,minmax(0,1fr))}}
 .opt .ti img{width:100%;height:100%;object-fit:cover;transform:scale(1.9)}
 .opt.br .ti img{transform:scale(2.6);transform-origin:50% 100%}
 .opt .dot{width:100%;aspect-ratio:1/1;display:grid;place-items:center;background:var(--ivory)}
@@ -239,8 +242,8 @@ html[lang="ar"] .opt span{font-size:14px}
 .opt[aria-checked="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
 .opt[aria-checked="true"] span{font-weight:600}
 .opt[aria-checked="true"]::after{content:"";position:absolute;top:6px;inset-inline-end:6px;width:18px;height:18px;border-radius:50%;background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F4F1EA' stroke-width='3'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center/12px no-repeat}
-.opts.txt{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
-.opts.txt .opt{grid-template-columns:auto 1fr;justify-items:start;text-align:start;align-items:center;padding:10px 12px;gap:10px}
+.opts.txt{grid-template-columns:repeat(2,minmax(0,1fr))}
+.opts.txt .opt{grid-template-columns:auto 1fr;justify-items:start;text-align:start;align-items:center;padding:8px 12px;gap:10px;min-height:44px}
 .opts.txt .opt i{width:18px;height:18px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(17,17,17,.2)}
 .opts.txt .opt[aria-checked="true"]::after{top:50%;margin-top:-9px}
 .addon{border-top:1px solid var(--hair);padding-top:18px;display:grid;gap:12px}
@@ -505,16 +508,34 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     checking_h:'نتأكد من الدفع…', checking_p:'لحظات، نتأكد من Ziina أن الدفع تم.', pending_h:'الدفع قيد التأكيد', pending_p:'لم يصلنا تأكيد الدفع بعد. إذا تم الخصم، سنتواصل معك على جوالك خلال ساعات. احتفظ برقم الطلب.',
     failed_h:'ما تم الدفع', failed_p:'ما انخصم منك شي. ترجع وتجرب مرة ثانية، أو راسلنا ونساعدك.', failed_btn:'راسلنا على إنستغرام'
   };
+  /* unified Arabic: simple and refined, not chat style */
+  Object.assign(AR, {
+    cta:'عرض الساعة', ask:'لديك سؤال قبل الطلب؟', s_size:'عرض الهيكل', s_case:'الهيكل',
+    hero_p:'هيكل مربع من الستيل، أرقام رومانية، وعبارة TIME IS MONEY بالأحمر على الميناء.', hero_cta:'اختر مونتي',
+    f_delivery:'تُجمَّع في الإمارات بعد الطلب، وتصلك خلال 2–3 أسابيع.', f_war:'ضمان لمدة سنة على الحركة.',
+    det_h:'تفاصيل تميّز مونتي.', str_label:'الخيارات', str_h:'سبعة خيارات لارتداء مونتي.',
+    str_p:'سوار ستيل أو أحد ستة ألوان من الجلد، مع عقارب زرقاء أو فضية. السير الأول ضمن السعر، ويُضاف السير الثاني بـ <span class="num" data-extra>149 درهم</span>.',
+    faq_label:'قبل الطلب', foot_p:'ساعات من الستيل، تُجمَّع في العين بعد الطلب وتصل إلى جميع الإمارات.',
+    tr_delivery:'<b>التوصيل:</b> نجمّع ساعتك بعد الطلب، وتصل إلى أي إمارة خلال 2–3 أسابيع مجاناً.',
+    tr_war:'<b>الضمان:</b> لمدة سنة على الحركة.',
+    tr_pay:'<b>الدفع:</b> بطاقة أو Apple Pay عبر Ziina. السعر النهائي شامل التوصيل داخل الإمارات.',
+    tr_after:'<b>بعد الطلب:</b> يصلك رقم الطلب، ونتواصل معك على جوالك لترتيب موعد التوصيل.',
+    tr_help:'<b>التواصل:</b> تواصل مباشر عبر إنستغرام قبل الشراء وبعده.',
+    worn_label:'صور العملاء', worn_h:'على معاصم <em>عملائنا.</em>', worn_p:'صور حقيقية شاركها عملاؤنا بعد استلام ساعاتهم.', worn_note:'من قصص إنستغرام التي أعدنا نشرها.', worn_link:'شاهدها كلها على إنستغرام',
+    failed_h:'لم تكتمل عملية الدفع', failed_p:'لم يُخصم أي مبلغ. يمكنك المحاولة مرة أخرى، أو مراسلتنا لنساعدك.',
+    paid_p:'هذا رقم طلبك. وصلتنا بيانات التوصيل، وسنتواصل معك على جوالك لتأكيد موعد التسليم.', checking_p:'لحظات، نتحقق من Ziina أن الدفع تم.'
+  });
+  Object.assign(EN, { tr_pay:'<b>Payment:</b> card or Apple Pay through Ziina. The final price includes delivery in the UAE.', tr_help:'<b>Contact:</b> direct contact on Instagram, before and after you buy.' });
   let lang = 'en'; try { lang = localStorage.getItem('avn-lang') || 'en'; } catch (e) {}
   const t = k => lang === 'ar' ? (AR[k] ?? EN[k] ?? '') : (EN[k] ?? '');
 
   /* only approved facts are published; anything null stays off the site until it is approved */
   const FAQ = [
-    { q:['When will my watch arrive?','متى توصلني الساعة؟'], a:['Each watch is assembled in the UAE after you order. Delivery anywhere in the UAE takes 2–3 weeks and is free.','كل ساعة تُجمَّع في الإمارات بعد طلبك. التوصيل لأي إمارة يستغرق 2–3 أسابيع، ومجاني.'] },
-    { q:['What is included in the price?','شو يشمل السعر؟'], a:['The watch, the strap you choose and delivery in the UAE. A second strap is optional. Nothing else is added at checkout.','الساعة، والسير اللي تختاره، والتوصيل داخل الإمارات. السير الثاني اختياري. ما ينضاف أي مبلغ ثاني وقت الدفع.'] },
-    { q:['How do I pay?','كيف أدفع؟'], a:['By card or Apple Pay on Ziina’s secure payment page. We never see your card details.','بالبطاقة أو Apple Pay في صفحة الدفع الآمنة من Ziina. ما نشوف بيانات بطاقتك.'] },
-    { q:['How do I follow my order?','كيف أتابع طلبي؟'], a:['After payment you see your order number. We call your mobile to arrange the delivery day, and you can message us on Instagram with your order number at any time.','بعد الدفع يظهر لك رقم الطلب. نتصل على جوالك لترتيب يوم التوصيل، وتقدر تراسلنا على إنستغرام برقم طلبك في أي وقت.'] },
-    { q:['Is there a warranty?','في ضمان؟'], a:['Yes: one year on the movement.','إيه: ضمان سنة كاملة على المكينة.'] },
+    { q:['When will my watch arrive?','متى تصلني الساعة؟'], a:['Each watch is assembled in the UAE after you order. Delivery anywhere in the UAE takes 2–3 weeks and is free.','تُجمَّع كل ساعة في الإمارات بعد الطلب، وتصل إلى أي إمارة خلال 2–3 أسابيع، والتوصيل مجاني.'] },
+    { q:['What is included in the price?','ماذا يشمل السعر؟'], a:['The watch, the strap you choose and delivery in the UAE. A second strap is optional. Nothing else is added at checkout.','الساعة والسير الذي تختاره والتوصيل داخل الإمارات. السير الثاني اختياري، ولا تُضاف أي رسوم عند الدفع.'] },
+    { q:['How do I pay?','كيف أدفع؟'], a:['By card or Apple Pay on Ziina’s secure payment page. We never see your card details.','بالبطاقة أو Apple Pay عبر صفحة الدفع الآمنة من Ziina، ولا نطّلع على بيانات بطاقتك.'] },
+    { q:['How do I follow my order?','كيف أتابع طلبي؟'], a:['After payment you see your order number. We call your mobile to arrange the delivery day, and you can message us on Instagram with your order number at any time.','بعد الدفع يظهر لك رقم الطلب، ونتواصل معك على جوالك لترتيب موعد التوصيل. ويمكنك مراسلتنا على إنستغرام برقم الطلب في أي وقت.'] },
+    { q:['Is there a warranty?','هل يوجد ضمان؟'], a:['Yes: one year on the movement.','نعم، ضمان لمدة سنة على الحركة.'] },
     // Waiting for approval (draft only, not shown): warranty length and cover, exchange and returns, what is in the box.
   ];
 
@@ -522,9 +543,9 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   const o = (id, en, ar, sw, img) => ({ id, en, ar, sw, img });
   const C = DATA.catalog.models;
   const W = {
-    monti: { for:'men', scale:1, spec:{ crystal:['Sapphire','سافاير'], move:['Japanese automatic','مكينة يابانية أوتوماتيك'], case:['Stainless steel, see-through back','ستيل، ظهر شفاف'] },
+    monti: { for:'men', scale:1, spec:{ crystal:['Sapphire','سافاير'], move:['Japanese automatic','حركة أوتوماتيكية يابانية'], case:['Stainless steel, see-through back','ستيل مقاوم للصدأ، ظهر شفاف'] },
       sub:'Square steel case with visible screws, an ivory dial with Roman numerals and TIME IS MONEY in red, and a blue cabochon crown.',
-      subAr:'علبة ستيل مربعة ببراغي ظاهرة، وميناء عاجي بأرقام رومانية وعبارة TIME IS MONEY بالأحمر، وتاج بحجر أزرق.',
+      subAr:'هيكل مربع من الستيل ببراغي ظاهرة، وميناء عاجي بأرقام رومانية وعبارة TIME IS MONEY بالأحمر، وتاج يتوسطه حجر أزرق.',
       groups:[
         { id:'strap', en:'Strap', ar:'السير', extra:true, opts:[ o('bracelet','Steel bracelet','سوار ستيل','linear-gradient(135deg,#e2e3e4,#9fa2a5)','monte-front-bracelet-blue-hands'),
           o('black','Black leather','جلد أسود','#151515','monte-strap-black-leather'), o('brown','Cognac leather','جلد بني','#8a4a22','monte-strap-brown-leather'),
@@ -540,7 +561,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
         const hand = s.hands !== 'blue' ? ['n_bluehands'] : [];
         if (c === 'black') return [ ['front', 'monte-front-black-leather', hand], ['side', 'monte-side-black-leather', []], ['back', 'monte-caseback-black-leather', []], ['clasp', 'monte-clasp-black-leather', []], ['strap', 'monte-strap-black-leather', []] ];
         return [ ['front', `monte-front-${c}-leather`, hand], ['back', `monte-caseback-${c}-leather`, []], ['strap', `monte-strap-${c}-leather`, []] ]; } },
-    lumi: { for:'women', scale:1, spec:{ crystal:['Sapphire','سافاير'], move:['Japanese automatic','مكينة يابانية أوتوماتيك'], case:['Stainless steel, integrated bracelet','ستيل، سوار مدمج'] },
+    lumi: { for:'women', scale:1, spec:{ crystal:['Sapphire','سافاير'], move:['Japanese automatic','حركة أوتوماتيكية يابانية'], case:['Stainless steel, integrated bracelet','ستيل، سوار مدمج'] },
       sub:'The smaller square: steel bracelet, ivory dial and TIME IS MONEY in light pink.', subAr:'المربع الأصغر: سوار ستيل، ميناء عاجي، وعبارة TIME IS MONEY بالوردي الفاتح.',
       groups:[ { id:'hands', en:'Hands', ar:'العقارب', opts:[ o('blue','Blue','زرقاء','#2443a8'), o('silver','Silver','فضية','linear-gradient(135deg,#f0f0f0,#a8abae)') ] } ],
       card:'lumi-front-blue-hands', sketch:'lumi-sketch-front',
@@ -551,7 +572,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
       extras:[ o('navy-rubber','Navy rubber','مطاط كحلي','#1b2a55'), o('steel','Steel bracelet','سوار ستيل','linear-gradient(135deg,#e2e3e4,#9fa2a5)') ],
       card:'rayo-front-silver-black-steel',
       gallery:s => [ ['front', `rayo-front-${s.colour}`, []] ] },
-    bloom: { for:'women', scale:.94, spec:{ crystal:['Sapphire','سافاير'], move:['Japanese automatic','مكينة يابانية أوتوماتيك'] },
+    bloom: { for:'women', scale:.94, spec:{ crystal:['Sapphire','سافاير'], move:['Japanese automatic','حركة أوتوماتيكية يابانية'] },
       sub:'Fluted bezel, Roman numerals and a date at three.', subAr:'إطار مضلّع، أرقام رومانية، وتاريخ عند الساعة الثالثة.',
       groups:[ { id:'dial', en:'Dial', ar:'الميناء', opts:[ o('pink','Rose pink','وردي','#e49a8e','bloom-front-pink'), o('white','Ivory and gold','عاجي وذهبي','#efe8d6','bloom-front-white'), o('blue','Ice blue and gold','أزرق ثلجي وذهبي','#a9d3ea','bloom-front-blue') ] } ],
       card:'bloom-front-pink',
@@ -604,9 +625,9 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   }
   function renderHomeDetails() {
     const D = [
-      ['monte-side-black-leather', ['Steel case, visible screws, blue crown','علبة ستيل، براغي ظاهرة، وتاج أزرق'], ['The square case is brushed and polished stainless steel, held by visible screws, with a faceted crown set with a blue cabochon.','العلبة المربعة من ستيل مطفي ومصقول، مثبتة ببراغي ظاهرة، وتاجها مضلّع فيه حجر أزرق.'], ['Photographed on black leather.','الصورة على الجلد الأسود.']],
-      ['monte-caseback-black-leather', ['A Japanese automatic movement you can see','مكينة يابانية أوتوماتيك تشوفها'], ['No battery: the Japanese automatic movement winds as you wear it, is visible through the see-through back, and has a one-year warranty.','بدون بطارية: المكينة اليابانية الأوتوماتيك تتعبّى من حركة يدك، تشوفها من الظهر الشفاف، وعليها ضمان سنة.'], ['Photographed on black leather.','الصورة على الجلد الأسود.']],
-      ['monte-clasp-black-leather', ['A folding clasp on leather','قفل قابل للطي مع الجلد'], ['The leather straps close with a steel folding clasp, so you open and close the watch without threading the strap.','سيور الجلد تُقفل بقفل ستيل قابل للطي، فتفتح الساعة وتقفلها بدون ما تسحب السير.'], ['Photographed on black leather.','الصورة على الجلد الأسود.']]
+      ['monte-side-black-leather', ['Steel case, visible screws, blue crown','هيكل ستيل، براغي ظاهرة، وتاج أزرق'], ['The square case is brushed and polished stainless steel, held by visible screws, with a faceted crown set with a blue cabochon.','هيكل مربع من الستيل بتشطيب مصقول ومطفي، مثبت ببراغي ظاهرة، وتاج مضلّع يتوسطه حجر أزرق.'], ['Photographed on black leather.','الصورة على الجلد الأسود.']],
+      ['monte-caseback-black-leather', ['A Japanese automatic movement you can see','حركة أوتوماتيكية يابانية ظاهرة'], ['No battery: the Japanese automatic movement winds as you wear it, is visible through the see-through back, and has a one-year warranty.','تعمل دون بطارية وتُشحن بحركة المعصم، وتظهر من الظهر الشفاف. ضمان لمدة سنة على الحركة.'], ['Photographed on black leather.','الصورة على الجلد الأسود.']],
+      ['monte-clasp-black-leather', ['A folding clasp on leather','مشبك قابل للطي'], ['The leather straps close with a steel folding clasp, so you open and close the watch without threading the strap.','تُغلق سيور الجلد بمشبك ستيل قابل للطي، فتلبس الساعة وتخلعها دون سحب السير.'], ['Photographed on black leather.','الصورة على الجلد الأسود.']]
     ];
     document.getElementById('dgrid').replaceChildren(...D.map(([id, h, p, n]) => el('figure', { class: 'dfig' }, [ el('div', { class: 'frame' }, [ pic(id, '(min-width:800px) 380px, 92vw', L({ en: h[0], ar: h[1] })) ]), el('figcaption', { style: 'display:grid;gap:6px' }, [ el('b', { text: L({ en: h[0], ar: h[1] }) }), el('p', { text: L({ en: p[0], ar: p[1] }) }), el('small', { text: L({ en: n[0], ar: n[1] }) }) ]) ])));
     const sg = W.monti.groups[0];
@@ -651,6 +672,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
         el('figcaption', {}, [ el('b', { text: cap }), note ? document.createTextNode(' · ' + note) : null ]) ]);
     }));
     thumbs.replaceChildren(...views.map(([view, id], i) => el('button', { type: 'button', class: 'thumb', 'aria-label': `${i + 1}: ${t('v_' + view)}`, onclick: () => goSlide(i) }, [ pic(id, '56px', '') ])));
+    track.querySelectorAll('.frame img').forEach(im => { const on = () => im.classList.add('ok'); im.complete && im.naturalWidth ? on() : (im.addEventListener('load', on, { once: true }), im.addEventListener('error', on, { once: true })); });
     thumbs.hidden = views.length < 2;
     const ni = prevView ? Math.max(0, views.findIndex(v => v[0] === prevView)) : 0;
     s._i = ni; requestAnimationFrame(() => { track.scrollLeft = (lang === 'ar' ? -1 : 1) * ni * track.clientWidth; markThumb(ni); });
@@ -669,7 +691,6 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
       el('div', { class: 'grp-h' }, [ el('span', { class: 'label', id: `g-${g.id}`, text: L(g) }), el('b', { text: L(chosen) }) ]),
       el('div', { class: 'opts' + (visual ? '' : ' txt'), role: 'radiogroup', 'aria-labelledby': `g-${g.id}`, onkeydown: keys }, g.opts.map(x => el('button', { type: 'button', role: 'radio', class: 'opt' + (x.id === 'bracelet' ? ' br' : ''), 'aria-checked': String(s[g.id] === x.id), tabindex: s[g.id] === x.id ? '0' : '-1', onclick: () => pick(x) }, [
         visual ? el('span', { class: 'ti' }, [ pic(x.img, '120px', '') ]) : el('i', { style: `background:${x.sw}` }), el('span', { text: L(x) }) ]))),
-      g.hint ? el('p', { class: 'hint', text: L({ en: g.hint[0], ar: g.hint[1] }) }) : null
     ]);
   }
   function renderPV() {
@@ -692,7 +713,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
       x.img ? el('span', { class: 'ti' }, [ pic(x.img, '120px', '') ]) : el('i', { style: `background:${x.sw}` }), el('span', { text: L(x) }) ])));
     // specs: size, crystal, movement, case, and the chosen options in words
     const sp = document.getElementById('pv-specs'); sp.replaceChildren();
-    const rows = [['s_size', `${w.size} mm`], ['s_crystal', w.spec.crystal && L({ en: w.spec.crystal[0], ar: w.spec.crystal[1] })], ['s_move', w.spec.move && L({ en: w.spec.move[0], ar: w.spec.move[1] })], ['s_case', w.spec.case && L({ en: w.spec.case[0], ar: w.spec.case[1] })], ['s_war', L({ en: '1 year on the movement', ar: 'سنة على المكينة' })]];
+    const rows = [['s_size', `${w.size} mm`], ['s_crystal', w.spec.crystal && L({ en: w.spec.crystal[0], ar: w.spec.crystal[1] })], ['s_move', w.spec.move && L({ en: w.spec.move[0], ar: w.spec.move[1] })], ['s_case', w.spec.case && L({ en: w.spec.case[0], ar: w.spec.case[1] })], ['s_war', L({ en: '1 year on the movement', ar: 'سنة على الحركة' })]];
     rows.filter(r => r[1]).forEach(([a, b]) => sp.append(el('dt', { text: t(a) }), el('dd', { text: b })));
     const chosenWords = w.groups.map(g => L(g.opts.find(x => x.id === s[g.id]))).join(' · ');
     const extraWords = s._x.map(id => L(ex.find(x => x.id === id) || { en: id, ar: id })).join(', ');
@@ -809,6 +830,6 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
 })();
 </script>
 <script src="%%A%%js/track-v7.js" defer></script>
-<script src="%%A%%js/order-v2.js?v=4" defer></script>
+<script src="%%A%%js/order-v2.js?v=5" defer></script>
 </body>
 </html>

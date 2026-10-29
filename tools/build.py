@@ -54,8 +54,13 @@ def og(k, src):
 og_img = {k: og(k, v) for k, v in SHARE.items()}
 
 M = cat['models']
+TIERS = cat.get('tiers', {})
+def amount(k):
+    """The price a visitor actually pays by default: the enabled Standard package if the model has packages."""
+    on = [v for v in TIERS.get(k, {}).values() if v.get('enabled')]
+    return on[0]['price'] if on else M[k]['price']
 def price(k):
-    p = M[k]['price']; return f"AED {p:,}" if p is not None else ''
+    p = amount(k); return f"AED {p:,}" if p is not None else ''
 DESC = {
     'home': ('AVENOIR · Steel watches assembled in the UAE',
              'MONTI, LUMI, RAYO and BLOOM: steel watches assembled in the UAE after you order. Card or Apple Pay, delivered in 2–3 weeks. · ساعات ستيل تُجمَّع في الإمارات بعد طلبك.'),
@@ -73,15 +78,15 @@ def meta(page, url, robots):
     tags += [f'<meta property="og:{k}" content="{html.escape(v)}">' for k, v in [('type', 'product' if page in M else 'website'), ('site_name', 'AVENOIR'), ('url', url), ('title', t), ('description', d),
              ('image', im), ('image:secure_url', im), ('image:type', 'image/jpeg'), ('image:width', '1200'), ('image:height', '630'), ('image:alt', alt), ('locale', 'en_US'), ('locale:alternate', 'ar_AE')]]
     tags += ['<meta name="twitter:card" content="summary_large_image">', f'<meta name="twitter:title" content="{html.escape(t)}">', f'<meta name="twitter:image" content="{im}">']
-    if page in M and M[page]['price'] is not None:
-        tags += [f'<meta property="product:price:amount" content="{M[page]["price"]}">', '<meta property="product:price:currency" content="AED">']
+    if page in M and amount(page) is not None:
+        tags += [f'<meta property="product:price:amount" content="{amount(page)}">', '<meta property="product:price:currency" content="AED">']
     return '\n'.join(tags)
 
 def page(out, A, H, page_key, url, robots):
     data = json.dumps({'catalog': cat, 'img': img}, separators=(',', ':'), ensure_ascii=False)
     pre = '' if page_key != 'home' else ''
     s = (tpl.replace('%%META%%', meta(page_key, url, robots)).replace('%%PRELOAD%%', pre).replace('%%DATA%%', data)
-            .replace('%%OPEN%%', page_key if page_key in M else '').replace('%%A%%', A).replace('%%H%%', H))
+            .replace('%%OPEN%%', page_key if page_key in M else '').replace('data-price="monti">AED 999<', f'data-price="monti">{price("monti")}<').replace('%%A%%', A).replace('%%H%%', H))
     os.makedirs(os.path.dirname(out), exist_ok=True); open(out, 'w').write(s); print('wrote', os.path.relpath(out, ROOT))
 
 if target == 'preview':

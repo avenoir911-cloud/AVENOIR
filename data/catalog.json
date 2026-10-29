@@ -50,7 +50,6 @@
         "max_extras": 1
       },
       "exclusive": {
-        "price": 999,
         "enabled": false
       }
     }

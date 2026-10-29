@@ -149,6 +149,22 @@ html[lang="ar"] .card .pr{font:600 16px/1.5 var(--ar)}
 .card .cta{font:500 12px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--navy);margin-top:6px}
 html[lang="ar"] .card .cta{font:600 14px/1 var(--ar);letter-spacing:0;text-transform:none}
 
+
+/* ---------- customers: real reposts from Instagram stories ---------- */
+.worn{background:#111;color:#cfc8bd}
+.worn .label{color:#a59d92}
+.worn h2{color:#F4F1EA}
+.worn .head p{color:#cfc8bd}
+.wstrip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(150px,42vw);gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 var(--gut) 8px;scrollbar-width:none}
+.wstrip::-webkit-scrollbar{display:none}
+@media(min-width:800px){.wstrip{grid-auto-columns:220px;gap:14px;padding-inline:max(40px,calc((100vw - 1240px)/2 + 40px))}}
+.wstrip figure{margin:0;scroll-snap-align:start;aspect-ratio:4/5;overflow:hidden;background:#1d1d1d}
+.wstrip figure:nth-child(even){transform:translateY(22px)}
+.wstrip img{width:100%;height:100%;object-fit:cover;filter:saturate(.92)}
+.wfoot{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;justify-content:space-between;margin-top:44px}
+.wfoot .tl{color:#F4F1EA}
+.wfoot small{font-size:14px;color:#a59d92}
+
 /* ---------- 3 details ---------- */
 .dgrid{display:grid;gap:28px}
 @media(min-width:800px){.dgrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}}
@@ -348,6 +364,13 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     </div>
   </section>
 
+  <!-- 2b worn by customers: photos customers shared and we reposted (Instagram highlight "Repost") -->
+  <section class="worn" id="worn" aria-labelledby="worn-h">
+    <div class="wrap"><div class="head"><span class="label" data-t="worn_label">On our customers' wrists</span><h2 id="worn-h" data-t="worn_h">Ordered, delivered, <em>worn.</em></h2><p data-t="worn_p">Real photos our customers shared after their AVENOIR arrived.</p></div></div>
+    <div class="wstrip" id="wstrip"></div>
+    <div class="wrap wfoot"><small data-t="worn_note">Reposted from our customers' Instagram stories.</small><a class="tl" href="https://www.instagram.com/stories/highlights/17897357757284100/" target="_blank" rel="noopener noreferrer" data-t="worn_link">See them all on Instagram</a></div>
+  </section>
+
   <!-- 3 three details, each with a real photograph -->
   <section id="details" aria-labelledby="det-h">
     <div class="wrap">
@@ -464,6 +487,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     n_black:'shown on black leather', n_bluehands:'shown with blue hands', n_preview:'colour preview: photographed in black leather, colour shown digitally',
     sum_with:'with', sum_extra:'+ second strap:', incl_short:'Strap and UAE delivery included',
     tr_delivery:'<b>Delivery:</b> assembled after you order, delivered across the UAE in 2–3 weeks. Free.',
+    worn_alt:'A customer wearing their AVENOIR',
     tr_war:'<b>Warranty:</b> one year on the movement.',
     tr_pay:'<b>Payment:</b> card or Apple Pay through Ziina. The total above is what you pay.',
     tr_after:'<b>After you order:</b> you get an order number, and we call your mobile to arrange delivery.',
@@ -490,6 +514,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     str_label:'على ذوقك', str_h:'سبع طرق تلبس فيها MONTI.', str_p:'سوار ستيل أو واحد من ستة ألوان جلد، مع عقارب زرقاء أو فضية. السير الأول داخل السعر، والسير الثاني يُضاف بـ <span class="num" data-extra>149 درهم</span>.',
     faq_label:'قبل ما تطلب', faq_h:'التوصيل والأسئلة.', foot_p:'ساعات ستيل، تُجمَّع في العين بعد طلبك وتوصل لكل الإمارات.', foot_help:'المساعدة',
     tr_delivery:'<b>التوصيل:</b> تُجمَّع بعد طلبك، وتوصلك في أي إمارة خلال 2–3 أسابيع. مجاناً.',
+    worn_label:'على معاصم عملائنا', worn_h:'طلبوها، وصلتهم، <em>ولبسوها.</em>', worn_p:'صور حقيقية شاركها عملاؤنا بعد ما وصلتهم ساعتهم.', worn_note:'من ستوريات إنستغرام اللي نشرناها.', worn_link:'شوفها كلها في إنستغرام', worn_alt:'عميل لابس ساعة AVENOIR',
     tr_war:'<b>الضمان:</b> سنة كاملة على المكينة.',
     tr_pay:'<b>الدفع:</b> بطاقة أو Apple Pay عبر Ziina. الإجمالي فوق هو اللي تدفعه.',
     tr_after:'<b>بعد الطلب:</b> يوصلك رقم طلب، ونتصل على جوالك لترتيب موعد التوصيل.',
@@ -605,6 +630,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     document.getElementById('dgrid').replaceChildren(...D.map(([id, h, p, n]) => el('figure', { class: 'dfig' }, [ el('div', { class: 'frame' }, [ pic(id, '(min-width:800px) 380px, 92vw', L({ en: h[0], ar: h[1] })) ]), el('figcaption', { style: 'display:grid;gap:6px' }, [ el('b', { text: L({ en: h[0], ar: h[1] }) }), el('p', { text: L({ en: p[0], ar: p[1] }) }), el('small', { text: L({ en: n[0], ar: n[1] }) }) ]) ])));
     const sg = W.monti.groups[0];
     document.getElementById('straprow').replaceChildren(...sg.opts.map(x => el('a', { class: 'stile' + (x.id === 'bracelet' ? ' br' : ''), href: new URL(`watch/monti/?strap=${x.id}`, HOME).href, 'data-open': 'monti', 'data-preset': `strap=${x.id}` }, [ el('div', { class: 'sp' }, [ pic(x.img, '160px', '') ]), el('span', { text: L(x) }) ])));
+    document.getElementById('wstrip').replaceChildren(...Array.from({ length: 12 }, (_, i) => { const n = String(i + 1).padStart(2, '0'); return el('figure', {}, [ el('picture', {}, [ el('source', { type: 'image/webp', srcset: `${A}img/customers/c${n}.webp` }), el('img', { src: `${A}img/customers/c${n}.jpg`, width: 320, height: 400, alt: t('worn_alt'), loading: 'lazy', decoding: 'async' }) ]) ]); }));
     document.getElementById('faqlist').replaceChildren(...FAQ.map(f => el('details', {}, [ el('summary', { text: L({ en: f.q[0], ar: f.q[1] }) }), el('p', { text: L({ en: f.a[0], ar: f.a[1] }) }) ])));
   }
   function setFilter(f) { filter = f; renderGrid(); }

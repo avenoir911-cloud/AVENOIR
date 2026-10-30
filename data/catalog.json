@@ -53,5 +53,28 @@
         "enabled": false
       }
     }
-  }
+  },
+  "verified": {
+    "monti": {
+      "size": false,
+      "crystal": false
+    },
+    "lumi": {
+      "size": false,
+      "crystal": false
+    },
+    "rayo": {
+      "size": false,
+      "crystal": false
+    },
+    "bloom": {
+      "size": false,
+      "crystal": false
+    },
+    "timeless": {
+      "size": false,
+      "crystal": false
+    }
+  },
+  "_verify_note": "Set size/crystal to true only after the supplier confirms them for the exact product sold."
 }

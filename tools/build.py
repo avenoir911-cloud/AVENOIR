@@ -64,15 +64,15 @@ def price(k):
 DESC = {
     'home': ('AVENOIR · Steel watches assembled in the UAE',
              'MONTI, LUMI, RAYO and BLOOM: steel watches assembled in the UAE after you order. Card or Apple Pay, delivered in 2–3 weeks. · ساعات ستيل تُجمَّع في الإمارات بعد طلبك.'),
-    'monti': ('MONTI 38 · {p} · AVENOIR', 'Square steel case, TIME IS MONEY in red, blue cabochon crown. Steel bracelet or six leathers. Assembled in the UAE, delivered in 2–3 weeks. · علبة ستيل مربعة وعبارة TIME IS MONEY بالأحمر.'),
-    'lumi': ('LUMI 33.5 · {p} · AVENOIR', 'The smaller square: steel bracelet and TIME IS MONEY in light pink. Assembled in the UAE, delivered in 2–3 weeks. · المربع الأصغر بسوار ستيل.'),
-    'rayo': ('RAYO 40 · {p} · AVENOIR', 'A steel chronograph with three sub-dials and a tachymeter bezel. Assembled in the UAE, delivered in 2–3 weeks. · كرونوغراف ستيل بثلاث موانئ فرعية.'),
-    'bloom': ('BLOOM 31 · {p} · AVENOIR', 'Fluted bezel, Roman numerals and a date at three. Assembled in the UAE, delivered in 2–3 weeks. · إطار مضلّع وأرقام رومانية.'),
+    'monti': ('MONTI · {p} · AVENOIR', 'Square steel case, TIME IS MONEY in red, blue cabochon crown. Standard: steel bracelet or black leather. Assembled in the UAE, delivered in 2–3 weeks. · علبة ستيل مربعة وعبارة TIME IS MONEY بالأحمر.'),
+    'lumi': ('LUMI · {p} · AVENOIR', 'The smaller square: steel bracelet and TIME IS MONEY in light pink. Assembled in the UAE, delivered in 2–3 weeks. · المربع الأصغر بسوار ستيل.'),
+    'rayo': ('RAYO · {p} · AVENOIR', 'A steel chronograph with three sub-dials and a tachymeter bezel. Assembled in the UAE, delivered in 2–3 weeks. · كرونوغراف ستيل بثلاث موانئ فرعية.'),
+    'bloom': ('BLOOM · {p} · AVENOIR', 'Fluted bezel, Roman numerals and a date at three. Assembled in the UAE, delivered in 2–3 weeks. · إطار مضلّع وأرقام رومانية.'),
 }
 def meta(page, url, robots):
     t, d = DESC[page]; t = t.format(p=price(page) if page in M else '')
     im = SITE + og_img.get(page, og_img['monti'])
-    alt = {'home': 'AVENOIR MONTI 38 on black leather'}.get(page, f"AVENOIR {M[page]['name']} {M[page]['size']}" if page in M else 'AVENOIR')
+    alt = {'home': 'AVENOIR MONTI on black leather'}.get(page, f"AVENOIR {M[page]['name']}" if page in M else 'AVENOIR')
     tags = [f'<title>{html.escape(t)}</title>', f'<meta name="description" content="{html.escape(d)}">', f'<link rel="canonical" href="{url}">']
     if robots: tags.append('<meta name="robots" content="noindex">')
     tags += [f'<meta property="og:{k}" content="{html.escape(v)}">' for k, v in [('type', 'product' if page in M else 'website'), ('site_name', 'AVENOIR'), ('url', url), ('title', t), ('description', d),

@@ -757,7 +757,9 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   const mm = k => !VER[k]?.size ? '' : lang === 'ar' ? `\u2066${W[k].size}\u2069 مم` : `${W[k].size} mm`;
   const optQuery = k => { const p = new URLSearchParams(); if (tierOf(k)) p.set('tier', state[k].tier); W[k].groups.forEach(g => p.set(g.id, state[k][g.id])); if (state[k]._x.length) p.set('x', state[k]._x.join(',')); return p; };
   const buyHref = k => { const p = optQuery(k); p.set('m', k); return `${CHECKOUT}?${p}`; };
-  const watchURL = k => new URL(`watch/${k}/?${optQuery(k)}`, HOME).href;
+  // campaign tags (utm_*, fbclid, gclid) stay in the address so analytics still sees where the visit came from
+  const KEEP = [...new URLSearchParams(location.search)].filter(([k]) => /^(utm_|fbclid$|gclid$)/.test(k));
+  const watchURL = k => { const q = optQuery(k); KEEP.forEach(([a, b]) => q.set(a, b)); return new URL(`watch/${k}/?${q}`, HOME).href; };
   const el = (tag, at = {}, kids = []) => { const e = document.createElement(tag); for (const [a, v] of Object.entries(at)) { if (a === 'text') e.textContent = v; else if (a === 'html') e.innerHTML = v; else if (a.startsWith('on')) e.addEventListener(a.slice(2), v); else if (v != null) e.setAttribute(a, v); } kids.forEach(c => c && e.append(c)); return e; };
 
   // <picture> from the build-time image map (AVIF + WebP + JPEG fallback, explicit size so nothing jumps)
@@ -1011,6 +1013,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   addEventListener('hashchange', showResult);
   applyLang(); showResult();
   if (INITIAL) openPV(INITIAL, 'none', location.search);
+  else { const w = new URLSearchParams(location.search).get('w'); if (w && W[w] && !W[w].soon) openPV(w, 'none', location.search); } // ?w=monti (Google Shopping links)
 })();
 </script>
 <script src="../js/track-v7.js" defer></script>

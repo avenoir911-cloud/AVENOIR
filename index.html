@@ -783,6 +783,8 @@ html[lang="ar"] .mbar b{font:500 18px/1 var(--ar)}
   function closePV() { pv.classList.remove('show'); pv.hidden = true; document.body.style.overflow = ''; lastFocus?.focus?.(); }
   document.getElementById('pv-close').addEventListener('click', closePV);
   document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => openPV(b.dataset.open)));
+  /* ?w=monti opens that watch directly (product links from Google Shopping and shared links) */
+  { const q = new URLSearchParams(location.search).get('w'); if (q && Object.prototype.hasOwnProperty.call(W, q) && !W[q].soon) openPV(q); }
 
   /* ---------- after Ziina ---------- */
   const notice = document.getElementById('notice');

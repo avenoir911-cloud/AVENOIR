@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- AVENOIR product feed for Google Merchant Center (free listings).
+     Prices must match the live site (products.price_aed). RAYO and BLOOM are left out until
+     their dial photos are confirmed (see the council ideas c-rayo-dial and c-sun-gift). -->
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+  <channel>
+    <title>AVENOIR</title>
+    <link>https://avenoirlab.com/</link>
+    <description>AVENOIR steel watches, assembled in the UAE.</description>
+    <item>
+      <g:id>AVN-MONTI</g:id>
+      <g:title>AVENOIR MONTI Steel Automatic Watch – TIME IS MONEY Dial</g:title>
+      <g:description>Square steel watch with Roman numerals, blue hands and TIME IS MONEY in red on the dial. Japanese automatic movement, no battery, visible through the see-through case back. Steel bracelet. Assembled in the UAE after you order and delivered within the UAE in 2–3 weeks.</g:description>
+      <g:link>https://avenoirlab.com/?w=monti&amp;utm_source=google_shopping&amp;utm_medium=free_listing&amp;utm_campaign=monti</g:link>
+      <g:image_link>https://avenoirlab.com/img/catalogue/monte-front-bracelet-blue-hands-768.jpg</g:image_link>
+      <g:availability>in_stock</g:availability>
+      <g:price>999 AED</g:price>
+      <g:brand>AVENOIR</g:brand>
+      <g:condition>new</g:condition>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>201</g:google_product_category>
+      <g:product_type>Watches &gt; Men &gt; MONTI</g:product_type>
+      <g:gender>male</g:gender>
+      <g:age_group>adult</g:age_group>
+      <g:color>Silver</g:color>
+      <g:material>Stainless steel</g:material>
+    </item>
+    <item>
+      <g:id>AVN-LUMI</g:id>
+      <g:title>AVENOIR LUMI Steel Automatic Watch – Pink TIME IS MONEY Dial</g:title>
+      <g:description>The smaller square steel watch with Roman numerals, blue hands and TIME IS MONEY in light pink on the dial. Japanese automatic movement, no battery. Steel integrated bracelet. Assembled in the UAE after you order and delivered within the UAE in 2–3 weeks.</g:description>
+      <g:link>https://avenoirlab.com/?w=lumi&amp;utm_source=google_shopping&amp;utm_medium=free_listing&amp;utm_campaign=lumi</g:link>
+      <g:image_link>https://avenoirlab.com/img/catalogue/lumi-front-blue-hands-768.jpg</g:image_link>
+      <g:availability>in_stock</g:availability>
+      <g:price>799 AED</g:price>
+      <g:brand>AVENOIR</g:brand>
+      <g:condition>new</g:condition>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>201</g:google_product_category>
+      <g:product_type>Watches &gt; Women &gt; LUMI</g:product_type>
+      <g:gender>female</g:gender>
+      <g:age_group>adult</g:age_group>
+      <g:color>Silver</g:color>
+      <g:material>Stainless steel</g:material>
+    </item>
+  </channel>
+</rss>

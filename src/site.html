@@ -200,19 +200,28 @@ html[lang="ar"] .notes b{font:400 21px/1.5 var(--arh)}
 .ch-head{display:grid;gap:10px;margin-bottom:clamp(24px,4vw,40px);max-width:640px}
 .index{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
 .index li{border-bottom:1px solid var(--hair)}
-.index a{display:grid;grid-template-columns:28px 88px 1fr auto;gap:16px;align-items:center;padding:12px 0;text-decoration:none;color:var(--ink)}
-.index .ix{font:400 13px/1 var(--sans);color:var(--quiet)}
-.index .th{width:88px;height:88px;background:var(--paper);outline:1px solid var(--hair);outline-offset:-1px;overflow:hidden}
-.index .th img{width:100%;height:100%;object-fit:contain;transform:scale(var(--s,1))}
-.index .nm{display:grid;gap:2px}
-.index .nm b{font:400 22px/1.2 var(--serif);letter-spacing:.06em}
-.index .nm small{font-size:14px;color:var(--quiet)}
-.index .pr{font:500 16px/1.3 var(--sans);white-space:nowrap;text-align:end}
+.index a{display:grid;grid-template-columns:28px 168px minmax(0,1fr);gap:28px;align-items:center;padding:18px 0;text-decoration:none;color:var(--ink)}
+.index .ix{font:400 13px/1 var(--sans);color:var(--quiet);align-self:start;padding-top:10px}
+.index .th{width:168px;height:168px;background:var(--ivory);outline:1px solid var(--hair);outline-offset:-1px;overflow:hidden}
+.index .th img{width:100%;height:100%;object-fit:contain;transform:scale(var(--s,1));transition:transform .5s var(--ease)}
+.index .nm{display:grid;gap:4px;align-content:center;max-width:520px}
+.index .nm b{font:400 26px/1.15 var(--serif);letter-spacing:.06em}
+.index .nm small{font-size:15px;color:var(--quiet)}
+.index .pr{display:flex;align-items:baseline;gap:18px;margin-top:8px;font:500 16px/1.3 var(--sans);white-space:nowrap}
 html[lang="ar"] .index .pr{font:600 16px/1.4 var(--ar)}
-.index .pr small{display:block;font:500 12px/1.4 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--navy);margin-top:4px}
-html[lang="ar"] .index .pr small{font:600 13px/1.4 var(--ar);letter-spacing:0;text-transform:none}
-@media(hover:hover){.index a:hover .nm b{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1px}}
-@media(max-width:520px){.index a{grid-template-columns:72px 1fr auto;gap:12px}.index .ix{display:none}.index .th{width:72px;height:72px}.index .nm b{font-size:19px}}
+.index .go{display:inline-flex;align-items:center;gap:8px;font:500 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--navy)}
+html[lang="ar"] .index .go{font:600 14px/1 var(--ar);letter-spacing:0;text-transform:none}
+.index .go svg{width:16px;height:16px;transition:transform .35s var(--ease)}
+html[dir="rtl"] .index .go svg{transform:scaleX(-1)}
+@media(hover:hover){.index a:hover .th img{transform:scale(calc(var(--s,1) * 1.04))}.index a:hover .nm b{color:var(--navy)}.index a:hover .go svg{transform:translateX(4px)}html[dir="rtl"] .index a:hover .go svg{transform:scaleX(-1) translateX(4px)}}
+.index a:focus-visible{outline-offset:-2px}
+@media(max-width:700px){.index a{grid-template-columns:132px minmax(0,1fr);gap:18px;padding:14px 0}.index .ix{display:none}.index .th{width:132px;height:132px}.index .nm b{font-size:22px}.index .nm small{font-size:14px}.index .pr{flex-wrap:wrap;gap:6px 16px}}
+@media(max-width:360px){.index a{grid-template-columns:112px minmax(0,1fr);gap:14px}.index .th{width:112px;height:112px}}
+/* loading: ivory skeleton instead of empty white boxes */
+@keyframes sk{0%,100%{background-color:#efebe2}50%{background-color:#e7e1d5}}
+.sk:not(.ok){animation:sk 1.4s ease-in-out infinite}
+.sk img{opacity:0;transition:opacity .3s}
+.sk.ok img{opacity:1}
 .colophon{border-top:1px solid var(--ink)}
 .col-grid{display:grid;gap:28px}
 @media(min-width:900px){.col-grid{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:72px}}
@@ -235,6 +244,8 @@ html[lang="ar"] .dfig b{font:400 22px/1.5 var(--arh)}
 .stile .sp{aspect-ratio:3/4;background:var(--paper);border:1px solid var(--hair);overflow:hidden}
 .stile img{width:100%;height:100%;object-fit:cover;object-position:50% 60%;transform:scale(1.45);transform-origin:50% 60%}
 .stile.br img{transform:scale(2.6);transform-origin:50% 100%}
+.stile .sp.sw{display:grid;place-items:center}
+.stile .sp.sw i{width:46%;aspect-ratio:1/1;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(17,17,17,.2)}
 .stile span{font-size:14px;color:var(--ink);line-height:1.3}
 @media(hover:hover){.stile:hover .sp{border-color:var(--ink)}}
 
@@ -257,6 +268,13 @@ footer{border-top:1px solid var(--hair);padding-block:40px calc(32px + env(safe-
 .fgrid p{font-size:14.5px;max-width:36ch}
 
 /* ---------- product view ---------- */
+/* watch page of its own (watch/<model>/): the product is the page, not a dialog over the home page */
+.solo #hero,.solo .contents,.solo .chapter:not(#watches),.solo #worn{display:none!important}
+.solo .pv{position:static;overflow:visible;z-index:auto;padding-top:0}
+.solo .pv-bar{position:static;background:none}
+.solo .pv-bar .lang{display:none}
+@media(min-width:960px){.solo .gal{top:61px}}
+@media(max-width:959px){.solo body{padding-bottom:76px}}
 .pv{position:fixed;inset:0;z-index:50;background:var(--ivory);overflow-y:auto;overscroll-behavior:contain;padding-top:env(safe-area-inset-top,0px)}
 .pv-bar{position:sticky;top:0;z-index:3;display:flex;justify-content:space-between;align-items:center;height:56px;padding-inline:var(--gut);background:rgba(244,241,234,.97);border-bottom:1px solid var(--hair)}
 .pv-close{display:inline-flex;align-items:center;gap:8px;min-height:44px;font:500 12px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
@@ -270,10 +288,12 @@ html[dir="rtl"] .pv-close svg{transform:scaleX(-1)}
 .track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;touch-action:pan-x pan-y}
 .track::-webkit-scrollbar{display:none}
 .slide{flex:0 0 100%;scroll-snap-align:center;margin:0;display:grid;gap:8px}
-.slide .frame{aspect-ratio:1/1;background:var(--ivory);overflow:hidden;position:relative;width:100%}
+.slide .frame{aspect-ratio:1/1;background:#efebe2;overflow:hidden;position:relative;width:100%}
 @media(min-width:960px){.slide .frame{max-height:calc(100vh - 200px);margin:0 auto;width:min(100%,calc(100vh - 200px));cursor:zoom-in}}
 .slide .frame img{opacity:0;transition:opacity .25s,transform .35s var(--ease);position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:scale(var(--s,1))}
 .slide .frame img.ok{opacity:1}
+.slide .frame:has(img.ok){background:var(--ivory)}
+.slide .frame:not(:has(img.ok)){animation:sk 1.4s ease-in-out infinite}
 .slide .frame.ink img{mix-blend-mode:multiply}
 .slide .frame.zoom{cursor:zoom-out}
 .slide .frame.zoom img{transform:scale(var(--z,1.6))}
@@ -288,8 +308,8 @@ html[lang="ar"] .slide figcaption{font:400 15px/1.6 var(--ar)}
 @media(min-width:960px){.pv-info{padding:24px clamp(28px,4vw,56px) 64px;background:var(--paper);min-height:calc(100vh - 56px);border-inline-start:1px solid var(--hair)}}
 .pv-head{display:grid;gap:6px}
 @media(min-width:960px){.pv-sub{display:none}}
-.pv-head h1{font-size:clamp(30px,3.2vw,44px);letter-spacing:.06em}
-html[lang="ar"] .pv-head h1{font-family:var(--serif);letter-spacing:.06em}
+.pv-head :is(h1,h2){font-size:clamp(30px,3.2vw,44px);letter-spacing:.06em}
+html[lang="ar"] .pv-head :is(h1,h2){font-family:var(--serif);letter-spacing:.06em}
 .pv-price{font:500 22px/1.2 var(--sans);color:var(--ink)}
 html[lang="ar"] .pv-price{font:600 22px/1.3 var(--ar)}
 .pv-sub{max-width:46ch}
@@ -319,6 +339,7 @@ html[lang="ar"] .grp-h b{font:600 16px/1.4 var(--ar)}
 @media(min-width:421px){.opts:not(.txt){grid-template-columns:repeat(4,minmax(0,1fr))}}
 .opt .ti img{width:100%;height:100%;object-fit:cover;object-position:50% 72%;transform:scale(1.55);transform-origin:50% 72%}
 .opt.br .ti img{transform:scale(2.6);transform-origin:50% 100%}
+.opt .ti.dot{aspect-ratio:4/3}
 .opt .dot{width:100%;aspect-ratio:1/1;display:grid;place-items:center;background:var(--ivory)}
 .opt .dot i{width:46%;aspect-ratio:1/1;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(17,17,17,.2)}
 .opt span{font-size:13px;line-height:1.25}
@@ -344,7 +365,11 @@ html[lang="ar"] .buy-total b{font:600 24px/1.2 var(--ar)}
 .trust div{display:flex;gap:12px;align-items:flex-start;font-size:15px;padding:12px 0;border-bottom:1px solid var(--hair)}
 .trust svg{width:18px;height:18px;flex:none;margin-top:3px;color:var(--navy)}
 .trust b{color:var(--ink);font-weight:500}
-.specs{margin:0;display:grid;grid-template-columns:auto 1fr;gap:10px 20px;font-size:15px}
+.specs{margin:0;display:grid;grid-template-columns:auto 1fr;gap:0 20px;font-size:15px;border-top:1px solid var(--hair)}
+.specs dt,.specs dd{padding:10px 0;border-bottom:1px solid var(--hair)}
+.spec-h{margin-bottom:-8px}
+.pol{font-size:14.5px;text-align:center;color:var(--body)}
+.pol a{color:var(--ink);text-underline-offset:4px}
 .specs dt{color:var(--quiet)}
 .specs dd{margin:0;color:var(--ink);text-align:end}
 .design{display:grid;gap:10px}
@@ -451,12 +476,12 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
       <article id="ch-case" aria-labelledby="ch2-h">
         <figure class="plate"><div id="plate-case"></div><figcaption class="plate-cap" data-t="cap_case">Plate III — Profile, on black leather</figcaption></figure>
         <span class="chno">II</span><h2 id="ch2-h" data-t="ch2_h">The case.</h2>
-        <p data-t="ch2_p">Square stainless steel with curved shoulders, held by visible screws. The crown is faceted and set with a blue cabochon.</p>
+        <p data-t="ch2_p">A square steel case with curved shoulders, held by visible screws. The crown is faceted and set with a blue cabochon.</p>
       </article>
       <article id="ch-move" aria-labelledby="ch3-h">
         <figure class="plate"><div id="plate-move"></div><figcaption class="plate-cap" data-t="cap_move">Plate IV — The back, on black leather</figcaption></figure>
         <span class="chno">III</span><h2 id="ch3-h" data-t="ch3_h">The movement.</h2>
-        <p data-t="ch3_p">A Japanese automatic movement: no battery, it winds as you wear it, and you see it through the back. One-year warranty on the movement.</p>
+        <p data-t="ch3_p">A Japanese automatic movement: no battery, it winds as you wear it. One-year warranty on the movement.</p>
       </article>
     </div>
   </section>
@@ -508,7 +533,9 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     <div><span class="label" data-t="foot_help">Help</span><ul>
       <li><a href="%%H%%#faq" data-t="nav_faq">Delivery &amp; questions</a></li>
       <li><a href="https://www.instagram.com/avenoir.watches/" target="_blank" rel="noopener noreferrer">Instagram · @avenoir.watches</a></li>
+      <li data-policy hidden><a href="%%H%%delivery.html" data-t="pol" data-pol>Delivery, warranty &amp; returns</a></li>
       <li><a href="%%A%%privacy.html" data-t="privacy">Privacy</a></li>
+      <li><a href="#" data-consent>Analytics choice</a></li>
     </ul></div>
   </div>
 </footer>
@@ -542,8 +569,10 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
         <p class="summary" id="pv-summary"></p>
         <a class="btn wide" id="pv-buy" href="#" target="_blank" rel="noopener noreferrer">Buy now</a>
         <div class="pays"><span>Apple Pay</span><span>Visa</span><span>Mastercard</span><span data-t="byziina">Secured by Ziina</span></div>
+        <p class="pol" data-policy hidden><a href="%%H%%delivery.html" data-pol data-t="pol_full">Delivery, warranty &amp; returns</a></p>
       </div>
       <div class="trust" id="pv-trust"></div>
+      <span class="label spec-h" data-t="specs_h">Specifications</span>
       <dl class="specs" id="pv-specs"></dl>
       <div class="design" id="pv-design" hidden></div>
       <p class="ask"><span data-t="ask">Questions before you buy?</span> <a class="tl" href="https://www.instagram.com/avenoir.watches/" target="_blank" rel="noopener noreferrer" data-t="ask_link">Message us on Instagram</a></p>
@@ -584,9 +613,9 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     buy:'Buy now', aed:'AED', onrequest:'Price on request', cta:'View', total:'Total', byziina:'Secured by Ziina',
     addon:'Add a second strap', ask:'Questions before you buy?', ask_link:'Message us on Instagram', privacy:'Privacy',
     s_size:'Case width', s_crystal:'Crystal', s_move:'Movement', s_case:'Case', s_war:'Warranty', s_strap:'Strap', s_hands:'Hands',
-    standard:'Standard', exclusive:'Exclusive',
-    v_front:'Front', v_side:'Side, crown and thickness', v_back:'Case back and movement', v_clasp:'Folding clasp', v_strap:'Strap and buckle detail', v_crown:'Side and crown',
-    n_black:'shown on black leather', n_bluehands:'shown with blue hands', n_preview:'colour preview: photographed in black leather, colour shown digitally',
+    standard:'Standard', pol:'Delivery, warranty & returns', pol_full:'Delivery, warranty & returns', specs_h:'Specifications', v_macro:'Dial detail', v_dialart:'The dial, before assembly',
+    v_front:'Front', v_side:'Side, crown and thickness', v_back:'Case back', v_clasp:'Folding clasp', v_strap:'Strap and buckle detail', v_crown:'Side and crown',
+    n_black:'shown on black leather', n_bluehands:'shown with blue hands', n_other:'photo of another build of this watch',
     sum_with:'with', sum_extra:'+ second strap:', incl_short:'Strap and UAE delivery included',
     tr_delivery:'<b>Delivery:</b> assembled after you order, delivered across the UAE in 2–3 weeks. Free.',
     worn_alt:'A customer wearing their AVENOIR',
@@ -605,9 +634,9 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     buy:'اطلب الآن', aed:'درهم', onrequest:'السعر عند الطلب', cta:'شوف الساعة', total:'الإجمالي', byziina:'دفع آمن عبر Ziina',
     addon:'أضف سيراً ثانياً', ask:'عندك سؤال قبل الطلب؟', ask_link:'راسلنا على إنستغرام', privacy:'الخصوصية',
     s_size:'عرض العلبة', s_crystal:'الزجاج', s_move:'الحركة', s_case:'العلبة', s_war:'الضمان', s_strap:'السير', s_hands:'العقارب',
-    standard:'الأساسية', exclusive:'الحصرية',
-    v_front:'من الأمام', v_side:'الجنب والتاج والسماكة', v_back:'الظهر والحركة', v_clasp:'القفل القابل للطي', v_strap:'تفاصيل السير والإبزيم', v_crown:'الجنب والتاج',
-    n_black:'الصورة على الجلد الأسود', n_bluehands:'الصورة بالعقارب الزرقاء', n_preview:'معاينة للون: الصورة الأصلية على الجلد الأسود واللون معروض رقمياً',
+    standard:'الأساسية', pol:'التوصيل والضمان والاسترجاع', pol_full:'التوصيل والضمان والاسترجاع', specs_h:'المواصفات', v_macro:'تفاصيل المينا', v_dialart:'المينا قبل التركيب',
+    v_front:'من الأمام', v_side:'الجنب والتاج والسماكة', v_back:'ظهر الساعة', v_clasp:'القفل القابل للطي', v_strap:'تفاصيل السير والإبزيم', v_crown:'الجنب والتاج',
+    n_black:'الصورة على الجلد الأسود', n_bluehands:'الصورة بالعقارب الزرقاء', n_other:'صورة لإصدار آخر من هذه الساعة',
     sum_with:'مع', sum_extra:'+ سير ثانٍ:', incl_short:'السير والتوصيل داخل الإمارات ضمن السعر',
     hero_label:'MONTI 38 · ستيل · أوتوماتيك', hero_h:'الوقت، <em>بتوقيع أحمر.</em>', hero_p:'علبة ستيل مربعة، أرقام رومانية، وعبارة TIME IS MONEY مكتوبة بالأحمر على الميناء.',
     incl:'السعر يشمل السير والتوصيل داخل الإمارات.', f_delivery:'تُجمَّع في الإمارات بعد طلبك، وتوصلك خلال 2–3 أسابيع.', f_war:'ضمان سنة على المكينة.', f_pay:'ادفع بالبطاقة أو Apple Pay عبر Ziina.',
@@ -645,17 +674,19 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   });
   Object.assign(EN, { choose_ver:'Choose your version', st_inc:'Included', st_extra:'Second strap', x_removed:'Your second strap became your main strap, so it was removed from the extras.',
     hero_label:'MONTI · Standard', coll_label:'AVENOIR', coll_h:'The collection' });
-  Object.assign(AR, { issue:'العدد 01', issue_r:'ستيل · حركة أوتوماتيكية يابانية', cap_cover:'لوحة I — مونتي، جلد أسود', cap_dial:'لوحة II — المينا، بتفاصيل الصورة الأصلية', cap_case:'لوحة III — الجانب، على الجلد الأسود', cap_move:'لوحة IV — الظهر، على الجلد الأسود',
+  Object.assign(AR, { issue:'الإصدار 01', issue_r:'ستيل · حركة أوتوماتيكية يابانية', cap_cover:'لوحة I — مونتي، جلد أسود', cap_dial:'لوحة II — المينا، بتفاصيل الصورة الأصلية', cap_case:'لوحة III — الجانب، على الجلد الأسود', cap_move:'لوحة IV — الظهر، على الجلد الأسود',
     ch1:'المينا', ch2:'الهيكل', ch3:'الحركة', ch4:'السوار والسيور', ch5:'المجموعة', ch1_h:'المينا.', ch2_h:'الهيكل.', ch3_h:'الحركة.',
     d1_h:'أرقام رومانية', d1_p:'أرقام سوداء حول إطار دقائق، على مينا عاجية.', d2_h:'TIME IS MONEY', d2_p:'مكتوبة بالأحمر في المنتصف: توقيع كل ساعة AVENOIR.', d3_h:'عقارب زرقاء', d3_p:'عقارب الساعات والدقائق والثواني بالأزرق، على محور واحد.', d4_h:'حرف A', d4_p:'شعار AVENOIR تحت الساعة الثانية عشرة.',
-    ch2_p:'هيكل مربع من الستيل بكتفين منحنيين، مثبت ببراغي ظاهرة، وتاج مضلّع يتوسطه حجر أزرق.', ch3_p:'حركة أوتوماتيكية يابانية تعمل دون بطارية وتُشحن بحركة المعصم، وتظهر من الظهر الشفاف. ضمان لمدة سنة على الحركة.',
+    ch2_p:'هيكل مربع من الستيل بكتفين منحنيين، مثبت ببراغي ظاهرة، وتاج مضلّع يتوسطه حجر أزرق.', ch3_p:'حركة أوتوماتيكية يابانية تعمل دون بطارية وتُشحن بحركة المعصم. ضمان لمدة سنة على الحركة.',
     hero_p:'هيكل مربع من الستيل، أرقام رومانية، وعبارة TIME IS MONEY بالأحمر على المينا.', choose_ver:'اختر نسختك', st_inc:'ضمن السعر', st_extra:'سير ثانٍ', x_removed:'أصبح السير الثاني هو السير الأساسي، فأزلناه من الإضافات.',
-    hero_label:'مونتي · Standard', coll_label:'AVENOIR', coll_h:'المجموعة',
-    str_h:'السوار والسيور.', str_p:'نسخة Standard تأتي بسوار ستيل أو جلد أسود. ويمكن إضافة سير ثانٍ واحد بـ <span class="num" data-extra>149 درهم</span>.' });
+    hero_label:'مونتي · النسخة الأساسية', coll_label:'AVENOIR', coll_h:'المجموعة',
+    str_h:'السوار والسيور.', str_p:'النسخة الأساسية تأتي بسوار ستيل أو جلد أسود. ويمكن إضافة سير ثانٍ واحد بـ <span class="num" data-extra>149 درهم</span>.' });
   Object.assign(EN, { str_h:'Bracelet and straps.', str_p:'Standard comes on the steel bracelet or black leather. You can add one second strap for <span class="num" data-extra>AED 149</span>.' });
-  for (const k in AR) if (typeof AR[k] === 'string') AR[k] = AR[k].replace(/TIME IS MONEY/g, '\u2066TIME IS MONEY\u2069');
+  for (const k in AR) if (typeof AR[k] === 'string') AR[k] = AR[k].replace(/TIME IS MONEY/g, '\u2066TIME IS MONEY\u2069').replace(/(\d+)–(\d+)/g, '\u2066$1–$2\u2069');
   Object.assign(EN, { tr_pay:'<b>Payment:</b> card or Apple Pay through Ziina. The final price includes delivery in the UAE.', tr_help:'<b>Contact:</b> direct contact on Instagram, before and after you buy.' });
   let lang = 'en'; try { lang = localStorage.getItem('avn-lang') || 'en'; } catch (e) {}
+  { const ql = new URLSearchParams(location.search).get('lang'); if (ql === 'ar' || ql === 'en') { lang = ql; try { localStorage.setItem('avn-lang', lang); } catch (e) {} } }
+  const SOLO = document.documentElement.classList.contains('solo');   // watch/<model>/ opened as its own page
   const t = k => lang === 'ar' ? (AR[k] ?? EN[k] ?? '') : (EN[k] ?? '');
 
   /* only approved facts are published; anything null stays off the site until it is approved */
@@ -665,7 +696,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     { q:['How do I pay?','كيف أدفع؟'], a:['By card or Apple Pay on Ziina’s secure payment page. We never see your card details.','بالبطاقة أو Apple Pay عبر صفحة الدفع الآمنة من Ziina، ولا نطّلع على بيانات بطاقتك.'] },
     { q:['How do I follow my order?','كيف أتابع طلبي؟'], a:['After payment you see your order number. We call your mobile to arrange the delivery day, and you can message us on Instagram with your order number at any time.','بعد الدفع يظهر لك رقم الطلب، ونتواصل معك على جوالك لترتيب موعد التوصيل. ويمكنك مراسلتنا على إنستغرام برقم الطلب في أي وقت.'] },
     { q:['Is there a warranty?','هل يوجد ضمان؟'], a:['Yes: one year on the movement.','نعم، ضمان لمدة سنة على الحركة.'] },
-    // Waiting for approval (draft only, not shown): warranty length and cover, exchange and returns, what is in the box.
+    { q:['Delivery, warranty and returns in full','التوصيل والضمان والاسترجاع بالتفصيل'], a:['Delivery times, cancelling, returns, damaged watches and the warranty are on one page:','مواعيد التوصيل والإلغاء والاسترجاع والساعات التالفة والضمان في صفحة واحدة:'], link:true },
   ];
 
   /* ---------- catalogue: options must match the checkout server ---------- */
@@ -676,43 +707,46 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
       sub:'Square steel case with visible screws, an ivory dial with Roman numerals and TIME IS MONEY in red, and a blue cabochon crown.',
       subAr:'هيكل مربع من الستيل ببراغي ظاهرة، وميناء عاجي بأرقام رومانية وعبارة TIME IS MONEY بالأحمر، وتاج يتوسطه حجر أزرق.',
       groups:[
+        // leather colours other than black have no photograph yet, so they are shown as a colour sample, never as an edited photo
         { id:'strap', en:'Strap', ar:'السير', extra:true, opts:[ o('bracelet','Steel bracelet','سوار ستيل','linear-gradient(135deg,#e2e3e4,#9fa2a5)','monte-front-bracelet-blue-hands'),
-          o('black','Black leather','جلد أسود','#151515','monte-strap-black-leather'), o('brown','Cognac leather','جلد بني','#8a4a22','monte-strap-brown-leather'),
-          o('navy','Navy leather','جلد كحلي','#1d2f73','monte-strap-navy-leather'), o('green','Green leather','جلد أخضر','#1f4a32','monte-strap-green-leather'),
-          o('cream','Ivory leather','جلد عاجي','#ece3cc','monte-strap-cream-leather'), o('white','White leather','جلد أبيض','#ffffff','monte-strap-white-leather') ] },
+          o('black','Black leather','جلد أسود','#151515','monte-strap-black-leather'), o('brown','Cognac leather','جلد بني','#8a4a22'),
+          o('navy','Navy leather','جلد كحلي','#1d2f73'), o('green','Green leather','جلد أخضر','#1f4a32'),
+          o('cream','Ivory leather','جلد عاجي','#ece3cc'), o('white','White leather','جلد أبيض','#ffffff') ] },
         { id:'hands', en:'Hands', ar:'العقارب', hint:['Blue hands pick up the blue crown; silver hands are quieter.','العقارب الزرقاء تتماشى مع التاج الأزرق، والفضية أهدأ.'],
           opts:[ o('blue','Blue','زرقاء','#2443a8'), o('silver','Polished silver','فضية لامعة','linear-gradient(135deg,#f0f0f0,#a8abae)') ] } ],
       card:'monte-front-black-leather', sketch:'monte-sketch-front',
-      gallery:s => {
-        const c = s.strap;
-        // only photos of the chosen strap: no black-leather shots on other straps
-        if (c === 'bracelet') return [ ['front', `monte-front-bracelet-${s.hands}-hands`, []] ];
-        const hand = s.hands !== 'blue' ? ['n_bluehands'] : [];
-        if (c === 'black') return [ ['front', 'monte-front-black-leather', hand], ['side', 'monte-side-black-leather', []], ['back', 'monte-caseback-black-leather', []], ['clasp', 'monte-clasp-black-leather', []], ['strap', 'monte-strap-black-leather', []] ];
-        return [ ['front', `monte-front-${c}-leather`, hand], ['back', `monte-caseback-${c}-leather`, []], ['strap', `monte-strap-${c}-leather`, []] ]; } },
+      // five angles: front, side and crown, case back, clasp, dial detail. A missing angle is left out (see docs/MISSING-ASSETS.md),
+      // never filled with a photo of another strap, hand colour or watch.
+      slots:s => {
+        const blue = s.hands === 'blue';
+        if (s.strap === 'bracelet') return { front: `monte-front-bracelet-${s.hands}-hands`, side: null, back: null, clasp: null, macro: blue ? 'monte-dial-macro' : null };
+        if (s.strap === 'black') return { front: blue ? 'monte-front-black-leather' : null, side: 'monte-side-black-leather', back: 'monte-caseback-black-leather', clasp: 'monte-clasp-black-leather', macro: blue ? 'monte-dial-macro' : null };
+        return { front: null, side: null, back: null, clasp: null, macro: blue ? 'monte-dial-macro' : null }; } },
     lumi: { line:['The smaller square, in light pink','المربع الأصغر، بالوردي الفاتح'], for:'women', scale:1, spec:{ crystal:['Sapphire','سافاير'], move:['Japanese automatic','حركة أوتوماتيكية يابانية'], case:['Stainless steel, integrated bracelet','ستيل، سوار مدمج'] },
       sub:'The smaller square: steel bracelet, ivory dial and TIME IS MONEY in light pink.', subAr:'المربع الأصغر: سوار ستيل، ميناء عاجي، وعبارة TIME IS MONEY بالوردي الفاتح.',
       groups:[ { id:'hands', en:'Hands', ar:'العقارب', opts:[ o('blue','Blue','زرقاء','#2443a8'), o('silver','Silver','فضية','linear-gradient(135deg,#f0f0f0,#a8abae)') ] } ],
       card:'lumi-front-blue-hands', sketch:'lumi-sketch-front',
-      gallery:s => [ ['front', `lumi-front-${s.hands}-hands`, []], ['crown', 'lumi-crown-profile', []], ['clasp', 'lumi-clasp', []] ] },
+      slots:s => ({ front: `lumi-front-${s.hands}-hands`, side: 'lumi-crown-profile', back: null, clasp: 'lumi-clasp', macro: ['lumi-dial-macro', 'v_dialart'] }) },
     rayo: { line:['Steel chronograph','كرونوغراف من الستيل'], for:'men', scale:1.12, spec:{ case:['Stainless steel, chronograph, tachymeter bezel','ستيل، كرونوغراف، إطار تاكيميتر'] },
       sub:'A chronograph with three sub-dials and a tachymeter bezel.', subAr:'كرونوغراف بثلاث موانئ فرعية وإطار تاكيميتر.',
       groups:[ { id:'colour', en:'Colour', ar:'اللون', opts:[ o('gold-ice-black','Ice blue, gold, black rubber','أزرق ثلجي، ذهبي، مطاط أسود','linear-gradient(135deg,#a9d3ea 50%,#d4b264 50%)','rayo-front-gold-ice-black'), o('gold-navy-navy','Navy, gold, navy rubber','كحلي، ذهبي، مطاط كحلي','linear-gradient(135deg,#1b2a55 50%,#d4b264 50%)','rayo-front-gold-navy-navy'), o('silver-black-steel','Black, steel','أسود، ستيل','linear-gradient(135deg,#151515 50%,#c9cbcd 50%)','rayo-front-silver-black-steel'), o('silver-white-steel','White, steel','أبيض، ستيل','linear-gradient(135deg,#f6f6f4 50%,#151515 50%)','rayo-front-silver-white-steel'), o('silver-ice-steel','Ice blue, steel','أزرق ثلجي، ستيل','linear-gradient(135deg,#a9d3ea 50%,#c9cbcd 50%)','rayo-front-silver-ice-steel'), o('silver-white-bluehands-steel','White, blue hands, steel','أبيض، عقارب زرقاء، ستيل','linear-gradient(135deg,#f6f6f4 50%,#2443a8 50%)','rayo-front-silver-white-bluehands-steel') ] } ],
       extras:[ o('navy-rubber','Navy rubber','مطاط كحلي','#1b2a55'), o('steel','Steel bracelet','سوار ستيل','linear-gradient(135deg,#e2e3e4,#9fa2a5)') ],
       card:'rayo-front-silver-black-steel',
-      gallery:s => [ ['front', `rayo-front-${s.colour}`, []] ] },
+      slots:s => ({ front: `rayo-front-${s.colour}`, side: null, back: null, clasp: null, macro: null }) },
     bloom: { line:['Fluted bezel, date at three','إطار مضلّع وتاريخ عند الثالثة'], for:'women', scale:.94, spec:{ crystal:['Sapphire','سافاير'], move:['Japanese automatic','حركة أوتوماتيكية يابانية'] },
       sub:'Fluted bezel, Roman numerals and a date at three.', subAr:'إطار مضلّع، أرقام رومانية، وتاريخ عند الساعة الثالثة.',
       groups:[ { id:'dial', en:'Dial', ar:'الميناء', opts:[ o('pink','Rose pink','وردي','#e49a8e','bloom-front-pink'), o('white','Ivory and gold','عاجي وذهبي','#efe8d6','bloom-front-white'), o('blue','Ice blue and gold','أزرق ثلجي وذهبي','#a9d3ea','bloom-front-blue') ] } ],
       card:'bloom-front-pink',
-      gallery:s => [ ['front', `bloom-front-${s.dial}`, []] ] },
+      slots:s => ({ front: `bloom-front-${s.dial}`, side: null, back: null, clasp: null, macro: null }) },
     timeless: { for:'all', scale:1, groups:[] }
   };
   const ORDER = ['monti','lumi','rayo','bloom','timeless'];
+  const ANGLES = ['front', 'side', 'back', 'clasp', 'macro'];
+  // gallery = the angles that exist for this exact build, in a fixed order; [view, image id, notes]
+  for (const k of ORDER) if (W[k].slots) W[k].gallery = s => { const sl = W[k].slots(s); const g = ANGLES.filter(a => sl[a]).map(a => Array.isArray(sl[a]) ? [sl[a][1].slice(2), sl[a][0], []] : [a, sl[a], []]);
+    return g.length ? g : [['front', W[k].card, ['n_other']]]; };   // only for builds that cannot be sold today
   for (const k of ORDER) Object.assign(W[k], { name: C[k].name, size: C[k].size, price: C[k].price, soon: !C[k].active });
-  // Packages: Standard is the watch as sold today. Exclusive stays switched off until its extras are confirmed.
-  // Packages (MONTI Standard / Exclusive) come from products.tiers, the same data checkout prices from.
-  // A package that is not enabled is never shown or sold.
+  // Packages come from products.tiers, the same data checkout prices from. A package that is not switched on is never shown or sold.
   const TIERS = DATA.catalog.tiers || {};
   const tierOn = k => Object.entries(TIERS[k] || {}).filter(([, v]) => v.enabled);
   const tierOf = k => { const on = tierOn(k); if (!on.length) return null; const f = on.find(([id]) => id === state[k].tier) || on[0]; state[k].tier = f[0]; return f[1]; };
@@ -721,8 +755,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   const maxExtras = k => { const t = tierOf(k); return t ? (t.max_extras ?? 1) : 9; };
   const TIER_TXT = {
     standard: { en: ['The original MONTI design, in ready combinations.', ['Original dial and blue hands', 'Steel bracelet or black leather', 'UAE delivery included', '1-year warranty on the movement']],
-                ar: ['تصميم مونتي الأصلي، باختيارات جاهزة.', ['المينا الأصلية والعقارب الزرقاء', 'سوار ستيل أو جلد أسود', 'التوصيل داخل الإمارات ضمن السعر', 'ضمان لمدة سنة على الحركة']] },
-    exclusive: { en: ['MONTI with your signature: selected colours and personal details.', []], ar: ['مونتي بتوقيعك، بألوان مختارة وتفاصيل شخصية.', []] } };
+                ar: ['تصميم مونتي الأصلي، باختيارات جاهزة.', ['المينا الأصلية والعقارب الزرقاء', 'سوار ستيل أو جلد أسود', 'التوصيل داخل الإمارات ضمن السعر', 'ضمان لمدة سنة على الحركة']] } };
 
   const state = {}; ORDER.forEach(k => { state[k] = { _x: [], _open: false, _i: 0, tier: 'standard', _note: '' }; W[k].groups.forEach(g => state[k][g.id] = g.opts[0].id); });
   state.monti.strap = 'bracelet';
@@ -759,28 +792,33 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
       const n = grid.children.length + 1;
       grid.append(el('li', {}, [ el('a', { class: 'card', href: new URL(`watch/${k}/`, HOME).href, 'data-open': k }, [
         el('span', { class: 'ix num', text: String(n).padStart(2, '0') }),
-        el('span', { class: 'th', style: `--s:${w.scale}` }, [ pic(w.card, '88px', '') ]),
-        el('span', { class: 'nm' }, [ el('b', { text: w.name }), el('small', { text: L({ en: w.line[0], ar: w.line[1] }) }) ]),
-        el('span', { class: 'pr num' }, [ document.createTextNode((tierOf(k) ? 'Standard · ' : '') + fmt(priceOf(k))), el('small', { text: t('cta') }) ])
+        el('span', { class: 'th sk', style: `--s:${w.scale}` }, [ pic(w.card, '(max-width:360px) 112px, (max-width:700px) 132px, 168px', `${w.name}, ${lang === 'ar' ? 'من الأمام' : 'front view'}`) ]),
+        el('span', { class: 'nm' }, [ el('b', { text: w.name }), el('small', { text: L({ en: w.line[0], ar: w.line[1].replace(/TIME IS MONEY/g, '\u2066TIME IS MONEY\u2069') }) }),
+        el('span', { class: 'pr' }, [ el('span', { class: 'num', text: (tierOf(k) ? t(state[k].tier) + ' · ' : '') + fmt(priceOf(k)) }), el('span', { class: 'go', html: `${t('cta')}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>` }) ]) ])
       ]) ]));
     });
     document.querySelectorAll('.filter').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.f === filter)));
     document.querySelectorAll('[data-price]').forEach(n => n.textContent = fmt(priceOf(n.dataset.price)));
     document.querySelectorAll('[data-extra]').forEach(n => n.textContent = fmt(EXTRA));
     const fw = document.getElementById('footw'); fw.replaceChildren(...ORDER.filter(k => !W[k].soon).map(k => el('li', {}, [ el('a', { href: new URL(`watch/${k}/`, HOME).href, 'data-open': k, text: `${title(k)} · ${fmt(priceOf(k))}` }) ])));
-    observe();
+    skeletons(); observe();
   }
+  // ivory skeleton until each picture has loaded
+  function skeletons() { document.querySelectorAll('.sk:not(.ok)').forEach(b => { const im = b.querySelector('img'); if (!im) return; const on = () => b.classList.add('ok'); if (im.complete && im.naturalWidth) on(); else { im.addEventListener('load', on, { once: true }); im.addEventListener('error', on, { once: true }); } }); }
   function renderHomeDetails() {
     document.getElementById('plate-case').replaceChildren(pic('monte-side-black-leather', '(min-width:800px) 440px, 92vw', 'MONTI, profile with crown'));
     document.getElementById('plate-move').replaceChildren(pic('monte-caseback-black-leather', '(min-width:800px) 440px, 92vw', 'MONTI, see-through back with the movement'));
     const sg = W.monti.groups[0];
     const inc = allowed('monti', sg).map(x => x.id);
     document.getElementById('straprow').replaceChildren(...sg.opts.map(x => { const q = inc.includes(x.id) ? `strap=${x.id}` : `strap=black&x=${x.id}`;
-      return el('a', { class: 'stile' + (x.id === 'bracelet' ? ' br' : ''), href: new URL(`watch/monti/?${q}`, HOME).href, 'data-open': 'monti', 'data-preset': q }, [ el('div', { class: 'sp' }, [ pic(x.img, '160px', '') ]), el('span', { text: L(x) }), el('small', { text: inc.includes(x.id) ? t('st_inc') : `+ ${fmt(EXTRA)}` }) ]); }));
+      return el('a', { class: 'stile' + (x.id === 'bracelet' ? ' br' : ''), href: new URL(`watch/monti/?${q}`, HOME).href, 'data-open': 'monti', 'data-preset': q }, [ x.img ? el('div', { class: 'sp sk' }, [ pic(x.img, '160px', L(x)) ]) : el('div', { class: 'sp sw', role: 'img', 'aria-label': `${L(x)} (${lang === 'ar' ? 'عيّنة لون' : 'colour sample'})` }, [ el('i', { style: `background:${x.sw}` }) ]), el('span', { text: L(x) }), el('small', { text: inc.includes(x.id) ? t('st_inc') : `+ ${fmt(EXTRA)}` }) ]); }));
     document.getElementById('wstrip').replaceChildren(...Array.from({ length: 12 }, (_, i) => { const n = String(i + 1).padStart(2, '0'); return el('figure', {}, [ el('picture', {}, [ el('source', { type: 'image/webp', srcset: `${A}img/customers/c${n}.webp` }), el('img', { src: `${A}img/customers/c${n}.jpg`, width: 320, height: 400, alt: t('worn_alt'), loading: 'lazy', decoding: 'async' }) ]) ]); }));
-    document.getElementById('faqlist').replaceChildren(...FAQ.map(f => el('details', {}, [ el('summary', { text: L({ en: f.q[0], ar: f.q[1] }) }), el('p', { text: L({ en: f.a[0], ar: f.a[1] }) }) ])));
+    document.getElementById('faqlist').replaceChildren(...FAQ.filter(f => !f.link || DATA.policy).map(f => el('details', {}, [ el('summary', { text: L({ en: f.q[0], ar: f.q[1] }) }), el('p', {}, [ document.createTextNode(L({ en: f.a[0], ar: f.a[1] }) + ' '), f.link ? el('a', { href: policyHref(), 'data-pol': '', text: t('pol') }) : null ]) ])));
+    document.querySelectorAll('[data-policy]').forEach(n => n.hidden = !DATA.policy); document.querySelectorAll('a[data-pol]').forEach(a => a.href = policyHref());
   }
   function setFilter(f) { filter = f; renderGrid(); }
+  // the policy page opens in the same language and its Back link returns to the watch, with the same choices
+  const policyHref = () => { const u = new URL('delivery.html', HOME); u.searchParams.set('lang', lang); if (cur) u.searchParams.set('from', `watch/${cur}/?${optQuery(cur)}`); return u.href; };
   document.querySelectorAll('.filter').forEach(b => b.addEventListener('click', () => setFilter(b.dataset.f)));
 
   /* live prices / availability from the products table (the same source checkout charges from) */
@@ -790,7 +828,8 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
       if (p.active && p.price_aed != null && w.price !== p.price_aed) { w.price = p.price_aed; changed = true; }
       if (!p.active && !w.soon) { w.soon = true; changed = true; }
       if (p.extra_strap_aed && p.extra_strap_aed !== EXTRA) { EXTRA = p.extra_strap_aed; changed = true; }
-      if (p.tiers && JSON.stringify(p.tiers) !== JSON.stringify(TIERS[p.key])) { TIERS[p.key] = p.tiers; changed = true; } });
+      const on = p.tiers ? Object.fromEntries(Object.entries(p.tiers).filter(([, v]) => v && v.enabled)) : null;   // switched-off packages are dropped
+      if (on && JSON.stringify(on) !== JSON.stringify(TIERS[p.key] || {})) { TIERS[p.key] = on; changed = true; } });
     if (changed) for (const k of ORDER) sanitize(k);
     if (changed) { renderGrid(); renderHomeDetails(); if (cur) { renderPV(); syncURL(); } }
   }).catch(() => {});
@@ -843,14 +882,14 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     return el('div', { class: 'grp' }, [
       el('div', { class: 'grp-h' }, [ el('span', { class: 'label', id: `g-${g.id}`, text: L(g) }), el('b', { text: L(chosen) }) ]),
       el('div', { class: 'opts' + (visual ? '' : ' txt'), role: 'radiogroup', 'aria-labelledby': `g-${g.id}`, onkeydown: keys }, g.opts.map(x => el('button', { type: 'button', role: 'radio', class: 'opt' + (x.id === 'bracelet' ? ' br' : ''), 'aria-checked': String(s[g.id] === x.id), tabindex: s[g.id] === x.id ? '0' : '-1', onclick: () => pick(x) }, [
-        visual ? el('span', { class: 'ti' }, [ pic(x.img, '120px', '') ]) : el('i', { style: `background:${x.sw}` }), el('span', { text: L(x) }) ]))),
+        visual ? (x.img ? el('span', { class: 'ti' }, [ pic(x.img, '120px', L(x)) ]) : el('span', { class: 'ti dot' }, [ el('i', { style: `background:${x.sw}` }) ])) : el('i', { style: `background:${x.sw}` }), el('span', { text: L(x), 'aria-hidden': visual && x.img ? 'true' : null }) ]))),
     ]);
   }
   function tierCards(k, tiers, s) {
     return el('div', { class: 'grp' }, [ el('span', { class: 'label', id: 'g-tier', text: t('choose_ver') }),
       el('div', { class: 'tiers', role: 'radiogroup', 'aria-labelledby': 'g-tier' }, tiers.map(([id, v]) => { const tx = TIER_TXT[id]?.[lang] || ['', []];
         return el('button', { type: 'button', role: 'radio', class: 'tier', 'aria-checked': String(s.tier === id), onclick: () => { s.tier = id; sanitize(k); renderPV(); syncURL(); } }, [
-          el('span', { class: 'th' }, [ el('b', { text: id === 'standard' ? 'Standard' : 'Exclusive' }), el('span', { class: 'num', text: fmt(v.price) }) ]), el('span', { class: 'tl1', text: tx[0] }),
+          el('span', { class: 'th' }, [ el('b', { text: t(id) || id }), el('span', { class: 'num', text: fmt(v.price) }) ]), el('span', { class: 'tl1', text: tx[0] }),
           el('ul', {}, tx[1].map(f => el('li', { text: f }))) ]); })) ]);
   }
   // keep a build valid for its package (e.g. Standard: bracelet or black, blue hands, one extra strap)
@@ -862,7 +901,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     const k = cur, w = W[k], s = state[k];
     document.getElementById('pv-spec').textContent = mm(k);
     document.getElementById('pv-name').textContent = title(k);
-    document.getElementById('pv-price').textContent = (tierOf(k) ? 'Standard · ' : '') + fmt(priceOf(k));
+    document.getElementById('pv-price').textContent = (tierOf(k) ? t(s.tier) + ' · ' : '') + fmt(priceOf(k));
     document.getElementById('pv-sub').textContent = lang === 'ar' ? w.subAr.replace(/TIME IS MONEY/g, '\u2066TIME IS MONEY\u2069') : w.sub;
     renderGallery();
     const box = document.getElementById('pv-groups'); box.replaceChildren();
@@ -876,14 +915,15 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     tog.setAttribute('aria-expanded', String(s._open || s._x.length > 0)); opts.hidden = !(s._open || s._x.length > 0);
     opts.className = 'opts' + (ex.some(x => x.img) ? '' : ' txt');
     opts.replaceChildren(...ex.map(x => el('button', { type: 'button', class: 'opt', role: maxExtras(k) === 1 ? 'radio' : 'checkbox', 'aria-checked': String(s._x.includes(x.id)), onclick: () => { s._note = ''; s._x = s._x.includes(x.id) ? s._x.filter(i => i !== x.id) : (maxExtras(k) === 1 ? [x.id] : [...s._x, x.id]); renderPV(); syncURL(); } }, [
-      x.img ? el('span', { class: 'ti' }, [ pic(x.img, '120px', '') ]) : el('i', { style: `background:${x.sw}` }), el('span', { text: L(x) }) ])));
+      ex.some(e => e.img) ? (x.img ? el('span', { class: 'ti' }, [ pic(x.img, '120px', L(x)) ]) : el('span', { class: 'ti dot' }, [ el('i', { style: `background:${x.sw}` }) ])) : el('i', { style: `background:${x.sw}` }), el('span', { text: L(x), 'aria-hidden': x.img ? 'true' : null }) ])));
     // specs: size, crystal, movement, case, and the chosen options in words
     const sp = document.getElementById('pv-specs'); sp.replaceChildren();
-    const rows = [['s_size', mm(k)], ['s_crystal', VER[k]?.crystal && w.spec.crystal && L({ en: w.spec.crystal[0], ar: w.spec.crystal[1] })], ['s_move', w.spec.move && L({ en: w.spec.move[0], ar: w.spec.move[1] })], ['s_case', w.spec.case && L({ en: w.spec.case[0], ar: w.spec.case[1] })], ['s_war', L({ en: '1 year on the movement', ar: 'سنة على الحركة' })]];
-    rows.filter(r => r[1]).forEach(([a, b]) => sp.append(el('dt', { text: t(a) }), el('dd', { text: b })));
+    const SP = DATA.specs, ms = SP.models[k] || {};
+    SP.fields.filter(f => ms[f]).forEach(f => sp.append(el('dt', { text: L({ en: SP.labels[f][0], ar: SP.labels[f][1] }) }), el('dd', { text: L(ms[f]) })));
     const chosenWords = w.groups.map(g => L(g.opts.find(x => x.id === s[g.id]))).join(' · ');
     const extraWords = s._x.map(id => L(ex.find(x => x.id === id) || { en: id, ar: id })).join(', ');
-    const summary = `${title(k)}${tierOf(k) ? ' Standard' : ''} · ${chosenWords}${extraWords ? ` · ${t('sum_extra')} ${extraWords}` : ''}`;
+    const AR_NAME = { monti: 'مونتي', lumi: 'لومي', rayo: 'رايو', bloom: 'بلوم' };   // Arabic summary in Arabic only, so it never reads in the wrong order
+    const summary = `${lang === 'ar' ? (AR_NAME[k] || title(k)) : title(k)}${tierOf(k) ? ' ' + t(s.tier) : ''} · ${chosenWords}${extraWords ? ` · ${t('sum_extra')} ${extraWords}` : ''}`;
     document.getElementById('pv-summary').textContent = summary;
     const tot = fmt(total(k));
     document.getElementById('pv-total').textContent = tot;
@@ -895,8 +935,11 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     document.getElementById('pv-trust').innerHTML = ['tr_delivery', 'tr_war', 'tr_pay', 'tr_after', 'tr_help'].map((x, i) => `<div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">${['<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/>', '<path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/>', '<rect x="4" y="10" width="16" height="10" rx="1.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>', '<path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/>', '<path d="M4 5h16v11H8l-4 4z"/>'][i]}</svg><span>${t(x)}</span></div>`).join('');
     const ds = document.getElementById('pv-design');
     ds.hidden = !w.sketch;
-    if (w.sketch) ds.replaceChildren(el('span', { class: 'label', text: t('design_h') }), el('div', { class: 'frame' }, [ pic(w.sketch, '340px', t('design_cap')) ]), el('small', { text: t('design_cap').replace('MONTI', w.name) }));
+    const cap = t('design_cap').replace('MONTI', w.name);
+    if (w.sketch) ds.replaceChildren(el('span', { class: 'label', text: t('design_h') }), el('div', { class: 'frame' }, [ pic(w.sketch, '340px', cap) ]), el('small', { text: cap }));
     document.title = `${title(k)} · ${fmt(priceOf(k))} · AVENOIR`;
+    setMeta(lang === 'ar' && SOLO ? DATA.meta.ar[1] : lang === 'ar' ? (w.subAr || '') : (w.sub || ''));
+    document.querySelectorAll('a[data-pol]').forEach(a => a.href = policyHref());
   }
   document.getElementById('addon-toggle').addEventListener('click', () => { state[cur]._open = !(state[cur]._open || state[cur]._x.length); if (!state[cur]._open) { state[cur]._x = []; syncURL(); } renderPV(); });
 
@@ -913,15 +956,15 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     if (!W[k] || W[k].soon) return;
     if (q) applyQuery(k, q);
     cur = k; galKey = ''; lastFocus = lastFocus || document.activeElement;
-    pv.hidden = false; outside.forEach(n => n && (n.inert = true)); document.body.style.overflow = 'hidden';
+    pv.hidden = false; if (!SOLO) { outside.forEach(n => n && (n.inert = true)); document.body.style.overflow = 'hidden'; }
     renderPV(); pv.scrollTop = 0;
     if (how === 'push') history.pushState({ pv: k }, '', watchURL(k)); else history.replaceState({ pv: k }, '', watchURL(k)); // the address always shows the build actually chosen
-    document.getElementById('pv-name').focus({ preventScroll: true });
+    if (!SOLO) document.getElementById('pv-name').focus({ preventScroll: true });
   }
   function closePV(how = 'push') {
     if (pv.hidden) return;
     pv.hidden = true; cur = null; outside.forEach(n => n && (n.inert = false)); document.body.style.overflow = '';
-    document.title = 'AVENOIR · Steel watches assembled in the UAE';
+    document.title = DATA.meta[lang === 'ar' ? 'ar' : 'en'][0]; setMeta(DATA.meta[lang === 'ar' ? 'ar' : 'en'][1]);
     if (how === 'push') history.pushState({}, '', new URL('#watches', HOME).href);
     lastFocus?.focus?.(); lastFocus = null;
   }
@@ -930,12 +973,13 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     const m = location.pathname.match(/\/watch\/([a-z]+)\/?$/);
     if (m && W[m[1]]) openPV(m[1], 'none', location.search); else closePV('none');
   }
-  addEventListener('popstate', route);
-  document.getElementById('pv-close').addEventListener('click', e => { e.preventDefault(); if (history.state && history.state.pv && history.length > 1 && sessionStorage.getItem('avn-in') === '1') history.back(); else closePV('push'); });
+  const setMeta = d => { const m = document.querySelector('meta[name="description"]'); if (m && d) m.setAttribute('content', d); };
+  if (!SOLO) addEventListener('popstate', route);
+  document.getElementById('pv-close').addEventListener('click', e => { if (SOLO) return; e.preventDefault(); if (history.state && history.state.pv && history.length > 1 && sessionStorage.getItem('avn-in') === '1') history.back(); else closePV('push'); });
   try { sessionStorage.setItem('avn-in', '1'); } catch (e) {}
   // any link to a watch opens in place (plain links still work without JavaScript)
   document.addEventListener('click', e => {
-    const a = e.target.closest('[data-open]'); if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.button > 0) return;
+    const a = e.target.closest('[data-open]'); if (SOLO || !a || e.metaKey || e.ctrlKey || e.shiftKey || e.button > 0) return;   // on a watch page every watch link is a real page
     e.preventDefault(); lastFocus = a; closeMenu(); openPV(a.dataset.open, 'push', a.dataset.preset || '');
   });
 
@@ -969,7 +1013,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   }
   document.getElementById('notice-close').addEventListener('click', () => { notice.hidden = true; });
   document.getElementById('notice-ig').addEventListener('click', () => { const r = document.getElementById('notice-ref').textContent; if (r) { try { navigator.clipboard.writeText(r).catch(() => {}); } catch (e) {} } });
-  addEventListener('keydown', e => { if (e.key !== 'Escape') return; if (!notice.hidden) notice.hidden = true; else if (!pv.hidden) document.getElementById('pv-close').click(); else closeMenu(); });
+  addEventListener('keydown', e => { if (e.key !== 'Escape') return; if (!notice.hidden) notice.hidden = true; else if (!pv.hidden && !SOLO) document.getElementById('pv-close').click(); else closeMenu(); });
 
   /* ---------- zoom: only as far as the photograph really has detail ---------- */
   document.addEventListener('click', e => { const f = e.target.closest('.slide .frame'); if (!f || !matchMedia('(min-width:960px)').matches) return;
@@ -988,7 +1032,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     document.documentElement.lang = lang; document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     document.querySelectorAll('[data-t]').forEach(n => { if (n.dataset.en == null) n.dataset.en = n.innerHTML; n.innerHTML = (lang === 'ar' && AR[n.dataset.t]) ? AR[n.dataset.t] : n.dataset.en; });
     ['lang', 'lang2'].forEach(id => { const b = document.getElementById(id); b.textContent = lang === 'ar' ? 'English' : 'العربية'; b.lang = lang === 'ar' ? 'en' : 'ar'; });
-    galKey = ''; renderGrid(); renderHomeDetails(); observe(); if (cur) renderPV(); if (!notice.hidden) showResult();
+    galKey = ''; renderGrid(); renderHomeDetails(); observe(); if (cur) renderPV(); else { document.title = DATA.meta[lang][0]; setMeta(DATA.meta[lang][1]); } if (!notice.hidden) showResult();
   }
   ['lang', 'lang2'].forEach(id => document.getElementById(id).addEventListener('click', () => { lang = lang === 'ar' ? 'en' : 'ar'; try { localStorage.setItem('avn-lang', lang); } catch (e) {} applyLang(); }));
   addEventListener('hashchange', showResult);
@@ -997,7 +1041,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   else { const w = new URLSearchParams(location.search).get('w'); if (w && W[w] && !W[w].soon) openPV(w, 'none', location.search); } // ?w=monti (Google Shopping links)
 })();
 </script>
-<script src="%%A%%js/track-v7.js" defer></script>
-<script src="%%A%%js/order-v2.js?v=5" defer></script>
+<script src="%%A%%js/track-v8.js" defer></script>
+<script src="%%A%%js/order-v3.js" defer></script>
 </body>
 </html>

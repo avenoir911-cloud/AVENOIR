@@ -1,0 +1,122 @@
+{
+ "note": "Provenance of every catalogue image the site may show. Images listed in excluded are never put on a page.",
+ "use": {
+  "monte-front-bracelet-blue-hands": {
+   "source": "OLD_SITE/webp/unified/monti/monti-blue.webp",
+   "kind": "previous-site cut-out"
+  },
+  "monte-front-bracelet-silver-hands": {
+   "source": "OLD_SITE/webp/unified/monti/monti-silver.webp",
+   "kind": "previous-site cut-out"
+  },
+  "monte-front-black-leather": {
+   "source": "pack/04_MONTE/REAL_01_MONTE_leather_multi_angle.jpeg",
+   "kind": "REAL reference (owner: REAL files are a mix of photos and AI images)"
+  },
+  "monte-side-black-leather": {
+   "source": "pack/04_MONTE/REAL_02_MONTE_leather_side.jpeg",
+   "kind": "REAL reference"
+  },
+  "monte-caseback-black-leather": {
+   "source": "pack/04_MONTE/REAL_01_MONTE_leather_multi_angle.jpeg",
+   "kind": "REAL reference"
+  },
+  "monte-clasp-black-leather": {
+   "source": "pack/04_MONTE/REAL_03_MONTE_leather_clasp.jpeg",
+   "kind": "REAL reference"
+  },
+  "monte-strap-black-leather": {
+   "source": "pack/04_MONTE/REAL_03_MONTE_leather_clasp.jpeg",
+   "kind": "REAL reference"
+  },
+  "monte-dial-macro": {
+   "source": "pack/04_MONTE/MONTI-dial-reference-v2.png",
+   "kind": "AI concept render (dial text checked: ASSEMBLE IN UAE)"
+  },
+  "monte-dial-plate": {
+   "source": "crop of monte-front-black-leather",
+   "kind": "REAL reference crop"
+  },
+  "monte-sketch-front": {
+   "source": "design drawing",
+   "kind": "illustration"
+  },
+  "lumi-front-blue-hands": {
+   "source": "OLD_SITE/webp/unified/lumi/lumi-blue.webp",
+   "kind": "previous-site cut-out"
+  },
+  "lumi-front-silver-hands": {
+   "source": "OLD_SITE/webp/unified/lumi/lumi-silver.webp",
+   "kind": "previous-site cut-out"
+  },
+  "lumi-crown-profile": {
+   "source": "pack/01_LUMI/LUMI Watch Top-Edge Orthographic View.png",
+   "kind": "AI concept render"
+  },
+  "lumi-clasp": {
+   "source": "pack/01_LUMI/LUMI clasp_ closed and open views.png",
+   "kind": "AI concept render"
+  },
+  "lumi-dial-macro": {
+   "source": "pack/01_LUMI/REAL_01_LUMI_dial_component.jpeg",
+   "kind": "REAL dial artwork (dial only, no hands)"
+  },
+  "lumi-sketch-front": {
+   "source": "design drawing",
+   "kind": "illustration"
+  },
+  "rayo-front-gold-ice-black": {
+   "source": "OLD_SITE/rayo-v2/gold-ice-black.webp",
+   "kind": "previous-site cut-out"
+  },
+  "rayo-front-gold-navy-navy": {
+   "source": "OLD_SITE/rayo-v2/gold-navy-navy.webp",
+   "kind": "previous-site cut-out"
+  },
+  "rayo-front-silver-black-steel": {
+   "source": "OLD_SITE/rayo-v2/silver-black-steel.webp",
+   "kind": "previous-site cut-out"
+  },
+  "rayo-front-silver-white-steel": {
+   "source": "OLD_SITE/rayo-v2/silver-white-steel.webp",
+   "kind": "previous-site cut-out"
+  },
+  "rayo-front-silver-ice-steel": {
+   "source": "OLD_SITE/rayo-v2/silver-ice-steel.webp",
+   "kind": "previous-site cut-out"
+  },
+  "rayo-front-silver-white-bluehands-steel": {
+   "source": "OLD_SITE/rayo-v2/silver-white-bluehands-steel.webp",
+   "kind": "previous-site cut-out"
+  },
+  "bloom-front-pink": {
+   "source": "OLD_SITE/webp/unified/bloom/bloom-pink.webp",
+   "kind": "previous-site cut-out"
+  },
+  "bloom-front-white": {
+   "source": "OLD_SITE/webp/unified/bloom/bloom-white.webp",
+   "kind": "previous-site cut-out"
+  },
+  "bloom-front-blue": {
+   "source": "OLD_SITE/webp/unified/bloom/bloom-blue.webp",
+   "kind": "previous-site cut-out"
+  }
+ },
+ "excluded": {
+  "monte-front-brown-leather": "digital recolour of the black-leather image (not a photo of this strap); removed from the site",
+  "monte-caseback-brown-leather": "digital recolour of the black-leather image (not a photo of this strap); removed from the site",
+  "monte-strap-brown-leather": "digital recolour of the black-leather image (not a photo of this strap); removed from the site",
+  "monte-front-navy-leather": "digital recolour of the black-leather image (not a photo of this strap); removed from the site",
+  "monte-caseback-navy-leather": "digital recolour of the black-leather image (not a photo of this strap); removed from the site",
+  "monte-strap-navy-leather": "digital recolour of the black-leather image (not a photo of this strap); removed from the site",
+  "monte-front-green-leather": "digital recolour of the black-leather image (not a photo of this strap); removed from the site",
+  "monte-caseback-green-leather": "digital recolour of the black-leather image (not a photo of this strap); removed from the site",
+  "monte-strap-green-leather": "digital recolour of the black-leather image (not a photo of this strap); removed from the site",
+  "monte-front-cream-leather": "digital recolour of the black-leather image (not a photo of this strap); removed from the site",
+  "monte-caseback-cream-leather": "digital recolour of the black-leather image (not a photo of this strap); removed from the site",
+  "monte-strap-cream-leather": "digital recolour of the black-leather image (not a photo of this strap); removed from the site",
+  "monte-front-white-leather": "digital recolour of the black-leather image (not a photo of this strap); removed from the site",
+  "monte-caseback-white-leather": "digital recolour of the black-leather image (not a photo of this strap); removed from the site",
+  "monte-strap-white-leather": "digital recolour of the black-leather image (not a photo of this strap); removed from the site"
+ }
+}

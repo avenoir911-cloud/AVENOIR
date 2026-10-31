@@ -1,80 +1,77 @@
 {
-  "_note": "Build-time fallback only. Live prices and packages come from the products table (price_aed, tiers), which checkout also charges from.",
-  "extra_strap_aed": 149,
-  "models": {
-    "monti": {
-      "name": "MONTI",
-      "size": "38",
-      "price": 999,
-      "active": true
-    },
-    "lumi": {
-      "name": "LUMI",
-      "size": "33.5",
-      "price": 799,
-      "active": true
-    },
-    "rayo": {
-      "name": "RAYO",
-      "size": "40",
-      "price": 899,
-      "active": true
-    },
-    "bloom": {
-      "name": "BLOOM",
-      "size": "31",
-      "price": 799,
-      "active": true
-    },
-    "timeless": {
-      "name": "TIMELESS",
-      "size": "",
-      "price": null,
-      "active": false
-    }
+ "_note": "Build-time fallback only. Live prices and packages come from the products table (price_aed, tiers), which checkout also charges from.",
+ "extra_strap_aed": 149,
+ "models": {
+  "monti": {
+   "name": "MONTI",
+   "size": "38",
+   "price": 999,
+   "active": true
   },
-  "tiers": {
-    "monti": {
-      "standard": {
-        "price": 799,
-        "enabled": true,
-        "allow": {
-          "strap": [
-            "bracelet",
-            "black"
-          ],
-          "hands": [
-            "blue"
-          ]
-        },
-        "max_extras": 1
-      },
-      "exclusive": {
-        "enabled": false
-      }
-    }
+  "lumi": {
+   "name": "LUMI",
+   "size": "33.5",
+   "price": 799,
+   "active": true
   },
-  "verified": {
-    "monti": {
-      "size": false,
-      "crystal": false
-    },
-    "lumi": {
-      "size": false,
-      "crystal": false
-    },
-    "rayo": {
-      "size": false,
-      "crystal": false
-    },
-    "bloom": {
-      "size": false,
-      "crystal": false
-    },
-    "timeless": {
-      "size": false,
-      "crystal": false
-    }
+  "rayo": {
+   "name": "RAYO",
+   "size": "40",
+   "price": 899,
+   "active": true
   },
-  "_verify_note": "Set size/crystal to true only after the supplier confirms them for the exact product sold."
+  "bloom": {
+   "name": "BLOOM",
+   "size": "31",
+   "price": 799,
+   "active": true
+  },
+  "timeless": {
+   "name": "TIMELESS",
+   "size": "",
+   "price": null,
+   "active": false
+  }
+ },
+ "tiers": {
+  "monti": {
+   "standard": {
+    "price": 799,
+    "enabled": true,
+    "allow": {
+     "strap": [
+      "bracelet",
+      "black"
+     ],
+     "hands": [
+      "blue"
+     ]
+    },
+    "max_extras": 1
+   }
+  }
+ },
+ "verified": {
+  "monti": {
+   "size": false,
+   "crystal": false
+  },
+  "lumi": {
+   "size": false,
+   "crystal": false
+  },
+  "rayo": {
+   "size": false,
+   "crystal": false
+  },
+  "bloom": {
+   "size": false,
+   "crystal": false
+  },
+  "timeless": {
+   "size": false,
+   "crystal": false
+  }
+ },
+ "_verify_note": "Set size/crystal to true only after the supplier confirms them for the exact product sold."
 }

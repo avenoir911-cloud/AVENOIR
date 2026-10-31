@@ -1,0 +1,297 @@
+{
+ "note": "Only status=confirmed is shown on the site. Everything else is listed in docs/SPECS-AND-POLICIES-FOR-APPROVAL.md.",
+ "fields": [
+  "case_size",
+  "case_thickness",
+  "case_material",
+  "crystal",
+  "movement_type",
+  "calibre",
+  "water_resistance",
+  "strap_material",
+  "strap_width",
+  "wrist_range",
+  "caseback",
+  "warranty"
+ ],
+ "labels": {
+  "case_size": [
+   "Case size",
+   "مقاس الهيكل"
+  ],
+  "case_thickness": [
+   "Case thickness",
+   "سماكة الهيكل"
+  ],
+  "case_material": [
+   "Case material",
+   "مادة الهيكل"
+  ],
+  "crystal": [
+   "Crystal",
+   "الزجاج"
+  ],
+  "movement_type": [
+   "Movement",
+   "الحركة"
+  ],
+  "calibre": [
+   "Movement calibre",
+   "طراز الحركة"
+  ],
+  "water_resistance": [
+   "Water resistance",
+   "مقاومة الماء"
+  ],
+  "strap_material": [
+   "Strap",
+   "السير"
+  ],
+  "strap_width": [
+   "Strap width",
+   "عرض السير"
+  ],
+  "wrist_range": [
+   "Wrist size",
+   "مقاس المعصم"
+  ],
+  "caseback": [
+   "Case back",
+   "ظهر الساعة"
+  ],
+  "warranty": [
+   "Warranty",
+   "الضمان"
+  ]
+ },
+ "models": {
+  "monti": {
+   "case_size": {
+    "status": "unconfirmed",
+    "note": "38 mm on the old site, 40 mm in old notes; not confirmed"
+   },
+   "case_thickness": {
+    "status": "missing",
+    "note": ""
+   },
+   "case_material": {
+    "status": "confirmed",
+    "en": "Steel",
+    "ar": "ستيل",
+    "source": "Owner, in chat (Oct 2026): \"steel watches only\""
+   },
+   "crystal": {
+    "status": "unconfirmed",
+    "note": "\"Sapphire\" in old site copy; not confirmed by supplier"
+   },
+   "movement_type": {
+    "status": "confirmed",
+    "en": "Japanese automatic",
+    "ar": "أوتوماتيكية يابانية",
+    "source": "Owner, in chat (Oct 2026): \"write Japanese automatic movement\""
+   },
+   "calibre": {
+    "status": "unconfirmed",
+    "note": "Internal reference images show NH35; owner asked not to name it; not confirmed"
+   },
+   "water_resistance": {
+    "status": "missing",
+    "note": ""
+   },
+   "strap_material": {
+    "status": "confirmed",
+    "en": "Steel bracelet or black leather",
+    "ar": "سوار ستيل أو جلد أسود",
+    "source": "Owner: MONTI has several strap options incl. a steel bracelet; Standard package = bracelet or black leather (products.tiers)"
+   },
+   "strap_width": {
+    "status": "missing",
+    "note": ""
+   },
+   "wrist_range": {
+    "status": "missing",
+    "note": ""
+   },
+   "caseback": {
+    "status": "unconfirmed",
+    "note": "Exhibition back seen in REAL_01 reference; owner said REAL files mix photos and AI images"
+   },
+   "warranty": {
+    "status": "confirmed",
+    "en": "1 year on the movement",
+    "ar": "سنة على الحركة",
+    "source": "Owner, in chat (Oct 2026): one-year warranty on the movement"
+   }
+  },
+  "lumi": {
+   "case_size": {
+    "status": "unconfirmed",
+    "note": "33.5 mm on the old site; not confirmed"
+   },
+   "case_thickness": {
+    "status": "missing",
+    "note": ""
+   },
+   "case_material": {
+    "status": "confirmed",
+    "en": "Steel",
+    "ar": "ستيل",
+    "source": "Owner, in chat (Oct 2026): \"steel watches only\""
+   },
+   "crystal": {
+    "status": "unconfirmed",
+    "note": "\"Sapphire\" in old site copy; not confirmed"
+   },
+   "movement_type": {
+    "status": "confirmed",
+    "en": "Japanese automatic",
+    "ar": "أوتوماتيكية يابانية",
+    "source": "Owner, in chat (Oct 2026): \"write Japanese automatic movement\""
+   },
+   "calibre": {
+    "status": "unconfirmed",
+    "note": "Supplier screenshot REAL_08 shows NH05; internal only"
+   },
+   "water_resistance": {
+    "status": "missing",
+    "note": ""
+   },
+   "strap_material": {
+    "status": "confirmed",
+    "en": "Steel bracelet",
+    "ar": "سوار ستيل",
+    "source": "Asset inventory, owner answers (19 Oct 2026)"
+   },
+   "strap_width": {
+    "status": "missing",
+    "note": ""
+   },
+   "wrist_range": {
+    "status": "missing",
+    "note": ""
+   },
+   "caseback": {
+    "status": "unconfirmed",
+    "note": "Supplier screenshot REAL_08 shows an exhibition back; internal only"
+   },
+   "warranty": {
+    "status": "confirmed",
+    "en": "1 year on the movement",
+    "ar": "سنة على الحركة",
+    "source": "Owner, in chat (Oct 2026): one-year warranty on the movement"
+   }
+  },
+  "rayo": {
+   "case_size": {
+    "status": "unconfirmed",
+    "note": "40 mm on the old site; not confirmed"
+   },
+   "case_thickness": {
+    "status": "missing",
+    "note": ""
+   },
+   "case_material": {
+    "status": "confirmed",
+    "en": "Steel",
+    "ar": "ستيل",
+    "source": "Owner, in chat (Oct 2026): \"steel watches only\""
+   },
+   "crystal": {
+    "status": "missing",
+    "note": ""
+   },
+   "movement_type": {
+    "status": "missing",
+    "note": "The page shows no movement type; not added until confirmed"
+   },
+   "calibre": {
+    "status": "missing",
+    "note": ""
+   },
+   "water_resistance": {
+    "status": "missing",
+    "note": ""
+   },
+   "strap_material": {
+    "status": "confirmed",
+    "en": "Rubber or steel bracelet, by colourway",
+    "ar": "مطاط أو سوار ستيل حسب اللون",
+    "source": "Owner: all six RAYO colourways in the pack are valid; strap per colourway image"
+   },
+   "strap_width": {
+    "status": "missing",
+    "note": ""
+   },
+   "wrist_range": {
+    "status": "missing",
+    "note": ""
+   },
+   "caseback": {
+    "status": "missing",
+    "note": ""
+   },
+   "warranty": {
+    "status": "confirmed",
+    "en": "1 year on the movement",
+    "ar": "سنة على الحركة",
+    "source": "Owner, in chat (Oct 2026): one-year warranty on the movement"
+   }
+  },
+  "bloom": {
+   "case_size": {
+    "status": "unconfirmed",
+    "note": "31 mm on the old site; not confirmed"
+   },
+   "case_thickness": {
+    "status": "missing",
+    "note": ""
+   },
+   "case_material": {
+    "status": "confirmed",
+    "en": "Steel",
+    "ar": "ستيل",
+    "source": "Owner, in chat (Oct 2026): \"steel watches only\""
+   },
+   "crystal": {
+    "status": "unconfirmed",
+    "note": "\"Sapphire\" in old site copy; not confirmed"
+   },
+   "movement_type": {
+    "status": "confirmed",
+    "en": "Japanese automatic",
+    "ar": "أوتوماتيكية يابانية",
+    "source": "Owner, in chat (Oct 2026): \"write Japanese automatic movement\""
+   },
+   "calibre": {
+    "status": "missing",
+    "note": ""
+   },
+   "water_resistance": {
+    "status": "missing",
+    "note": ""
+   },
+   "strap_material": {
+    "status": "missing",
+    "note": "Bracelet type not confirmed"
+   },
+   "strap_width": {
+    "status": "missing",
+    "note": ""
+   },
+   "wrist_range": {
+    "status": "missing",
+    "note": ""
+   },
+   "caseback": {
+    "status": "missing",
+    "note": ""
+   },
+   "warranty": {
+    "status": "confirmed",
+    "en": "1 year on the movement",
+    "ar": "سنة على الحركة",
+    "source": "Owner, in chat (Oct 2026): one-year warranty on the movement"
+   }
+  }
+ }
+}

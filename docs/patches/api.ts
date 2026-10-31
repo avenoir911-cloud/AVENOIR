@@ -76,6 +76,8 @@ Deno.serve(async (req) => {
   if (route === "/catalog" && req.method === "GET") {
     const r = await sb("products?select=key,price_aed,extra_strap_aed,active,stock,tiers&order=sort", { headers: { Prefer: "" } });
     const rows = r.ok ? await r.json() : [];
+    // a package that is not switched on is not sold, so it is not published either
+    for (const p of rows) if (p.tiers && typeof p.tiers === "object") p.tiers = Object.fromEntries(Object.entries(p.tiers).filter(([, v]) => (v as { enabled?: boolean })?.enabled === true));
     return json(req, { products: rows }, 200, { "cache-control": "public, max-age=60" });
   }
 

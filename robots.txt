@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /preview/
+Disallow: /admin.html
+
+Sitemap: https://avenoirlab.com/sitemap.xml

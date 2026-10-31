@@ -45,6 +45,10 @@ for k, e in img.items():
     jp = [x for x in e['w'] if os.path.exists(f"{ROOT}/img/{e['d']}/{k}-{x}.jpg")]
     e['j'] = 768 if 768 in jp else (jp[-1] if jp else None)
 json.dump(cache, open(cache_p, 'w'), indent=0)
+# iPhone Safari only decodes AVIF in AV1 main profile without an alpha layer: refuse to build with any other kind
+for f in glob.glob(f'{ROOT}/img/**/*.avif', recursive=True):
+    b = open(f, 'rb').read(); i = b.find(b'av1C')
+    assert i > 0 and b[i + 5] >> 5 == 0 and b.find(b'auxC') < 0, f'AVIF not readable on iPhone: {f}'
 
 # ---------- share images: a real front photograph per watch, 1200x630 ----------
 SHARE = {'monti': 'monte-front-black-leather', 'lumi': 'lumi-front-blue-hands', 'rayo': 'rayo-front-silver-black-steel', 'bloom': 'bloom-front-pink'}

@@ -111,9 +111,9 @@ def meta(page, url, robots):
 FIRST = {'home': 'monte-front-black-leather', 'monti': 'monte-front-bracelet-blue-hands', 'lumi': 'lumi-front-blue-hands', 'rayo': 'rayo-front-gold-ice-black', 'bloom': 'bloom-front-pink'}
 def preload(page_key, A):
     k = FIRST[page_key]; e = img[k]
-    srcset = ', '.join(f"{A}img/{e['d']}/{k}-{w}.webp {w}w" for w in e['w'])
+    srcset = ', '.join(f"{A}img/{e['d']}/{k}-{w}.jpg {w}w" for w in e['w'])
     sizes = '(min-width:900px) 560px, 92vw' if page_key == 'home' else '(min-width:960px) 52vw, 100vw'
-    return f'<link rel="preload" as="image" type="image/webp" imagesrcset="{srcset}" imagesizes="{sizes}" fetchpriority="high">'
+    return f'<link rel="preload" as="image" type="image/jpeg" imagesrcset="{srcset}" imagesizes="{sizes}" fetchpriority="high">'
 
 def jsonld(k, url):
     e = img[FIRST[k]]; d = DESC[k][1].split(' · ')[0]

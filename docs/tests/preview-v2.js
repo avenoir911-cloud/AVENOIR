@@ -53,7 +53,7 @@ const go = (p, u) => p.goto(BASE + u, { waitUntil: 'networkidle' });
 
   /* 2. every product and option: gallery matches the build, price, summary, address */
   const p = await newPage(b, 1366);
-  const state = () => p.evaluate(() => ({ total: document.getElementById('pv-total').textContent, sum: document.getElementById('pv-summary').textContent, url: location.search, imgs: [...document.querySelectorAll('#track img')].map(i => i.closest('picture').querySelector('source[type="image/webp"]').srcset.split('/').pop().replace(/-\d+\.webp.*$/, '')) }));
+  const state = () => p.evaluate(() => ({ total: document.getElementById('pv-total').textContent, sum: document.getElementById('pv-summary').textContent, url: location.search, imgs: [...document.querySelectorAll('#track img')].map(i => i.closest('picture').querySelector('source').srcset.split('/').pop().replace(/-\d+\.jpg.*$/, '')) }));
   const FORBIDDEN = /(brown|navy|green|cream|white)-leather/;   // digital recolours: never shown
   for (const [strap, hands] of [['bracelet', 'blue'], ['black', 'blue']]) {
     await go(p, `watch/monti/?tier=standard&strap=${strap}&hands=${hands}`); await p.waitForTimeout(300);

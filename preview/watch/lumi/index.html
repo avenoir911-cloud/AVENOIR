@@ -27,7 +27,7 @@
 <meta property="product:price:currency" content="AED">
 <link rel="privacy-policy" href="../../../privacy.html">
 <link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
-<link rel="preload" as="image" type="image/webp" imagesrcset="../../../img/catalogue/lumi-front-blue-hands-480.webp 480w, ../../../img/catalogue/lumi-front-blue-hands-768.webp 768w, ../../../img/catalogue/lumi-front-blue-hands-1200.webp 1200w" imagesizes="(min-width:960px) 52vw, 100vw" fetchpriority="high">
+<link rel="preload" as="image" type="image/jpeg" imagesrcset="../../../img/catalogue/lumi-front-blue-hands-480.jpg 480w, ../../../img/catalogue/lumi-front-blue-hands-768.jpg 768w, ../../../img/catalogue/lumi-front-blue-hands-1200.jpg 1200w" imagesizes="(min-width:960px) 52vw, 100vw" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@400;500&family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap">
@@ -489,7 +489,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     <div class="wrap cover-grid">
       <div class="cover-meta"><span class="label" data-t="issue">Nº 01</span><span class="label" data-t="issue_r">Steel · Japanese automatic</span></div>
       <a class="plate cover-plate" href="../../watch/monti/?strap=black" data-open="monti" data-preset="strap=black" aria-label="MONTI on black leather">
-        <picture><source type="image/webp" srcset="../../../img/catalogue/monte-front-black-leather-480.webp 480w, ../../../img/catalogue/monte-front-black-leather-768.webp 768w, ../../../img/catalogue/monte-front-black-leather-1200.webp 1200w" sizes="(min-width:900px) 560px, 92vw"><img src="../../../img/catalogue/monte-front-black-leather-768.jpg" width="1200" height="1200" alt="MONTI: square steel case, ivory dial with Roman numerals and TIME IS MONEY in red, blue cabochon crown, black leather strap" fetchpriority="high"></picture>
+        <picture><source type="image/jpeg" srcset="../../../img/catalogue/monte-front-black-leather-480.jpg 480w, ../../../img/catalogue/monte-front-black-leather-768.jpg 768w, ../../../img/catalogue/monte-front-black-leather-1200.jpg 1200w" sizes="(min-width:900px) 560px, 92vw"><img src="../../../img/catalogue/monte-front-black-leather-768.jpg" width="1200" height="1200" alt="MONTI: square steel case, ivory dial with Roman numerals and TIME IS MONEY in red, blue cabochon crown, black leather strap" fetchpriority="high"></picture>
         <span class="plate-cap" data-t="cap_cover">Plate I — MONTI, black leather</span>
       </a>
       <div class="cover-copy">
@@ -518,7 +518,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   <section class="chapter" id="ch-dial" aria-labelledby="ch1-h">
     <div class="wrap ch-grid">
       <figure class="plate dial-plate">
-        <picture><source type="image/webp" srcset="../../../img/catalogue/monte-dial-plate-480.webp 480w, ../../../img/catalogue/monte-dial-plate-704.webp 704w" sizes="(min-width:900px) 440px, 88vw"><img src="../../../img/catalogue/monte-dial-plate-704.jpg" width="704" height="704" alt="Close view of the MONTI dial" loading="lazy" decoding="async"></picture>
+        <picture><source type="image/jpeg" srcset="../../../img/catalogue/monte-dial-plate-480.jpg 480w, ../../../img/catalogue/monte-dial-plate-704.jpg 704w" sizes="(min-width:900px) 440px, 88vw"><img src="../../../img/catalogue/monte-dial-plate-704.jpg" width="704" height="704" alt="Close view of the MONTI dial" loading="lazy" decoding="async"></picture>
         <figcaption class="plate-cap" data-t="cap_dial">Plate II — The dial, at the detail of the original photograph</figcaption>
       </figure>
       <div class="ch-copy">
@@ -803,7 +803,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   function pic(id, sizes, alt, eager) {
     const i = IMG[id]; const set = ext => i.w.map(w => `${A}img/${i.d}/${id}-${w}.${ext} ${w}w`).join(', ');
     const fw = i.j || i.w[i.w.length - 1], Wd = i.w[i.w.length - 1];
-    return el('picture', {}, [ el('source', { type: 'image/webp', srcset: set('webp'), sizes }),
+    return el('picture', {}, [ el('source', { type: 'image/jpeg', srcset: set('jpg'), sizes }),
       el('img', { src: `${A}img/${i.d}/${id}-${fw}.jpg`, width: Wd, height: Math.round(Wd * i.r), alt, loading: eager ? null : 'lazy', decoding: 'async', 'data-eff': i.e }) ]);
   }
 
@@ -884,7 +884,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     const first = figs[ni].querySelector('img'); first.loading = 'eager'; first.setAttribute('fetchpriority', 'high');
     const swap = () => { if (galKey !== key) return; track.replaceChildren(...figs); figs.forEach(f => f.querySelector('img').classList.add('ok'));
       s._i = ni; track.scrollLeft = (lang === 'ar' ? -1 : 1) * ni * track.clientWidth; markThumb(ni); buyLock(false); };
-    if (track.children.length) { buyLock(true); const pre = new Image(); pre.sizes = matchMedia('(min-width:960px)').matches ? '52vw' : '100vw'; const src = first.parentElement.querySelector('source[type="image/webp"]'); if (src) pre.srcset = src.srcset; pre.src = first.src;
+    if (track.children.length) { buyLock(true); const pre = new Image(); pre.sizes = matchMedia('(min-width:960px)').matches ? '52vw' : '100vw'; const src = first.parentElement.querySelector('source'); if (src) pre.srcset = src.srcset; pre.src = first.src;
       (pre.decode ? pre.decode() : Promise.resolve()).catch(() => {}).then(swap); setTimeout(swap, 2500); }
     else { track.replaceChildren(...figs); figs.forEach(f => { const im = f.querySelector('img'); const on = () => im.classList.add('ok'); im.complete && im.naturalWidth ? on() : (im.addEventListener('load', on, { once: true }), im.addEventListener('error', on, { once: true })); }); s._i = ni; requestAnimationFrame(() => { track.scrollLeft = (lang === 'ar' ? -1 : 1) * ni * track.clientWidth; markThumb(ni); }); }
     thumbs.replaceChildren(...views.map(([view, id], i) => el('button', { type: 'button', class: 'thumb', 'aria-label': `${i + 1}: ${t('v_' + view)}`, onclick: () => goSlide(i) }, [ pic(id, '56px', '') ])));

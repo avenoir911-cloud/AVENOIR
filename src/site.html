@@ -599,7 +599,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
 (() => {
   const DATA = %%DATA%%;              // build-time catalogue + image map (prices are replaced by the live table below)
   // this page changes its address (watch/<model>/) without reloading, so every relative link is fixed to an absolute one now
-  const A = new URL('%%A%%', location.href).href, HOME = new URL('%%H%%', location.href), INITIAL = '%%OPEN%%';
+  const A = new URL('%%A%%' || './', location.href).href, HOME = new URL('%%H%%', location.href), INITIAL = '%%OPEN%%';
   document.querySelectorAll('a[href]').forEach(a => { if (!/^(https?:|mailto:|tel:)/.test(a.getAttribute('href'))) a.href = a.href; });
   const CHECKOUT = 'https://uktmzygjaqnkizamrvij.supabase.co/functions/v1/checkout';
   const API = 'https://uktmzygjaqnkizamrvij.supabase.co/functions/v1/api';

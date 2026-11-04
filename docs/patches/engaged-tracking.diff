@@ -1,0 +1,61 @@
+diff --git a/js/track-v7.js b/js/track-v7.js
+index ae4c2db..187a19b 100644
+--- a/js/track-v7.js
++++ b/js/track-v7.js
+@@ -37,7 +37,19 @@
+     if (STANDARD.has(name)) fbq('track', name, params, opts); else fbq('trackCustom', name, params, opts);
+   }
+   window.avnTrack = track;
+-  window.dataLayer.push({ event: 'PageView' }); collect('PageView', {});
++
++  /* Engaged: once per visit, when the visitor scrolls past half the page or keeps it open (tab visible) for 15 seconds.
++     Tells real readers apart from bots and one-glance visits in the daily numbers. */
++  function engage() {
++    let fired = false; try { fired = sessionStorage.getItem('avn_eng') === '1'; } catch (e) {}
++    if (fired) return;
++    let secs = 0, timer = 0;
++    const fire = () => { if (fired) return; fired = true; clearInterval(timer); removeEventListener('scroll', onScroll); try { sessionStorage.setItem('avn_eng', '1'); } catch (e) {} window.dataLayer.push({ event: 'Engaged' }); collect('Engaged', {}); };
++    const onScroll = () => { const h = document.documentElement.scrollHeight; if (scrollY > 0 && (scrollY + innerHeight) / h >= 0.5) fire(); };
++    addEventListener('scroll', onScroll, { passive: true });
++    timer = setInterval(() => { if (document.visibilityState === 'visible' && ++secs >= 15) fire(); }, 1000);
++  }
++  window.dataLayer.push({ event: 'PageView' }); collect('PageView', {}); engage();
+ 
+   const $ = id => document.getElementById(id);
+   const amount = () => { const n = ($('pv-total')?.textContent || '').replace(/[^\d.]/g, ''); return n ? +n : undefined; };
+diff --git a/js/track-v8.js b/js/track-v8.js
+index 19e1ca7..1bd4a25 100644
+--- a/js/track-v8.js
++++ b/js/track-v8.js
+@@ -52,6 +52,18 @@
+   const model = () => { try { return new URL($('pv-buy').href).searchParams.get('m') || ''; } catch (e) { return ''; } };
+   const productParams = () => ({ content_ids: [model()], content_name: $('pv-name')?.textContent || '', content_type: 'product', value: amount(), currency: CURRENCY });
+ 
++  /* Engaged: once per visit, when the visitor scrolls past half the page or keeps it open (tab visible) for 15 seconds.
++     Tells real readers apart from bots and one-glance visits in the daily numbers. */
++  function engage() {
++    let fired = false; try { fired = sessionStorage.getItem('avn_eng') === '1'; } catch (e) {}
++    if (fired) return;
++    let secs = 0, timer = 0;
++    const fire = () => { if (fired) return; fired = true; clearInterval(timer); removeEventListener('scroll', onScroll); try { sessionStorage.setItem('avn_eng', '1'); } catch (e) {} window.dataLayer.push({ event: 'Engaged' }); collect('Engaged', {}); };
++    const onScroll = () => { const h = document.documentElement.scrollHeight; if (scrollY > 0 && (scrollY + innerHeight) / h >= 0.5) fire(); };
++    addEventListener('scroll', onScroll, { passive: true });
++    timer = setInterval(() => { if (document.visibilityState === 'visible' && ++secs >= 15) fire(); }, 1000);
++  }
++
+   /* product opened → SelectProduct + ViewContent */
+   const pv = $('pv');
+   const viewed = () => setTimeout(() => { const p = productParams(); track('SelectProduct', { content_ids: p.content_ids, content_name: p.content_name }); track('ViewContent', p); }, 0);
+@@ -65,7 +77,7 @@
+   // starts measuring once the visitor accepts; a watch page opened directly (watch/<model>/ or ?w=) counts as a product view
+   function start() {
+     if (on) return; on = true; startSession();
+-    const go = () => { loadPixel(); window.dataLayer.push({ event: 'PageView' }); collect('PageView', {}); if (pv && !pv.hidden) viewed(); };
++    const go = () => { loadPixel(); window.dataLayer.push({ event: 'PageView' }); collect('PageView', {}); engage(); if (pv && !pv.hidden) viewed(); };
+     'requestIdleCallback' in window ? requestIdleCallback(go, { timeout: 2500 }) : setTimeout(go, 1);
+   }
+ 
+
+# Server side (Supabase edge function "api"), one line:
+#   const EVENTS = new Set(["PageView", "Engaged", "SelectProduct", ...rest unchanged]);
+# Deploy the api change first, then apply this diff and push, so no visit sends an event the API rejects.

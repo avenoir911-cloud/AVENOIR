@@ -63,6 +63,7 @@ td input[type=number]{width:110px}
       <button role="tab" aria-selected="true" data-tab="orders">الطلبات</button>
       <button role="tab" aria-selected="false" data-tab="products">المنتجات والأسعار</button>
       <button role="tab" aria-selected="false" data-tab="channels">القنوات</button>
+      <button role="tab" aria-selected="false" data-tab="replies">ردود جاهزة</button>
     </div>
 
     <section id="tab-orders">
@@ -98,6 +99,13 @@ td input[type=number]{width:110px}
         <div id="links" class="order"></div>
       </div>
     </section>
+    <section id="tab-replies" hidden>
+      <div class="card">
+        <b>ردود جاهزة للإنستغرام والواتساب</b>
+        <p class="muted">كل رد من كلام الموقع بس. اضغط «نسخ» والصقه في المحادثة، وأنت اللي ترسل. الأسعار تنقرا من الموقع وقت ما تفتح هالصفحة. رابط الطلب في آخر رد عليه علامة «الرسائل» عشان يطلع في تبويب القنوات.</p>
+        <div id="replies" class="order"></div>
+      </div>
+    </section>
   </main>
 </div>
 <script>
@@ -127,8 +135,9 @@ td input[type=number]{width:110px}
   $('logout').addEventListener('click', () => { key = ''; try { sessionStorage.removeItem('avn_admin'); } catch (e) {} location.reload(); });
   document.querySelectorAll('[data-tab]').forEach(b => b.addEventListener('click', () => {
     document.querySelectorAll('[data-tab]').forEach(x => x.setAttribute('aria-selected', String(x === b)));
-    $('tab-orders').hidden = b.dataset.tab !== 'orders'; $('tab-products').hidden = b.dataset.tab !== 'products'; $('tab-channels').hidden = b.dataset.tab !== 'channels';
+    $('tab-orders').hidden = b.dataset.tab !== 'orders'; $('tab-products').hidden = b.dataset.tab !== 'products'; $('tab-channels').hidden = b.dataset.tab !== 'channels'; $('tab-replies').hidden = b.dataset.tab !== 'replies';
     if (b.dataset.tab === 'channels') loadChannels();
+    if (b.dataset.tab === 'replies') drawReplies();
   }));
   $('fDays').addEventListener('change', () => loadChannels());
 
@@ -140,7 +149,7 @@ td input[type=number]{width:110px}
     ['كتالوج واتساب بزنس', 'whatsapp', 'catalog'], ['سناب شات', 'snapchat', 'profile'], ['تيك توك', 'tiktok', 'bio'],
   ];
   const CH_AR = { direct: 'مباشر', instagram: 'إنستغرام', whatsapp: 'واتساب', facebook: 'فيسبوك', google: 'جوجل', snapchat: 'سناب شات', tiktok: 'تيك توك' };
-  const CAMP_AR = { bio: 'البايو', story: 'الستوري', status: 'الحالة', friends: 'الأهل والأصدقاء', catalog: 'الكتالوج', profile: 'البروفايل' };
+  const CAMP_AR = { dm: 'الرسائل', bio: 'البايو', story: 'الستوري', status: 'الحالة', friends: 'الأهل والأصدقاء', catalog: 'الكتالوج', profile: 'البروفايل' };
   const chName = c => { const [s, k] = c.split(' / '); return (CH_AR[s] || s) + (k ? ' · ' + (CAMP_AR[k] || k) : ''); };
   $('links').replaceChildren(...LINKS.map(([label, src, camp]) => {
     const url = `${SHOP}?utm_source=${src}&utm_campaign=${camp}`;
@@ -149,6 +158,42 @@ td input[type=number]{width:110px}
     btn.addEventListener('click', async () => { try { await navigator.clipboard.writeText(url); } catch (e) { inp.select(); document.execCommand('copy'); } btn.textContent = 'تم النسخ'; setTimeout(() => btn.textContent = 'نسخ', 1500); });
     return el('div', {}, [el('span', { className: 'muted', textContent: label }), el('div', { className: 'row', style: 'flex-wrap:nowrap' }, [inp, btn])]);
   }));
+  /* ready replies for Instagram / WhatsApp chats: only facts already on the website; prices come live from the catalog */
+  const copyBtn = (getText, fallbackEl) => {
+    const btn = el('button', { className: 'ghost', textContent: 'نسخ', type: 'button' });
+    btn.addEventListener('click', async () => { const t = getText(); try { await navigator.clipboard.writeText(t); } catch (e) { if (fallbackEl) { fallbackEl.select(); document.execCommand('copy'); } } btn.textContent = 'تم النسخ'; setTimeout(() => btn.textContent = 'نسخ', 1500); });
+    return btn;
+  };
+  async function drawReplies() {
+    let prices = null;
+    try { const r = await fetch('https://uktmzygjaqnkizamrvij.supabase.co/functions/v1/api/catalog'); prices = (await r.json()).products || null; } catch (e) {}
+    const P = k => (prices || []).find(p => p.key === k && p.active && p.price_aed != null);
+    const m = P('monti');
+    const tiers = m && m.tiers ? Object.entries(m.tiers).filter(([, v]) => v && v.enabled && v.price != null) : [];
+    const std = tiers.find(([id]) => id === 'standard'), onlyStd = std && tiers.length === 1;
+    const strapAED = (m && m.extra_strap_aed) || 149;
+    const others = ['lumi', 'rayo', 'bloom'].map(k => [k.toUpperCase(), P(k)]).filter(x => x[1]);
+    const montiAr = !m ? '' : onlyStd ? `MONTI بـ ${std[1].price} درهم (العقارب الزرقاء مع سوار ستيل أو جلد أسود).` : tiers.length ? 'MONTI: ' + tiers.map(([id, v]) => `${id === 'standard' ? 'Standard' : 'Exclusive'} بـ ${v.price} درهم`).join('، ') + '.' : `MONTI بـ ${m.price_aed} درهم.`;
+    const montiEn = !m ? '' : onlyStd ? `MONTI AED ${std[1].price} (blue hands, steel bracelet or black leather).` : tiers.length ? 'MONTI: ' + tiers.map(([id, v]) => `${id === 'standard' ? 'Standard' : 'Exclusive'} AED ${v.price}`).join(', ') + '.' : `MONTI AED ${m.price_aed}.`;
+    const priceAr = prices ? [montiAr, ...others.map(([n, p]) => `${n} بـ ${p.price_aed} درهم.`)].filter(Boolean).join(' ') + ' السعر شامل السير اللي تختاره والتوصيل داخل الإمارات.' : null;
+    const priceEn = prices ? [montiEn, ...others.map(([n, p]) => `${n} AED ${p.price_aed}.`)].filter(Boolean).join(' ') + ' Price includes your strap and delivery in the UAE.' : null;
+    const strapAr = onlyStd ? `MONTI يجي بسوار ستيل أو جلد أسود، وتقدر تضيف سير جلد ثاني (بني، كحلي، أخضر، عاجي، أبيض أو أسود) بـ ${strapAED} درهم. باقي الساعات تختار سيرها من صفحة الساعة.` : `تختار السير من صفحة الساعة، وتقدر تضيف سير ثاني بـ ${strapAED} درهم.`;
+    const strapEn = onlyStd ? `MONTI comes on the steel bracelet or black leather, and you can add a second leather strap (cognac, navy, green, ivory, white or black) for AED ${strapAED}. For the other watches, choose the strap on the watch page.` : `Choose the strap on the watch page; a second strap is AED ${strapAED}.`;
+    const R = [
+      ['السعر', priceAr ? `هلا وغلا، ${priceAr}` : null, priceEn],
+      ['وش داخل في السعر', 'السعر يشمل الساعة والسير اللي تختاره والتوصيل داخل الإمارات. السير الثاني اختياري، وما ينضاف أي رسوم وقت الدفع.', 'The watch, the strap you choose and delivery in the UAE. A second strap is optional; nothing else is added at checkout.'],
+      ['مدة التوصيل', 'كل ساعة تتجمع في الإمارات بعد طلبك، وتوصلك لأي إمارة خلال 2–3 أسابيع، والتوصيل مجاني.', 'Each watch is assembled in the UAE after you order and delivered anywhere in the UAE in 2–3 weeks, free.'],
+      ['طريقة الدفع', 'الدفع بالبطاقة أو Apple Pay من صفحة الدفع الآمنة من Ziina، وإحنا ما نشوف بيانات بطاقتك.', 'Card or Apple Pay on Ziina’s secure payment page. We never see your card details.'],
+      ['خيارات السير', prices ? strapAr : null, strapEn],
+      ['كيف أطلب', 'افتح الرابط، اختار الساعة والسير، واضغط «اطلب الآن»، وعبّ بيانات التوصيل وادفع. بعد الدفع يطلع لك رقم الطلب، ونتواصل معك على جوالك عشان نرتب موعد التوصيل.\n' + SHOP + '?utm_source=instagram&utm_campaign=dm', 'Open the link, choose your watch and strap, tap Buy now, add your delivery details and pay. You get an order number right away and we call you to arrange delivery.'],
+    ];
+    $('replies').replaceChildren(...R.map(([label, ar, en]) => {
+      if (!ar) return el('div', {}, [el('span', { className: 'muted', textContent: label + ': ما قدرت أقرا الأسعار من الموقع الحين، جرّب «ردود جاهزة» مرة ثانية.' })]);
+      const text = ar + (en ? '\n\n' + en : '');
+      const box = el('textarea', { value: text, readOnly: true, rows: 5, style: 'width:100%;font:inherit;padding:9px 11px;border:1px solid #d3cbbb;background:#fff;resize:vertical' });
+      return el('div', {}, [el('div', { className: 'row', style: 'justify-content:space-between' }, [el('b', { textContent: label }), copyBtn(() => text, box)]), box]);
+    }));
+  }
   async function loadChannels() {
     $('channelsMsg').className = 'msg'; $('channelsMsg').textContent = '…';
     try {

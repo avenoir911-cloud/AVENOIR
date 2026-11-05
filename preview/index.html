@@ -379,6 +379,8 @@ html[lang="ar"] .addon-toggle{font:600 16px/1.5 var(--ar)}
 .buy-total b{font:500 26px/1 var(--sans);color:var(--ink)}
 html[lang="ar"] .buy-total b{font:600 24px/1.2 var(--ar)}
 .summary{font-size:14.5px;color:var(--body)}
+.assure{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 14px;margin:0;font-size:14px;color:var(--ink)}
+.assure span::before{content:"\2713";color:var(--navy);margin-inline-end:6px}
 .pays{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 14px;font-size:13.5px;color:var(--quiet)}
 .trust{display:grid;border-top:1px solid var(--hair)}
 .trust div{display:flex;gap:12px;align-items:flex-start;font-size:15px;padding:12px 0;border-bottom:1px solid var(--hair)}
@@ -587,6 +589,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
         <div class="buy-total"><span class="label" data-t="total">Total</span><b class="num" id="pv-total" aria-live="polite"></b></div>
         <p class="summary" id="pv-summary"></p>
         <a class="btn wide" id="pv-buy" href="#" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <p class="assure"><span data-t="as1">Assembled in the UAE</span><span data-t="as2">Free delivery in 2–3 weeks</span><span data-t="as3">1-year warranty on the movement</span></p>
         <div class="pays"><span>Apple Pay</span><span>Visa</span><span>Mastercard</span><span data-t="byziina">Secured by Ziina</span></div>
         <p class="pol" data-policy hidden><a href="./delivery.html" data-pol data-t="pol_full">Delivery, warranty &amp; returns</a></p>
       </div>
@@ -702,6 +705,8 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     str_h:'السوار والسيور.', str_p:'النسخة الأساسية تأتي بسوار ستيل أو جلد أسود. ويمكن إضافة سير ثانٍ واحد بـ <span class="num" data-extra>149 درهم</span>.' });
   Object.assign(EN, { str_h:'Bracelet and straps.', str_p:'Standard comes on the steel bracelet or black leather. You can add one second strap for <span class="num" data-extra>AED 149</span>.' });
   for (const k in AR) if (typeof AR[k] === 'string') AR[k] = AR[k].replace(/TIME IS MONEY/g, '\u2066TIME IS MONEY\u2069').replace(/(\d+)–(\d+)/g, '\u2066$1–$2\u2069');
+  Object.assign(EN, { as1:'Assembled in the UAE', as2:'Free delivery in 2–3 weeks', as3:'1-year warranty on the movement' });
+  Object.assign(AR, { as1:'تُجمَّع في الإمارات', as2:'توصيل مجاني خلال 2–3 أسابيع', as3:'ضمان سنة على الحركة' });
   Object.assign(EN, { tr_pay:'<b>Payment:</b> card or Apple Pay through Ziina. The final price includes delivery in the UAE.', tr_help:'<b>Contact:</b> direct contact on Instagram, before and after you buy.' });
   let lang = 'en'; try { lang = localStorage.getItem('avn-lang') || 'en'; } catch (e) {}
   { const ql = new URLSearchParams(location.search).get('lang'); if (ql === 'ar' || ql === 'en') { lang = ql; try { localStorage.setItem('avn-lang', lang); } catch (e) {} } }

@@ -18,7 +18,7 @@ async function newPage(b, w, { lang = 'en', consent = 'necessary', h = 900 } = {
   await ctx.route(/connect\.facebook\.net|facebook\.com/, r => r.abort());
   await ctx.route(/functions\/v1\/api\/(catalog|collect)/, r => r.abort());
   await ctx.route(/functions\/v1\/api\/status/, r => r.fulfill({ status: 200, contentType: 'application/json', body: '{"status":"paid"}' }));
-  await ctx.route(/functions\/v1\/checkout/, async r => { p.posts.push(Object.fromEntries(new URLSearchParams(r.request().postData() || ''))); await r.fulfill({ status: 200, contentType: 'text/html', body: '<p>stub payment page</p>' }); });
+  await ctx.route(/functions\/v1\/checkout/, async r => { if (r.request().method() === 'GET') return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ zones: [{ code: 'AE', price_aed: 0 }], zone_of: {}, countries: ['AE'], gift: { wrap_aed: 29 } }) }); p.posts.push(Object.fromEntries(new URLSearchParams(r.request().postData() || ''))); await r.fulfill({ status: 200, contentType: 'text/html', body: '<p>stub payment page</p>' }); });
   return p;
 }
 const noHScroll = p => p.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1);

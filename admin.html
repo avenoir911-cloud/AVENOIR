@@ -21,7 +21,8 @@ input,select{padding:9px 11px;border:1px solid #d3cbbb;background:#fff;color:#11
 button{padding:9px 16px;border:1px solid #111;background:#111;color:#fff;cursor:pointer}
 button.ghost{background:transparent;color:#111}
 button:disabled{opacity:.5;cursor:default}
-.tabs{display:flex;gap:6px;margin:14px 0}
+.tabs{display:flex;gap:6px;margin:14px 0;flex-wrap:wrap}
+.gift{background:#fdf0ec;border:1px solid #e9c4b9;padding:10px 12px;margin-top:10px}.gift p{margin:6px 0 0}
 .tabs button{background:transparent;color:#111;border-color:var(--hair)}
 .tabs button[aria-selected=true]{background:#111;color:#fff;border-color:#111}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
@@ -64,6 +65,7 @@ td input[type=number]{width:110px}
       <button role="tab" aria-selected="false" data-tab="products">المنتجات والأسعار</button>
       <button role="tab" aria-selected="false" data-tab="channels">القنوات</button>
       <button role="tab" aria-selected="false" data-tab="replies">ردود جاهزة</button>
+      <button role="tab" aria-selected="false" data-tab="shipping">الشحن والهدية</button>
     </div>
 
     <section id="tab-orders">
@@ -97,6 +99,21 @@ td input[type=number]{width:110px}
         <b>روابطك الجاهزة</b>
         <p class="muted">استخدم كل رابط في مكانه بدال الرابط العادي، وبعدها الجدول فوق يبين أي قناة تجيب زوار وطلبات.</p>
         <div id="links" class="order"></div>
+      </div>
+    </section>
+    <section id="tab-shipping" hidden>
+      <div class="card">
+        <b>الشحن حسب المنطقة</b>
+        <p class="muted">المنطقة ما تطلع للزبون إلا إذا لها سعر و«مفتوحة». السعر يُضاف للإجمالي وقت الدفع. حط سعر شركة الشحن اللي تتعامل معها (أرامكس، DHL…) مع هامش بسيط. الجمارك والضرائب في بلد الزبون عليه.</p>
+        <table><thead><tr><th>المنطقة</th><th>سعر الشحن (درهم)</th><th>مدة التوصيل (عربي)</th><th>مدة التوصيل (English)</th><th>مفتوحة</th><th></th></tr></thead><tbody id="zones"></tbody></table>
+        <p class="muted">الخليج: السعودية، الكويت، قطر، البحرين، عُمان. الدول العربية: مصر، الأردن، لبنان، العراق، المغرب، تونس، الجزائر، ليبيا، السودان، اليمن، فلسطين، موريتانيا، جيبوتي، الصومال، جزر القمر. أوروبا: دول الاتحاد الأوروبي وبريطانيا وسويسرا والنرويج ودول البلقان. باقي العالم: كل الدول الثانية.</p>
+        <p class="msg" id="zonesMsg"></p>
+      </div>
+      <div class="card">
+        <b>خيار الهدية</b>
+        <p class="muted">الزبون يقدر يختار: تغليف هدية بالسعر اللي هنا، وبطاقة فيها رسالته (مجاناً)، وإن الطرد يوصل بدون أي سعر. كل هذا يطلع لك في الطلب.</p>
+        <div class="row" id="giftRow"></div>
+        <p class="msg" id="giftMsg"></p>
       </div>
     </section>
     <section id="tab-replies" hidden>
@@ -135,7 +152,8 @@ td input[type=number]{width:110px}
   $('logout').addEventListener('click', () => { key = ''; try { sessionStorage.removeItem('avn_admin'); } catch (e) {} location.reload(); });
   document.querySelectorAll('[data-tab]').forEach(b => b.addEventListener('click', () => {
     document.querySelectorAll('[data-tab]').forEach(x => x.setAttribute('aria-selected', String(x === b)));
-    $('tab-orders').hidden = b.dataset.tab !== 'orders'; $('tab-products').hidden = b.dataset.tab !== 'products'; $('tab-channels').hidden = b.dataset.tab !== 'channels'; $('tab-replies').hidden = b.dataset.tab !== 'replies';
+    $('tab-orders').hidden = b.dataset.tab !== 'orders'; $('tab-products').hidden = b.dataset.tab !== 'products'; $('tab-channels').hidden = b.dataset.tab !== 'channels'; $('tab-replies').hidden = b.dataset.tab !== 'replies'; $('tab-shipping').hidden = b.dataset.tab !== 'shipping';
+    if (b.dataset.tab === 'shipping') loadShipping();
     if (b.dataset.tab === 'channels') loadChannels();
     if (b.dataset.tab === 'replies') drawReplies();
   }));
@@ -240,13 +258,49 @@ td input[type=number]{width:110px}
         ]),
         el('div', { className: 'grid' }, [
           info('الساعة', `${(o.model || '').toUpperCase()} · ${opts}`), info('المبلغ', `${o.amount_aed} درهم`),
-          info('العميل', o.customer_name || ''), info('الجوال', phone), info('الإمارة', EM[o.emirate] || o.emirate || ''),
+          info('العميل', o.customer_name || ''), info('الجوال', phone),
+          (o.country && o.country !== 'AE') ? info('الدولة والمدينة', `${countryAr(o.country)} · ${o.city || ''}`) : info('الإمارة', EM[o.emirate] || o.emirate || ''),
           info('العنوان', o.address || ''), info('البريد', o.customer_email || ''), info('ملاحظة', o.customer_note || ''),
+          ...(o.shipping_aed ? [info('الشحن', `${o.shipping_aed} درهم`)] : []),
         ]),
+        ...((o.gift_wrap || o.gift_message || o.gift_hide_price) ? [el('div', { className: 'gift' }, [el('b', { textContent: '🎁 هدية' }), document.createTextNode(' · ' + [o.gift_wrap ? `تغليف (${o.gift_aed} درهم)` : '', o.gift_hide_price ? 'لا تحط أي سعر أو فاتورة في الطرد' : ''].filter(Boolean).join(' · ')), ...(o.gift_message ? [el('p', { textContent: 'رسالة البطاقة: «' + o.gift_message + '»' })] : [])])] : []),
       ]);
     }));
   }
 
+  const countryAr = c => { try { return new Intl.DisplayNames(['ar'], { type: 'region' }).of(c); } catch (e) { return c; } };
+  async function loadShipping() {
+    $('zonesMsg').className = 'msg'; $('zonesMsg').textContent = '…';
+    try {
+      const j = await call({ action: 'shipping' });
+      const td = (l, kids) => { const c = el('td', {}, kids); if (l) c.dataset.l = l; return c; };
+      $('zones').replaceChildren(...(j.zones || []).map(z => {
+        const ae = z.code === 'AE';
+        const price = el('input', { type: 'number', min: 0, step: 1, value: z.price_aed ?? '', placeholder: '—' });
+        const dar = el('input', { value: z.days_ar || '', placeholder: 'مثلاً ٥–٧ أيام عمل', maxLength: 40 });
+        const den = el('input', { value: z.days_en || '', placeholder: 'e.g. 5–7 working days', maxLength: 40, dir: 'ltr' });
+        const on = el('input', { type: 'checkbox', checked: z.enabled, disabled: ae });
+        const save = el('button', { textContent: 'حفظ' }), msg = el('span', { className: 'msg' });
+        save.addEventListener('click', async () => {
+          const body = { action: 'update_zone', code: z.code, price_aed: price.value === '' ? null : Math.round(+price.value), days_ar: dar.value.trim() || null, days_en: den.value.trim() || null };
+          if (!ae) body.enabled = on.checked;
+          if (body.enabled && body.price_aed == null) { msg.className = 'msg err'; msg.textContent = 'حط سعر قبل ما تفتحها'; return; }
+          save.disabled = true; msg.className = 'msg'; msg.textContent = '…';
+          try { await call(body); msg.className = 'msg ok'; msg.textContent = 'تم الحفظ'; } catch (e) { msg.className = 'msg err'; msg.textContent = e.message; }
+          save.disabled = false;
+        });
+        return el('tr', {}, [td('', [el('b', { textContent: z.name_ar })]), td('سعر الشحن (درهم)', [price]), td('المدة (عربي)', [dar]), td('المدة (English)', [den]), td('مفتوحة', [on]), td('', [save, msg])]);
+      }));
+      const g = j.gift || { gift_enabled: false, gift_wrap_aed: 29 };
+      const gp = el('input', { type: 'number', min: 0, step: 1, value: g.gift_wrap_aed, style: 'width:110px' }), ge = el('input', { type: 'checkbox', checked: g.gift_enabled });
+      const gs = el('button', { textContent: 'حفظ' });
+      gs.addEventListener('click', async () => { gs.disabled = true; $('giftMsg').className = 'msg'; $('giftMsg').textContent = '…';
+        try { await call({ action: 'update_gift', gift_enabled: ge.checked, gift_wrap_aed: Math.round(+gp.value || 0) }); $('giftMsg').className = 'msg ok'; $('giftMsg').textContent = 'تم الحفظ'; } catch (e) { $('giftMsg').className = 'msg err'; $('giftMsg').textContent = e.message; }
+        gs.disabled = false; });
+      $('giftRow').replaceChildren(el('label', { className: 'row', style: 'gap:6px' }, [ge, document.createTextNode('خيار الهدية مفعّل')]), el('label', { className: 'row', style: 'gap:6px' }, [document.createTextNode('سعر التغليف (درهم)'), gp]), gs);
+      $('zonesMsg').textContent = '';
+    } catch (e) { $('zonesMsg').className = 'msg err'; $('zonesMsg').textContent = e.message; }
+  }
   async function loadProducts() {
     try {
       const j = await call({ action: 'products' });

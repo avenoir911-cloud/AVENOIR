@@ -110,6 +110,7 @@ def meta(page, url, robots):
 
 FIRST = {'home': 'monte-front-black-leather', 'monti': 'monte-front-bracelet-blue-hands', 'lumi': 'lumi-front-blue-hands', 'rayo': 'rayo-front-gold-ice-black', 'bloom': 'bloom-front-pink'}
 def preload(page_key, A):
+    if page_key == 'home': return f'<link rel="preload" as="image" href="{A}img/cut/monte-front-bracelet-blue-hands.png" fetchpriority="high">'
     k = FIRST[page_key]; e = img[k]
     srcset = ', '.join(f"{A}img/{e['d']}/{k}-{w}.jpg {w}w" for w in e['w'])
     sizes = '(min-width:900px) 560px, 92vw' if page_key == 'home' else '(min-width:960px) 52vw, 100vw'

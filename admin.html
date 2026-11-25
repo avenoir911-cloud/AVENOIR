@@ -41,6 +41,7 @@ td input[type=number]{width:110px}
 .msg{min-height:1.4em;font-size:13px}
 .msg.err{color:var(--bad)}.msg.ok{color:var(--ok)}
 .filters{display:flex;flex-wrap:wrap;gap:8px}
+.trend{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;align-items:end;height:120px;margin:12px 0 4px}.trend .bar{background:#111;min-height:2px;position:relative}.trend .bar.zero{background:var(--hair)}.trend .bar span{position:absolute;bottom:100%;left:0;right:0;text-align:center;font-size:11px;color:var(--muted)}.trend-days{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;font-size:10px;color:var(--muted);text-align:center}
 @media(max-width:640px){table,thead,tbody,tr,td,th{display:block}thead{display:none}tr{border:1px solid var(--hair);margin-bottom:10px;padding:8px}td{border:0;padding:6px 4px}td[data-l]::before{content:attr(data-l);display:block;font-size:12px;color:var(--muted)}}
 </style>
 </head>
@@ -86,6 +87,13 @@ td input[type=number]{width:110px}
       </div>
     </section>
     <section id="tab-channels" hidden>
+      <div class="card">
+        <div class="row" style="justify-content:space-between"><b>الزوار يوم بيوم (آخر 14 يوم)</b><span class="muted">بتوقيت الإمارات</span></div>
+        <p class="muted">كل عمود = عدد الزوار في ذاك اليوم (الجدول تحت يبين بس الأيام اللي فيها زيارات). لو نشرت شي أو أرسلت رابط، شوف هل ارتفع العمود في نفس اليوم.</p>
+        <div class="trend" id="trend"></div><div class="trend-days" id="trendDays"></div>
+        <table style="margin-top:12px"><thead><tr><th>اليوم</th><th>زوار</th><th>شافوا ساعة</th><th>بدأوا الدفع</th><th>دفعوا</th><th>المبلغ</th></tr></thead><tbody id="daily"></tbody></table>
+        <p class="msg" id="dailyMsg"></p>
+      </div>
       <div class="card">
         <div class="row" style="justify-content:space-between">
           <b>من وين جوا الزوار؟</b>
@@ -154,7 +162,7 @@ td input[type=number]{width:110px}
     document.querySelectorAll('[data-tab]').forEach(x => x.setAttribute('aria-selected', String(x === b)));
     $('tab-orders').hidden = b.dataset.tab !== 'orders'; $('tab-products').hidden = b.dataset.tab !== 'products'; $('tab-channels').hidden = b.dataset.tab !== 'channels'; $('tab-replies').hidden = b.dataset.tab !== 'replies'; $('tab-shipping').hidden = b.dataset.tab !== 'shipping';
     if (b.dataset.tab === 'shipping') loadShipping();
-    if (b.dataset.tab === 'channels') loadChannels();
+    if (b.dataset.tab === 'channels') { loadChannels(); loadDaily(); }
     if (b.dataset.tab === 'replies') drawReplies();
   }));
   $('fDays').addEventListener('change', () => loadChannels());
@@ -211,6 +219,20 @@ td input[type=number]{width:110px}
       const box = el('textarea', { value: text, readOnly: true, rows: 5, style: 'width:100%;font:inherit;padding:9px 11px;border:1px solid #d3cbbb;background:#fff;resize:vertical' });
       return el('div', {}, [el('div', { className: 'row', style: 'justify-content:space-between' }, [el('b', { textContent: label }), copyBtn(() => text, box)]), box]);
     }));
+  }
+  async function loadDaily() {
+    $('dailyMsg').className = 'msg'; $('dailyMsg').textContent = '…';
+    try {
+      const j = await call({ action: 'daily', days: 14 });
+      const list = j.days || [];
+      const max = Math.max(1, ...list.map(d => d.visitors));
+      const short = d => new Date(d + 'T12:00:00Z').toLocaleDateString('ar-AE', { day: 'numeric', month: 'numeric', timeZone: 'UTC' });
+      $('trend').replaceChildren(...list.map(d => el('div', { className: 'bar' + (d.visitors ? '' : ' zero'), style: `height:${Math.round(d.visitors / max * 100)}%`, title: `${short(d.d)}: ${d.visitors} زائر` }, [el('span', { textContent: d.visitors || '' })])));
+      $('trendDays').replaceChildren(...list.map(d => el('span', { textContent: short(d.d) })));
+      const td = (l, t) => { const c = el('td', { textContent: t }); c.dataset.l = l; return c; };
+      $('daily').replaceChildren(...list.filter(d => d.visitors || d.views || d.checkouts || d.paid).reverse().map(d => el('tr', {}, [el('td', {}, [el('b', { textContent: new Date(d.d + 'T12:00:00Z').toLocaleDateString('ar-AE', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' }) })]), td('زوار', d.visitors), td('شافوا ساعة', d.views), td('بدأوا الدفع', d.checkouts), td('دفعوا', d.paid), td('المبلغ', d.revenue ? d.revenue + ' درهم' : '—')])));
+      $('dailyMsg').textContent = list.some(d => d.visitors) ? '' : 'ما في زيارات في آخر 14 يوم.';
+    } catch (e) { $('dailyMsg').className = 'msg err'; $('dailyMsg').textContent = e.message; }
   }
   async function loadChannels() {
     $('channelsMsg').className = 'msg'; $('channelsMsg').textContent = '…';

@@ -545,6 +545,21 @@ html .co .co-card input,html .co .co-card select,html .co .co-card textarea{bord
 .notice-card .steps-mini li i{width:14px;height:14px;border-radius:50%;border:2px solid var(--ink);flex:none}
 .notice-card .steps-mini li:first-child{color:var(--ink);font-weight:600}.notice-card .steps-mini li:first-child i{background:var(--ink)}
 @media(prefers-reduced-motion:reduce){.marq div{animation:none}}
+
+/* details: three cards; on phones they slide sideways so the photos stay at their real sharpness */
+.details3{padding-block:clamp(56px,8vw,104px);background:var(--ivory)}
+.d3{display:grid;grid-auto-flow:column;grid-auto-columns:78%;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+.d3::-webkit-scrollbar{display:none}
+@media(min-width:900px){.d3{grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;overflow:visible}}
+.d3 article{scroll-snap-align:start;background:var(--paper);border-radius:24px;padding:14px 14px 22px;display:grid;gap:10px;align-content:start}
+.d3 .plate{margin:0;max-width:none}
+.d3 .plate img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:16px;display:block}
+.d3 .plate-cap{display:none}
+.d3 .plate picture,.d3 .plate>div{outline:0;background:none}
+.d3 .dial-plate{max-width:none}
+.d3 h3{font:400 24px/1.2 var(--serif);margin:6px 6px 0}
+html[lang="ar"] .d3 h3{font:700 22px/1.5 var(--arh)}
+.d3 p{margin:0 6px;font-size:15px;color:var(--quiet)}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Product", "name": "AVENOIR MONTI", "sku": "monti", "brand": {"@type": "Brand", "name": "AVENOIR"}, "description": "Square steel case, TIME IS MONEY in red, blue cabochon crown. Standard: steel bracelet or black leather. Assembled in the UAE, delivered in 2–3 weeks.", "url": "https://avenoirlab.com/preview/watch/monti/", "image": ["https://avenoirlab.com/img/catalogue/monte-front-bracelet-blue-hands-768.jpg"], "offers": {"@type": "Offer", "url": "https://avenoirlab.com/preview/watch/monti/", "priceCurrency": "AED", "price": "799", "itemCondition": "https://schema.org/NewCondition", "availability": "https://schema.org/MadeToOrder", "seller": {"@type": "Organization", "name": "AVENOIR"}, "shippingDetails": {"@type": "OfferShippingDetails", "shippingRate": {"@type": "MonetaryAmount", "value": "0", "currency": "AED"}, "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "AE"}}}}</script>
 </head>
@@ -631,51 +646,30 @@ html .co .co-card input,html .co .co-card select,html .co .co-card textarea{bord
     <div class="st-card st-buy" id="st-buy"></div>
   </section>
 
-  <!-- CONTENTS: a magazine table of contents that is also the page navigation -->
-  <nav class="contents wrap" aria-label="Contents">
-    <a href="#ch-dial"><i>I</i><span data-t="ch1">The dial</span></a>
-    <a href="#ch-case"><i>II</i><span data-t="ch2">The case</span></a>
-    <a href="#ch-move"><i>III</i><span data-t="ch3">The movement</span></a>
-    <a href="#straps"><i>IV</i><span data-t="ch4">Bracelet &amp; straps</span></a>
-    <a href="#watches"><i>V</i><span data-t="ch5">The collection</span></a>
-  </nav>
 
   
-  <div class="marq" aria-hidden="true"><div id="marq"></div></div>
 
-  <!-- I. THE DIAL — the brand's signature, shown at the detail the photograph really has -->
-  <section class="chapter" id="ch-dial" aria-labelledby="ch1-h">
-    <div class="wrap ch-grid">
-      <figure class="plate dial-plate">
-        <picture><source type="image/jpeg" srcset="../../../img/catalogue/monte-dial-plate-480.jpg 480w, ../../../img/catalogue/monte-dial-plate-704.jpg 704w" sizes="(min-width:900px) 440px, 88vw"><img src="../../../img/catalogue/monte-dial-plate-704.jpg" width="704" height="704" alt="Close view of the MONTI dial" loading="lazy" decoding="async"></picture>
-        <figcaption class="plate-cap" data-t="cap_dial">Plate II — The dial, at the detail of the original photograph</figcaption>
-      </figure>
-      <div class="ch-copy">
-        <span class="chno">I</span>
-        <h2 id="ch1-h" data-t="ch1_h">The dial.</h2>
-        <ol class="notes">
-          <li><b data-t="d1_h">Roman numerals</b><span data-t="d1_p">Black numerals around a railway minute track, on an ivory dial.</span></li>
-          <li><b data-t="d2_h">TIME IS MONEY</b><span data-t="d2_p">Written across the centre in red: the signature of every AVENOIR.</span></li>
-          <li><b data-t="d3_h">Blue hands</b><span data-t="d3_p">Hour, minute and seconds hands in blue, on one central pinion.</span></li>
-          <li><b data-t="d4_h">The A</b><span data-t="d4_p">The AVENOIR mark under twelve.</span></li>
-        </ol>
+  <!-- details: the dial, the case, the movement; photos shown no larger than their real detail -->
+  <section class="details3" aria-label="Details">
+    <div class="wrap">
+      <div class="ch-head"><span class="label" data-t="det_k">MONTI, up close</span><h2 data-t="det_h">The details.</h2></div>
+      <div class="d3">
+        <article id="ch-dial" aria-labelledby="ch1-h">
+          <figure class="plate dial-plate"><picture><source type="image/jpeg" srcset="../../../img/catalogue/monte-dial-plate-480.jpg 480w, ../../../img/catalogue/monte-dial-plate-704.jpg 704w" sizes="(min-width:900px) 360px, 78vw"><img src="../../../img/catalogue/monte-dial-plate-704.jpg" width="704" height="704" alt="Close view of the MONTI dial" loading="lazy" decoding="async"></picture></figure>
+          <h3 id="ch1-h" data-t="ch1_h">The dial.</h3>
+          <p data-t="d2_p">Written across the centre in red: the signature of every AVENOIR.</p>
+        </article>
+        <article id="ch-case" aria-labelledby="ch2-h">
+          <figure class="plate"><div id="plate-case"></div></figure>
+          <h3 id="ch2-h" data-t="ch2_h">The case.</h3>
+          <p data-t="ch2_p">A square steel case with curved shoulders, held by visible screws. The crown is faceted and set with a blue cabochon.</p>
+        </article>
+        <article id="ch-move" aria-labelledby="ch3-h">
+          <figure class="plate"><div id="plate-move"></div></figure>
+          <h3 id="ch3-h" data-t="ch3_h">The movement.</h3>
+          <p data-t="ch3_p">A Japanese automatic movement: no battery, it winds as you wear it. One-year warranty on the movement.</p>
+        </article>
       </div>
-    </div>
-  </section>
-
-  <!-- II + III: case and movement, side by side like a spread -->
-  <section class="chapter spread" aria-label="Case and movement">
-    <div class="wrap spread-grid">
-      <article id="ch-case" aria-labelledby="ch2-h">
-        <figure class="plate"><div id="plate-case"></div><figcaption class="plate-cap" data-t="cap_case">Plate III — Profile, on black leather</figcaption></figure>
-        <span class="chno">II</span><h2 id="ch2-h" data-t="ch2_h">The case.</h2>
-        <p data-t="ch2_p">A square steel case with curved shoulders, held by visible screws. The crown is faceted and set with a blue cabochon.</p>
-      </article>
-      <article id="ch-move" aria-labelledby="ch3-h">
-        <figure class="plate"><div id="plate-move"></div><figcaption class="plate-cap" data-t="cap_move">Plate IV — The back, on black leather</figcaption></figure>
-        <span class="chno">III</span><h2 id="ch3-h" data-t="ch3_h">The movement.</h2>
-        <p data-t="ch3_p">A Japanese automatic movement: no battery, it winds as you wear it. One-year warranty on the movement.</p>
-      </article>
     </div>
   </section>
 
@@ -853,8 +847,9 @@ html .co .co-card input,html .co .co-card select,html .co .co-card textarea{bord
   let lang = 'en'; try { lang = localStorage.getItem('avn-lang') || 'en'; } catch (e) {}
   { const ql = new URLSearchParams(location.search).get('lang'); if (ql === 'ar' || ql === 'en') { lang = ql; try { localStorage.setItem('avn-lang', lang); } catch (e) {} } }
   const SOLO = document.documentElement.classList.contains('solo');   // watch/<model>/ opened as its own page
-  Object.assign(EN, { nav_build:'Build yours', st_kick:'Build yours', st_h:'Build your AVENOIR.', st_p:'Pick the watch, then the details. The price updates as you go.', st_1:'The watch', st_x:'Second strap', st_none:'None', st_total:'Total', st_go:'Continue to order', st_nophoto:'No photograph of this combination yet. The colour is shown as a sample.', st_incl:'Strap and UAE delivery included. Assembled in the UAE after you order.', st_h1:'Time is money.', mq:['Time is money.','Assembled in the UAE','Free UAE delivery','Four watches, each in its own colour'], how_k:'How it reaches you', how_h:'Three steps.', how1_h:'You choose', how1_p:'The watch and the strap, with the price in front of you.', how2_h:'We assemble it', how2_p:'In the UAE, after you order.', how3_h:'We deliver it', how3_p:'To your door anywhere in the UAE, free.', ns1:'Order received', ns2:'Assembled in the UAE', ns3:'We call you and deliver it' });
-  Object.assign(AR, { nav_build:'صمّم ساعتك', st_kick:'صمّم ساعتك', st_h:'صمّم ساعتك من AVENOIR.', st_p:'اختر الساعة، ثم التفاصيل. السعر يتحدّث مع كل اختيار.', st_1:'الساعة', st_x:'سير ثانٍ', st_none:'بدون', st_total:'الإجمالي', st_go:'أكمل الطلب', st_nophoto:'لا توجد صورة لهذا الاختيار بعد، واللون معروض كعيّنة.', st_incl:'السير والتوصيل داخل الإمارات ضمن السعر. تُجمَّع في الإمارات بعد طلبك.', st_h1:'الوقت، بتوقيع أحمر.', mq:['Time is money.','تُجمَّع في الإمارات','توصيل مجاني داخل الإمارات','أربع ساعات، كل وحدة بلونها'], how_k:'كيف توصلك', how_h:'ثلاث خطوات.', how1_h:'تختار', how1_p:'الساعة والسير، والسعر قدامك.', how2_h:'نجمّعها', how2_p:'في الإمارات، بعد طلبك.', how3_h:'نوصلها', how3_p:'لباب بيتك في أي إمارة، مجاناً.', ns1:'وصلنا طلبك', ns2:'التجميع في الإمارات', ns3:'نتصل فيك ونوصلها' });
+  Object.assign(EN, { nav_build:'Build yours', st_kick:'Build yours', st_h:'Build your AVENOIR.', st_p:'Pick the watch, then the details. The price updates as you go.', st_1:'The watch', st_x:'Second strap', st_none:'None', st_total:'Total', st_go:'Order now', st_nophoto:'No photograph of this combination yet. The colour is shown as a sample.', st_incl:'Strap and UAE delivery included. Assembled in the UAE after you order.', st_h1:'Time is money.', mq:['Time is money.','Assembled in the UAE','Free UAE delivery','Four watches, each in its own colour'], how_k:'How it reaches you', how_h:'Three steps.', how1_h:'You choose', how1_p:'The watch and the strap, with the price in front of you.', how2_h:'We assemble it', how2_p:'In the UAE, after you order.', how3_h:'We deliver it', how3_p:'To your door anywhere in the UAE, free.', ns1:'Order received', ns2:'Assembled in the UAE', ns3:'We call you and deliver it' });
+  Object.assign(AR, { nav_build:'صمّم ساعتك', st_kick:'صمّم ساعتك', st_h:'صمّم ساعتك من AVENOIR.', st_p:'اختر الساعة، ثم التفاصيل. السعر يتحدّث مع كل اختيار.', st_1:'الساعة', st_x:'سير ثانٍ', st_none:'بدون', st_total:'الإجمالي', st_go:'اطلب الآن', st_nophoto:'لا توجد صورة لهذا الاختيار بعد، واللون معروض كعيّنة.', st_incl:'السير والتوصيل داخل الإمارات ضمن السعر. تُجمَّع في الإمارات بعد طلبك.', st_h1:'الوقت، بتوقيع أحمر.', mq:['Time is money.','تُجمَّع في الإمارات','توصيل مجاني داخل الإمارات','أربع ساعات، كل وحدة بلونها'], how_k:'كيف توصلك', how_h:'ثلاث خطوات.', how1_h:'تختار', how1_p:'الساعة والسير، والسعر قدامك.', how2_h:'نجمّعها', how2_p:'في الإمارات، بعد طلبك.', how3_h:'نوصلها', how3_p:'لباب بيتك في أي إمارة، مجاناً.', ns1:'وصلنا طلبك', ns2:'التجميع في الإمارات', ns3:'نتصل فيك ونوصلها' });
+  Object.assign(EN, { det_k: 'MONTI, up close', det_h: 'The details.' }); Object.assign(AR, { det_k: 'مونتي عن قرب', det_h: 'التفاصيل.' });
   const t = k => lang === 'ar' ? (AR[k] ?? EN[k] ?? '') : (EN[k] ?? '');
 
   /* only approved facts are published; anything null stays off the site until it is approved */
@@ -976,8 +971,8 @@ html .co .co-card input,html .co .co-card select,html .co .co-card textarea{bord
   // ivory skeleton until each picture has loaded
   function skeletons() { document.querySelectorAll('.sk:not(.ok)').forEach(b => { const im = b.querySelector('img'); if (!im) return; const on = () => b.classList.add('ok'); if (im.complete && im.naturalWidth) on(); else { im.addEventListener('load', on, { once: true }); im.addEventListener('error', on, { once: true }); } }); }
   function renderHomeDetails() {
-    document.getElementById('plate-case').replaceChildren(pic('monte-side-black-leather', '(min-width:800px) 440px, 92vw', 'MONTI, profile with crown'));
-    document.getElementById('plate-move').replaceChildren(pic('monte-caseback-black-leather', '(min-width:800px) 440px, 92vw', 'MONTI, see-through back with the movement'));
+    document.getElementById('plate-case').replaceChildren(pic('monte-side-black-leather', '(min-width:900px) 360px, 78vw', 'MONTI, profile with crown'));
+    document.getElementById('plate-move').replaceChildren(pic('monte-caseback-black-leather', '(min-width:900px) 360px, 78vw', 'MONTI, see-through back with the movement'));
     const sg = W.monti.groups[0];
     const inc = allowed('monti', sg).map(x => x.id);
     document.getElementById('straprow').replaceChildren(...sg.opts.map(x => { const q = inc.includes(x.id) ? `strap=${x.id}` : `strap=black&x=${x.id}`;
@@ -1031,7 +1026,8 @@ html .co .co-card input,html .co .co-card select,html .co .co-card textarea{bord
           ...ex.map(x => sw(s._x.includes(x.id), x.sw, L(x), () => { s._x = s._x.includes(x.id) ? s._x.filter(i => i !== x.id) : (maxExtras(k) === 1 ? [x.id] : [...s._x, x.id]); sanitize(k); renderStudio(); })) ])); }
     document.getElementById('st-opts').replaceChildren(...box);
     document.getElementById('st-buy').replaceChildren(el('div', {}, [ el('span', { class: 'st-lab', text: t('st_total') }), el('div', { class: 'st-tot num', text: fmt(total(k)) }), el('small', { text: t('st_incl') }) ]),
-      el('button', { type: 'button', class: 'st-go', text: t('st_go'), onclick: () => { lastFocus = document.activeElement; fromStudio = true; openPV(k, 'push', optQuery(k).toString()); } }));
+      el('button', { type: 'button', class: 'st-go', text: t('st_go'), onclick: () => { const fr = w.slots(s).front; const u = new URL(buyHref(k)); try { const ck = n => (document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]+)')) || [])[1]; if (ck('_fbp')) u.searchParams.set('fbp', decodeURIComponent(ck('_fbp'))); if (ck('_fbc')) u.searchParams.set('fbc', decodeURIComponent(ck('_fbc'))); localStorage.setItem('avn_last_checkout', JSON.stringify({ content_ids: [k], content_type: 'product', value: total(k), currency: 'AED', at: Date.now() })); } catch (e) {}
+        if (window.avnOpenOrder && window.avnOpenOrder(u.toString(), { total: fmt(total(k)), name: title(k), what: w.groups.map(g => L(g.opts.find(x => x.id === s[g.id]))).concat(s._x.map(id => '+ ' + L((extrasFor(k).find(x => x.id === id)) || { en: id, ar: id }))).join(' · '), img: fr && CUT.has(fr) ? `${A}img/cut/${fr}.webp` : null })) return; lastFocus = document.activeElement; fromStudio = true; openPV(k, 'push', optQuery(k).toString()); } }));
   }
   function setFilter(f) { filter = f; renderGrid(); }
   // the policy page opens in the same language and its Back link returns to the watch, with the same choices

@@ -168,7 +168,7 @@
     if (!ae) lines.push([t2.shipLine + ' · ' + regionName(c, lang()), ship ? money(ship) : t2.free]);
     if (wrap) lines.push([t2.giftLine, money(wrap)]);
     box.querySelector('#co-lines').replaceChildren(...lines.map(([a, b]) => { const d = document.createElement('div'); d.innerHTML = '<span></span><span></span>'; d.children[0].textContent = a; d.children[1].textContent = b; return d; }));
-    const tot = base ? money(base + ship + wrap) : (document.getElementById('pv-total')?.textContent || '');
+    const tot = base ? money(base + ship + wrap) : (box.querySelector('#co-total').textContent || '');
     box.querySelector('#co-total').textContent = tot;
     box.querySelector('[data-k="incl"]').textContent = ae ? t.incl : t2.inclIntl;
     const days = ae ? null : (lang() === 'ar' ? z.days_ar : z.days_en);
@@ -180,19 +180,21 @@
   form.gift_wrap.addEventListener('change', sync); form.gift_msg.addEventListener('input', sync);
 
   let lastFocus = null;
-  function open(href) {
+  // meta (optional): the build as shown where the order started, when that is not the watch page { total, name, what, img }
+  function open(href, meta) {
+    meta = meta || {};
     let u; try { u = new URL(href); } catch (e) { return false; }
     const hid = box.querySelector('#co-hidden'); hid.replaceChildren();
     u.searchParams.forEach((v, k) => { const i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = v; hid.append(i); });
     texts();
     busy(false); clearErrs();
-    const tot = document.getElementById('pv-total')?.textContent || '';
+    const tot = meta.total || document.getElementById('pv-total')?.textContent || '';
     base = +(tot.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[^\d]/g, '')) || 0;   // the build's price, as shown on the watch page
     box.querySelector('#co-total').textContent = tot;
     const sum = (document.getElementById('pv-buy')?.dataset.summary || '').split(' · ');
-    box.querySelector('#co-nm').textContent = sum[0] || document.getElementById('pv-name')?.textContent || '';
-    box.querySelector('#co-what').textContent = sum.slice(1).join(' · ');
-    const src = document.querySelector('#track .slide img')?.currentSrc; const ph = box.querySelector('#co-ph'); ph.replaceChildren();
+    box.querySelector('#co-nm').textContent = meta.name || sum[0] || document.getElementById('pv-name')?.textContent || '';
+    box.querySelector('#co-what').textContent = meta.what != null ? meta.what : sum.slice(1).join(' · ');
+    const src = meta.img || (meta.name ? '' : document.querySelector('#track .slide img')?.currentSrc); const ph = box.querySelector('#co-ph'); ph.replaceChildren();
     if (src) { const im = new Image(); im.src = src; im.alt = ''; ph.append(im); }
     pay.textContent = `${T[lang()].payTo} · ${tot}`;
     err.textContent = '';

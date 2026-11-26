@@ -442,6 +442,86 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .rv{opacity:1!important;transform:none!important}
 }
+
+/* ================= B layer: every watch in its own colour, across the whole site ================= */
+:root{--soft:#EFE9DF;--deep:#141210}
+body{background:var(--ivory)}
+/* marquee */
+.marq{background:#141210;color:#f6ece0;overflow:hidden;white-space:nowrap;padding:14px 0;border:0}
+.marq div{display:inline-flex;gap:36px;padding-inline-end:36px;font:italic 400 22px/1 var(--serif);animation:mq 38s linear infinite}
+html[lang="ar"] .marq div{font:400 21px/1.2 var(--arh);font-style:normal}
+.marq span::after{content:"◆";font-style:normal;font-size:12px;margin-inline-start:36px;color:#e0483a;vertical-align:middle}
+@keyframes mq{to{transform:translateX(-50%)}}
+html[dir="rtl"] .marq div{animation-name:mqr}@keyframes mqr{to{transform:translateX(50%)}}
+/* collection as colour cards */
+#watches{background:var(--ivory)}
+#watches .index{border:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(min-width:900px){#watches .index{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}}
+#watches .index li{border:0}
+#watches .index a{display:flex;flex-direction:column;gap:6px;padding:16px 16px 18px;border-radius:24px;background:var(--cbg,#efe9df);color:var(--cfg,#141210);min-height:100%;position:relative;overflow:hidden;transition:transform .4s var(--ease)}
+#watches .index .ix{display:block;padding:0;color:inherit;opacity:.6;font-size:12px}
+#watches .index .th{width:100%;height:auto;aspect-ratio:1/1.05;background:none;outline:0;overflow:visible;display:grid;place-items:center}
+#watches .index .th img{width:auto;height:100%;max-width:100%;object-fit:contain;transform:rotate(-5deg);filter:drop-shadow(0 18px 18px rgba(0,0,0,.28));-webkit-mask-image:linear-gradient(#000 86%,transparent 97%);mask-image:linear-gradient(#000 86%,transparent 97%)}
+#watches .index .th.sk:not(.ok){animation:none;background:none}
+#watches .index .nm{max-width:none;gap:2px}
+#watches .index .nm b{font:500 20px/1.1 var(--sans);letter-spacing:.16em;color:inherit}
+#watches .index .nm small{color:inherit;opacity:.78;font-size:13.5px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#watches .index .pr{margin-top:6px;justify-content:space-between;color:inherit;flex-wrap:wrap;gap:4px 10px}
+#watches .index .go{color:inherit}
+@media(hover:hover){#watches .index a:hover{transform:translateY(-4px)}#watches .index a:hover .th img{transform:rotate(-2deg) scale(1.04)}#watches .index a:hover .nm b{color:inherit}}
+@media(max-width:700px){#watches .index a{padding:12px 12px 14px;border-radius:20px}#watches .index .nm b{font-size:16px}#watches .index .nm small{display:none}#watches .index .go{display:none}}
+#watches .filters{margin-bottom:18px}
+.filter{border-radius:99px}
+/* three steps */
+.steps3{background:var(--stone);padding-block:clamp(56px,8vw,110px)}
+.steps3 ol{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+@media(min-width:800px){.steps3 ol{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}}
+.steps3 li{background:var(--paper);border-radius:24px;padding:26px 24px;display:grid;gap:8px;align-content:start;box-shadow:0 14px 40px rgba(17,17,17,.06)}
+.steps3 li b{font:700 46px/1 var(--sans);letter-spacing:-.04em;color:var(--c)}
+.steps3 li h3{font:500 21px/1.3 var(--sans);margin:4px 0 0}
+html[lang="ar"] .steps3 li h3{font:700 21px/1.5 var(--ar)}
+.steps3 li p{margin:0;color:var(--quiet);font-size:15.5px}
+/* chapters: rounded plates, softer rules */
+.plate picture img,.plate>div img,.dial-plate img{border-radius:20px}
+.chapter{border-top:0}
+.stile .sp{border-radius:18px;border:0;box-shadow:inset 0 0 0 1px rgba(17,17,17,.08)}
+.stile .sp.sw{background:var(--paper)}
+@media(hover:hover){.stile:hover .sp{box-shadow:inset 0 0 0 2px var(--ink)}}
+/* questions */
+.colophon{border-top:0;background:var(--ivory)}
+.faq{border-top:0;gap:8px}
+.faq details{border:0;background:var(--paper);border-radius:18px;padding:0 20px}
+.faq details p{padding-bottom:20px}
+/* footer: black, signed in red */
+footer#foot{background:#141210;color:#d9d2c6;border:0;padding-top:clamp(48px,7vw,80px)}
+footer#foot .sig{font:italic 400 clamp(44px,8vw,96px)/1 var(--serif);color:#e0483a;margin:0 0 clamp(28px,4vw,44px);text-align:center}
+html[lang="ar"] footer#foot .sig{font:700 clamp(36px,6vw,72px)/1.3 var(--arh);font-style:normal}
+footer#foot a,footer#foot .logo{color:#f6ece0}
+footer#foot .label{color:#a59d90}
+footer#foot p{color:#bdb5a8}
+/* product view: the gallery sits on the watch's own soft colour */
+.pv{background:var(--ivory)}
+.gal .slide .frame,.gal .slide .frame:has(img.ok){background:var(--soft);border-radius:24px}
+.gal .slide .frame img{mix-blend-mode:multiply}
+@media(max-width:959px){.gal .slide .frame{width:calc(100% - 32px);margin-inline:auto}}
+.thumbs button,.thumbs a{border-radius:12px;overflow:hidden}
+#pv-buy,#mbar-buy,.btn{border-radius:99px}
+.mbar{border-radius:22px 22px 0 0;border-top:0;box-shadow:0 -10px 30px rgba(17,17,17,.08)}
+.pv-head .pv-price{color:var(--deep)}
+/* order sheet and the after-payment card follow the watch */
+html .co .co-card{border-radius:28px}
+@media(max-width:600px){html .co .co-card{border-radius:28px 28px 0 0}}
+html .co .co-order{background:var(--soft);border:0;border-radius:20px}
+html .co .co-order .ph{background:transparent}
+html .co .co-order .ph img{mix-blend-mode:multiply}
+html .co .co-gift{border-radius:18px}
+html .co .co-card input,html .co .co-card select,html .co .co-card textarea{border-radius:14px}
+.notice-card{background:var(--soft);border-radius:28px}
+.notice-card .steps-mini{list-style:none;margin:0;padding:16px 18px;display:grid;gap:10px;text-align:start;background:var(--paper);border-radius:18px}
+.notice-card .steps-mini li{display:flex;gap:12px;align-items:center;color:var(--quiet)}
+.notice-card .steps-mini li i{width:14px;height:14px;border-radius:50%;border:2px solid var(--ink);flex:none}
+.notice-card .steps-mini li:first-child{color:var(--ink);font-weight:600}.notice-card .steps-mini li:first-child i{background:var(--ink)}
+@media(prefers-reduced-motion:reduce){.marq div{animation:none}}
 </style>
 </head>
 <body>
@@ -494,6 +574,8 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   </nav>
 
   
+  <div class="marq" aria-hidden="true"><div id="marq"></div></div>
+
   <!-- I. THE DIAL — the brand's signature, shown at the detail the photograph really has -->
   <section class="chapter" id="ch-dial" aria-labelledby="ch1-h">
     <div class="wrap ch-grid">
@@ -551,6 +633,18 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     </div>
   </section>
 
+  <!-- how it reaches you -->
+  <section class="steps3" id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <div class="ch-head"><span class="label" data-t="how_k">How it reaches you</span><h2 id="how-h" data-t="how_h">Three steps.</h2></div>
+      <ol>
+        <li style="--c:#B3201C"><b>01</b><h3 data-t="how1_h">You choose</h3><p data-t="how1_p">The watch and the strap, with the price in front of you.</p></li>
+        <li style="--c:#2b7fa8"><b>02</b><h3 data-t="how2_h">We assemble it</h3><p data-t="how2_p">In the UAE, after you order.</p></li>
+        <li style="--c:#e49a8e"><b>03</b><h3 data-t="how3_h">We deliver it</h3><p data-t="how3_p">To your door anywhere in the UAE, free.</p></li>
+      </ol>
+    </div>
+  </section>
+
   <!-- worn by customers: hidden until each customer agrees -->
   <section class="worn" id="worn" aria-labelledby="worn-h" hidden data-why="hidden until each customer has agreed to their photo being used on the website">
     <div class="wrap"><div class="head"><span class="label" data-t="worn_label">On our customers' wrists</span><h2 id="worn-h" data-t="worn_h">Ordered, delivered, <em>worn.</em></h2></div></div>
@@ -568,6 +662,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
 </main>
 
 <footer id="foot">
+  <div class="wrap"><p class="sig" data-t="st_h1">Time is money.</p></div>
   <div class="wrap fgrid">
     <div style="display:grid;gap:12px">
       <a class="logo" href="%%H%%"><svg viewBox="70 120 460 360" aria-hidden="true"><path d="M86 456 H120 L278 140 H322 L486 456 H516"/><path d="M203 290 L300 456 L400 290"/></svg>AVENOIR</a>
@@ -633,6 +728,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     <h2 id="notice-h" style="font-size:30px"></h2>
     <p id="notice-p"></p>
     <div class="ref" id="notice-ref" hidden></div>
+    <ol class="steps-mini" id="notice-steps" hidden><li><i></i><span data-t="ns1">Order received</span></li><li><i></i><span data-t="ns2">Assembled in the UAE</span></li><li><i></i><span data-t="ns3">We call you and deliver it</span></li></ol>
     <div class="ctas" style="flex-direction:column;gap:8px">
       <a class="btn wide" id="notice-ig" href="https://www.instagram.com/avenoir.watches/" target="_blank" rel="noopener noreferrer"></a>
       <button class="tl" type="button" id="notice-close"></button>
@@ -732,8 +828,8 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   let lang = 'en'; try { lang = localStorage.getItem('avn-lang') || 'en'; } catch (e) {}
   { const ql = new URLSearchParams(location.search).get('lang'); if (ql === 'ar' || ql === 'en') { lang = ql; try { localStorage.setItem('avn-lang', lang); } catch (e) {} } }
   const SOLO = document.documentElement.classList.contains('solo');   // watch/<model>/ opened as its own page
-  Object.assign(EN, { nav_build:'Build yours', st_kick:'Build yours', st_h:'Build your AVENOIR.', st_p:'Pick the watch, then the details. The price updates as you go.', st_1:'The watch', st_x:'Second strap', st_none:'None', st_total:'Total', st_go:'Continue to order', st_nophoto:'No photograph of this combination yet. The colour is shown as a sample.', st_incl:'Strap and UAE delivery included. Assembled in the UAE after you order.', st_h1:'Time is money.' });
-  Object.assign(AR, { nav_build:'صمّم ساعتك', st_kick:'صمّم ساعتك', st_h:'صمّم ساعتك من AVENOIR.', st_p:'اختر الساعة، ثم التفاصيل. السعر يتحدّث مع كل اختيار.', st_1:'الساعة', st_x:'سير ثانٍ', st_none:'بدون', st_total:'الإجمالي', st_go:'أكمل الطلب', st_nophoto:'لا توجد صورة لهذا الاختيار بعد، واللون معروض كعيّنة.', st_incl:'السير والتوصيل داخل الإمارات ضمن السعر. تُجمَّع في الإمارات بعد طلبك.', st_h1:'الوقت، بتوقيع أحمر.' });
+  Object.assign(EN, { nav_build:'Build yours', st_kick:'Build yours', st_h:'Build your AVENOIR.', st_p:'Pick the watch, then the details. The price updates as you go.', st_1:'The watch', st_x:'Second strap', st_none:'None', st_total:'Total', st_go:'Continue to order', st_nophoto:'No photograph of this combination yet. The colour is shown as a sample.', st_incl:'Strap and UAE delivery included. Assembled in the UAE after you order.', st_h1:'Time is money.', mq:['Time is money.','Assembled in the UAE','Free UAE delivery','Four watches, each in its own colour'], how_k:'How it reaches you', how_h:'Three steps.', how1_h:'You choose', how1_p:'The watch and the strap, with the price in front of you.', how2_h:'We assemble it', how2_p:'In the UAE, after you order.', how3_h:'We deliver it', how3_p:'To your door anywhere in the UAE, free.', ns1:'Order received', ns2:'Assembled in the UAE', ns3:'We call you and deliver it' });
+  Object.assign(AR, { nav_build:'صمّم ساعتك', st_kick:'صمّم ساعتك', st_h:'صمّم ساعتك من AVENOIR.', st_p:'اختر الساعة، ثم التفاصيل. السعر يتحدّث مع كل اختيار.', st_1:'الساعة', st_x:'سير ثانٍ', st_none:'بدون', st_total:'الإجمالي', st_go:'أكمل الطلب', st_nophoto:'لا توجد صورة لهذا الاختيار بعد، واللون معروض كعيّنة.', st_incl:'السير والتوصيل داخل الإمارات ضمن السعر. تُجمَّع في الإمارات بعد طلبك.', st_h1:'الوقت، بتوقيع أحمر.', mq:['Time is money.','تُجمَّع في الإمارات','توصيل مجاني داخل الإمارات','أربع ساعات، كل وحدة بلونها'], how_k:'كيف توصلك', how_h:'ثلاث خطوات.', how1_h:'تختار', how1_p:'الساعة والسير، والسعر قدامك.', how2_h:'نجمّعها', how2_p:'في الإمارات، بعد طلبك.', how3_h:'نوصلها', how3_p:'لباب بيتك في أي إمارة، مجاناً.', ns1:'وصلنا طلبك', ns2:'التجميع في الإمارات', ns3:'نتصل فيك ونوصلها' });
   const t = k => lang === 'ar' ? (AR[k] ?? EN[k] ?? '') : (EN[k] ?? '');
 
   /* only approved facts are published; anything null stays off the site until it is approved */
@@ -837,9 +933,11 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     ORDER.filter(k => !W[k].soon && (filter === 'all' || W[k].for === filter || W[k].for === 'all')).forEach(k => {
       const w = W[k];
       const n = grid.children.length + 1;
-      grid.append(el('li', {}, [ el('a', { class: 'card', href: new URL(`watch/${k}/`, HOME).href, 'data-open': k }, [
+      const th = themeOf(k), fr = w.slots(state[k]).front, cut = fr && CUT.has(fr) ? fr : null;
+      grid.append(el('li', { style: `--cbg:${th[0]};--cfg:${th[2]}` }, [ el('a', { class: 'card', href: new URL(`watch/${k}/`, HOME).href, 'data-open': k }, [
         el('span', { class: 'ix num', text: String(n).padStart(2, '0') }),
-        el('span', { class: 'th sk', style: `--s:${w.scale}` }, [ pic(w.card, '(max-width:360px) 112px, (max-width:700px) 132px, 168px', `${w.name}, ${lang === 'ar' ? 'من الأمام' : 'front view'}`) ]),
+        cut ? el('span', { class: 'th' }, [ el('img', { src: `${A}img/cut/${cut}.png`, alt: `${w.name}, ${lang === 'ar' ? 'من الأمام' : 'front view'}`, loading: 'lazy', decoding: 'async' }) ])
+          : el('span', { class: 'th sk', style: `--s:${w.scale}` }, [ pic(w.card, '(max-width:360px) 112px, (max-width:700px) 132px, 168px', `${w.name}, ${lang === 'ar' ? 'من الأمام' : 'front view'}`) ]),
         el('span', { class: 'nm' }, [ el('b', { text: w.name }), el('small', { text: L({ en: w.line[0], ar: w.line[1].replace(/TIME IS MONEY/g, '\u2066TIME IS MONEY\u2069') }) }),
         el('span', { class: 'pr' }, [ el('span', { class: 'num', text: (tierOf(k) ? t(state[k].tier) + ' · ' : '') + fmt(priceOf(k)) }), el('span', { class: 'go', html: `${t('cta')}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>` }) ]) ])
       ]) ]));
@@ -859,6 +957,8 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     const inc = allowed('monti', sg).map(x => x.id);
     document.getElementById('straprow').replaceChildren(...sg.opts.map(x => { const q = inc.includes(x.id) ? `strap=${x.id}` : `strap=black&x=${x.id}`;
       return el('a', { class: 'stile' + (x.id === 'bracelet' ? ' br' : ''), href: new URL(`watch/monti/?${q}`, HOME).href, 'data-open': 'monti', 'data-preset': q }, [ x.img ? el('div', { class: 'sp sk' }, [ pic(x.img, '160px', L(x)) ]) : el('div', { class: 'sp sw', role: 'img', 'aria-label': `${L(x)} (${lang === 'ar' ? 'عيّنة لون' : 'colour sample'})` }, [ el('i', { style: `background:${x.sw}` }) ]), el('span', { text: L(x) }), el('small', { text: inc.includes(x.id) ? t('st_inc') : `+ ${fmt(EXTRA)}` }) ]); }));
+    requestAnimationFrame(skeletons);   // the strap photos were created after skeletons() last ran
+    const mq = document.getElementById('marq'); if (mq) { const items = t('mq'); mq.replaceChildren(...[...items, ...items].map(x => el('span', { text: x }))); }
     document.getElementById('wstrip').replaceChildren(...Array.from({ length: 12 }, (_, i) => { const n = String(i + 1).padStart(2, '0'); return el('figure', {}, [ el('picture', {}, [ el('source', { type: 'image/webp', srcset: `${A}img/customers/c${n}.webp` }), el('img', { src: `${A}img/customers/c${n}.jpg`, width: 320, height: 400, alt: t('worn_alt'), loading: 'lazy', decoding: 'async' }) ]) ]); }));
     document.getElementById('faqlist').replaceChildren(...FAQ.filter(f => !f.link || DATA.policy).map(f => el('details', {}, [ el('summary', { text: L({ en: f.q[0], ar: f.q[1] }) }), el('p', {}, [ document.createTextNode(L({ en: f.a[0], ar: f.a[1] }) + ' '), f.link ? el('a', { href: policyHref(), 'data-pol': '', text: t('pol') }) : null ]) ])));
     document.querySelectorAll('[data-policy]').forEach(n => n.hidden = !DATA.policy); document.querySelectorAll('a[data-pol]').forEach(a => a.href = policyHref());
@@ -872,6 +972,11 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     'silver-white-steel': ['#ebe8e1', '#e0dcd3', '#151515', '#B3201C'], 'silver-ice-steel': ['#cfe5ee', '#bddbe7', '#0f2733', '#B3201C'], 'silver-white-bluehands-steel': ['#dde4f1', '#cdd7eb', '#14204a', '#2443a8'],
     pink: ['#F1CFC6', '#e9beb3', '#3d1d16', '#B3201C'], white: ['#EFE6D3', '#e5dac3', '#2e2618', '#B3201C'], blue: ['#CDE3EE', '#bad8e6', '#0f2733', '#B3201C'] };
   let sk = 'monti', stKey = '', fromStudio = false;
+  // soft tint for galleries and the order sheet (photographs are multiplied onto it), per model and colour
+  const SOFT = { monti: '#F3DCD6', lumi: '#F6E3E5', 'gold-navy-navy': '#DDE2EF', rayo: '#DCEDF5', bloom: '#F6E0D9', white: '#F3EEE3', blue: '#DDEBF2' };
+  const themeOf = k => { const s = state[k]; return TH[k] || TH[s.colour] || TH[s.dial] || TH.monti; };
+  const softOf = k => { const s = state[k]; return SOFT[s.colour] || (k === 'bloom' && SOFT[s.dial]) || SOFT[k] || '#EFE9DF'; };
+  function paintSoft(k) { document.documentElement.style.setProperty('--soft', softOf(k)); document.documentElement.style.setProperty('--deep', themeOf(k)[0] === '#B3201C' ? '#B3201C' : '#141210'); }
   function renderStudio() {
     const sec = document.getElementById('build'); if (!sec) return;
     const k = sk, w = W[k], s = state[k]; sanitize(k);
@@ -988,7 +1093,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     document.getElementById('pv-name').textContent = title(k);
     document.getElementById('pv-price').textContent = (tierOf(k) ? t(s.tier) + ' · ' : '') + fmt(priceOf(k));
     document.getElementById('pv-sub').textContent = lang === 'ar' ? w.subAr.replace(/TIME IS MONEY/g, '\u2066TIME IS MONEY\u2069') : w.sub;
-    renderGallery();
+    renderGallery(); paintSoft(k);
     const box = document.getElementById('pv-groups'); box.replaceChildren();
     const tiers = tierOn(k);
     if (tiers.length) box.append(tierCards(k, tiers, s));
@@ -1075,7 +1180,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
     const h = location.hash.slice(1); let mode = null, ref = '';
     if (/^paid-AV-[A-Z0-9]{6}$/.test(h)) { mode = 'paid'; ref = h.slice(5); } else if (h === 'failed') mode = 'failed';
     if (!mode) return;
-    document.getElementById('notice-h').textContent = t(mode + '_h');
+    document.getElementById('notice-h').textContent = t(mode + '_h'); document.getElementById('notice-steps').hidden = mode !== 'paid';
     document.getElementById('notice-p').textContent = t(mode + '_p');
     const r = document.getElementById('notice-ref'); r.hidden = !ref; r.textContent = ref;
     document.getElementById('notice-icon').style.display = mode === 'paid' ? '' : 'none';
@@ -1087,7 +1192,7 @@ html[lang="ar"] .mbar b{font:600 18px/1.3 var(--ar)}
   let verifying = '';
   async function verifyPaid(ref) {
     if (verifying === ref) return; verifying = ref;
-    const set = m => { document.getElementById('notice-h').textContent = t(m + '_h'); document.getElementById('notice-p').textContent = t(m + '_p'); document.getElementById('notice-icon').style.display = m === 'paid' ? '' : 'none'; };
+    const set = m => { document.getElementById('notice-steps').hidden = m !== 'paid'; document.getElementById('notice-h').textContent = t(m + '_h'); document.getElementById('notice-p').textContent = t(m + '_p'); document.getElementById('notice-icon').style.display = m === 'paid' ? '' : 'none'; };
     set('checking');
     for (let i = 0; i < 8; i++) {
       try { const r = await fetch(`${API}/status?ref=${encodeURIComponent(ref)}`, { cache: 'no-store' }); const { status } = await r.json();
